@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/logbook.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/logbook.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Tracer (facilement) les entrées sorties d’une API REST</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/12/01/tracer-facilement-les-entrees-sorties-dune-api-rest/" rel="alternate" type="text/html" title="Tracer (facilement) les entrées sorties d’une API REST" /><published>2018-12-01T14:51:50+00:00</published><updated>2018-12-01T14:51:50+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/12/01/tracer-facilement-les-entrees-sorties-dune-api-rest</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/12/01/tracer-facilement-les-entrees-sorties-dune-api-rest/">&lt;figure class=&quot;wp-block-image&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;1200&quot; height=&quot;1200&quot; src=&quot;/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg&quot; alt=&quot;&quot; class=&quot;wp-image-115&quot; srcset=&quot;/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg 1200w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-300x300.jpeg 300w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-1024x1024.jpeg 1024w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-150x150.jpeg 150w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-768x768.jpeg 768w&quot; sizes=&quot;(max-width: 1200px) 100vw, 1200px&quot; /&gt;&lt;/figure&gt;
+
+&lt;p&gt;Il y a quelques jours, je cherchais comment tracer rapidement et simplement les entrées sorties d’une &lt;a href=&quot;https://fr.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;API REST&lt;/a&gt; en appliquant quelques formatages, des filtres, et des insertions en base si besoin.&lt;/p&gt;
+
+&lt;p&gt;Travaillant sur une stack &lt;a href=&quot;https://spring.io/projects/spring-boot&quot;&gt;SpringBoot&lt;/a&gt;, vous allez me dire : oui tu peux faire des filtres. Pour être franc, j’ai essayé d’ appliquer des &lt;a href=&quot;https://www.baeldung.com/spring-mvc-handlerinterceptor&quot;&gt;interceptor&lt;/a&gt; et &lt;a href=&quot;https://www.baeldung.com/spring-boot-add-filter&quot;&gt;filtres&lt;/a&gt; mais dans mon contexte, ça ne collait pas.&lt;/p&gt;
+
+&lt;p&gt;Me voilà donc à la recherche d’une solution faisant le taff et qui soit peu intrusive dans mon contexte.&lt;/p&gt;
+
+&lt;p&gt;J’ai trouvé par hasard au fil de mes lectures sur Stackoverflow le framework &lt;a href=&quot;https://github.com/zalando/logbook&quot;&gt;logbook&lt;/a&gt; réalisé par … Zalando ( et oui, ils ne font pas que des chaussures) en licence MIT. &lt;br /&gt;
+Ce composant ne fait qu’une seule chose, mais il le fait bien !&lt;/p&gt;
+
+&lt;p&gt;Il permet entre autres de s’intégrer dans une stack JAVA ( JAX-RS ou SpringMVC), de filtrer, récupérer les différentes informations des requêtes et réponses et enfin de formatter selon l’envie (ex. JSON).&lt;/p&gt;
+
+&lt;p&gt;Voici un exemple de mise en œuvre dans un projet SpringBoot:&lt;/p&gt;
+
+&lt;p&gt;Dans le  fichier pom.xml, ajouter cette dépendance:&lt;/p&gt;
+
+&lt;pre class=&quot;wp-block-preformatted&quot;&gt;&lt;dependency&gt;&lt;br /&gt;    &lt;groupId&gt;org.zalando&lt;/groupId&gt;&lt;br /&gt;    &lt;artifactId&gt;logbook-spring-boot-starter&lt;/artifactId&gt;&lt;br /&gt;    &lt;version&gt;1.11.2&lt;/version&gt;&lt;br /&gt;&lt;/dependency&gt;&lt;br /&gt;&lt;br /&gt;
+```
+
+
+Dans une de vos classes [Configuration](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html), définir la factory de Logbook
+
+&lt;pre class=&quot;wp-block-preformatted&quot;&gt;@Bean&lt;br /&gt;public Logbook createLogBook() {&lt;br /&gt;    // too easy : return Logbook.create();&lt;br /&gt;    return Logbook.&lt;em&gt;builder&lt;/em&gt;()&lt;br /&gt;            .condition(Conditions.&lt;em&gt;requestTo&lt;/em&gt;(&quot;/helloworld&quot;))&lt;br /&gt;            .formatter(new JsonHttpLogFormatter())&lt;br /&gt;            .build();&lt;br /&gt;}
+```
+
+
+Dans mon cas j&amp;rsquo;ai fait un filtre en n&amp;rsquo;incluant que l&amp;rsquo; API /helloworld et j&amp;rsquo;ai formatté en JSON.  
+On peut également modifier le processus d&amp;rsquo;écriture pour ne pas écrire dans un fichier mais en base par ex.  
+
+
+Ensuite, j&amp;rsquo;ai ajouté la configuration du logger dans le fichier application.properties
+
+&lt;pre class=&quot;wp-block-preformatted&quot;&gt;logging.level.org.zalando.logbook:TRACE&lt;br /&gt;
+```
+
+
+Et voila ! 
+
+Dans la console, lors d&amp;rsquo;un appel ou d&amp;rsquo;une réponse à mon API, j&amp;rsquo;ai le message suivant :
+
+
+
+&lt;pre class=&quot;wp-block-preformatted&quot;&gt;018-12-01 15:14:18.373 TRACE 3605 --- [nio-8080-exec-1] org.zalando.logbook.Logbook              : {&quot;origin&quot;:&quot;remote&quot;,&quot;type&quot;:&quot;request&quot;,&quot;correlation&quot;:&quot;c6b345013835273f&quot;,&quot;protocol&quot;:&quot;HTTP/1.1&quot;,&quot;remote&quot;:&quot;127.0.0.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;uri&quot;:&quot;http://127.0.0.1:8080/helloworld&quot;,&quot;headers&quot;:{&quot;accept&quot;:[&quot;&lt;em&gt;/&lt;/em&gt;&quot;],&quot;host&quot;:[&quot;127.0.0.1:8080&quot;],&quot;user-agent&quot;:[&quot;curl/7.52.1&quot;]}}&lt;br /&gt;
+2018-12-01 15:14:18.418 TRACE 3605 --- [nio-8080-exec-1] org.zalando.logbook.Logbook              : {&quot;origin&quot;:&quot;local&quot;,&quot;type&quot;:&quot;response&quot;,&quot;correlation&quot;:&quot;c6b345013835273f&quot;,&quot;duration&quot;:48,&quot;protocol&quot;:&quot;HTTP/1.1&quot;,&quot;status&quot;:200,&quot;headers&quot;:{&quot;Content-Length&quot;:[&quot;11&quot;],&quot;Content-Type&quot;:[&quot;text/plain;charset=UTF-8&quot;],&quot;Date&quot;:[&quot;Sat, 01 Dec 2018 14:14:18 GMT&quot;]},&quot;body&quot;:&quot;Hello world&quot;}
+```
+
+
+Vous remarquerez que les requêtes / réponses peuvent désormais être associés grâce à un identifiant de corrélation. On peut facilement déterminer le temps de traitement d&amp;rsquo;une requête ou encore faciliter les recherches.  
+
+
+
+
+Vous trouverez tout le code dans [ce repo github](https://github.com/littlewing/demo-logbook).
+&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="logbook" /><category term="planetlibre" /><category term="spring" /><category term="springboot" /><summary type="html"></summary></entry></feed>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/observability.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/observability.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Observabilité et Circuit Breaker avec Spring</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="alternate" type="text/html" title="Observabilité et Circuit Breaker avec Spring" /><published>2021-07-26T09:53:49+00:00</published><updated>2021-07-26T09:53:49+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/">&lt;p&gt;Il y a quelques mois déjà, je discutais avec &lt;a href=&quot;https://jefrajames.fr/&quot;&gt;un collègue&lt;/a&gt; d’ observabilité, &lt;a href=&quot;https://github.com/opentracing-contrib/java-spring-cloud&quot;&gt;opentracing&lt;/a&gt;, … avec &lt;a href=&quot;http://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt;. On est tombé sur &lt;a href=&quot;https://github.com/agoncal/agoncal-fascicle-quarkus-pract&quot;&gt;un super exemple réalisé par Antonio Concalves&lt;/a&gt;. Ce projet démontre les capacités de Quarkus sur les sujets suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Circuit Breaker&lt;/li&gt;
+  &lt;li&gt;Observabilité&lt;/li&gt;
+  &lt;li&gt;OpenTracing&lt;/li&gt;
+  &lt;li&gt;Tests&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Et la on peut se demander quid de &lt;a href=&quot;http://spring.io/&quot;&gt;Spring&lt;/a&gt;? Je me doutais que ces fonctionnalités étaient soient disponibles par défaut soient facilement intégrables vu la richesse de l’écosystème.&lt;/p&gt;
+
+&lt;p&gt;J’ai donc réalisé un clone de &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring&quot;&gt;ce projet basé sur Spring Boot/Cloud&lt;/a&gt;. Je ne vais pas détailler plus que ça les différentes fonctionnalités, vous pouvez vous référer au fichier &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring#readme&quot;&gt;README&lt;/a&gt;. Il est suffisamment détaillé pour que vous puissiez exécuter et les mettre en œuvre.&lt;/p&gt;
+
+&lt;h2 id=&quot;architecture-de-lapplication&quot;&gt;Architecture de l’application&lt;/h2&gt;
+
+&lt;p&gt;Vous trouverez ci-dessous un schéma d’architecture de l’application &lt;a href=&quot;https://c4model.com/&quot;&gt;au format C4&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;825&quot; height=&quot;668&quot; src=&quot;/assets/images/2021/07/rest-book-architecture.png?w=825&quot; alt=&quot;&quot; class=&quot;wp-image-580&quot; srcset=&quot;/assets/images/2021/07/rest-book-architecture.png 825w, /assets/images/2021/07/rest-book-architecture-300x243.png 300w, /assets/images/2021/07/rest-book-architecture-768x622.png 768w&quot; sizes=&quot;(max-width: 825px) 100vw, 825px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;circuit-breaker&quot;&gt;Circuit Breaker&lt;/h2&gt;
+
+&lt;p&gt;Lors des appels entre le &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/main/java/info/touret/bookstore/spring/book/service/BookService.java&quot;&gt;bookstore&lt;/a&gt; et le &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-number/src/main/java/info/touret/bookstore/spring/number/controller/BookNumbersController.java&quot;&gt;booknumberservice&lt;/a&gt;, il peut être intéressant d’ implémenter un &lt;a href=&quot;https://martinfowler.com/bliki/CircuitBreaker.html&quot;&gt;circuit breaker&lt;/a&gt; pour pallier aux indisponibilités de ce dernier.&lt;br /&gt;
+Avec Spring, on peut utiliser &lt;a href=&quot;https://github.com/resilience4j/resilience4j&quot;&gt;Resilience4J&lt;/a&gt; au travers de &lt;a href=&quot;https://spring.io/projects/spring-cloud&quot;&gt;Spring Cloud&lt;/a&gt;. Tout ceci se fait de manière programmatique&lt;/p&gt;
+
+&lt;p&gt;Il faut tout d’abord &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/main/java/info/touret/bookstore/spring/book/BookConfiguration.java&quot;&gt;configurer les circuit breakers au travers d’une classe Configuration&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Resilience4JCircuitBreakerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createDefaultCustomizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configureDefault&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Resilience4JConfigBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TimeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;custom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeoutDuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofSeconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeoutInSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;circuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CircuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofDefaults&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Creates a circuit breaker customizer applying a timeout specified by the &amp;lt;code&amp;gt;booknumbers.api.timeout_sec&amp;lt;/code&amp;gt; property.
+     * This customizer could be reached using this id: &amp;lt;code&amp;gt;slowNumbers&amp;lt;/code&amp;gt;
+     * @return the circuit breaker customizer to apply when calling to numbers api
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Resilience4JCircuitBreakerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createSlowNumbersAPICallCustomizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;circuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CircuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofDefaults&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TimeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;custom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeoutDuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofSeconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeoutInSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;slowNumbers&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Grâce à ces instanciations, on référence les différents &lt;a href=&quot;https://martinfowler.com/bliki/CircuitBreaker.html&quot;&gt;circuit breakers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Maintenant, on peut les utiliser dans le code de la manière suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Book&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;registerBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@Valid&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Book&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;circuitBreakerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;slowNumbers&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;persistBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;throwable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fallbackPersistBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bookRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant, il ne reste plus qu’à créer &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/main/java/info/touret/bookstore/spring/book/service/BookService.java&quot;&gt;une méthode de « fallback » utilisée si un service est indisponible&lt;/a&gt;. Cette dernière nous permettra, par exemple, de mettre le payload dans un fichier pour futur traitement batch.&lt;/p&gt;
+
+&lt;h2 id=&quot;observabilité&quot;&gt;Observabilité&lt;/h2&gt;
+
+&lt;p&gt;L’observabilité est sans contexte la pierre angulaire (oui, rien que ça…) de toute application cloud native. Sans ça, pas de scalabilité, de redémarrage automatique,etc.&lt;br /&gt;
+Les architectures de ce type d’applications sont &lt;a href=&quot;https://en.wikipedia.org/wiki/Idempotence&quot;&gt;idempotentes&lt;/a&gt;. On a donc besoin d’avoir toutes les informations à notre disposition. Heureusement, &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator&quot;&gt;Spring fournit par le biais d’ Actuator&lt;/a&gt; toutes les informations nécessaires. Ces dernières pourront soit être utilisées par &lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt; (ex. le &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;livenessProbe&lt;/a&gt;) ou agrégées dans une base de données &lt;a href=&quot;https://prometheus.io/docs/prometheus/latest/storage/&quot;&gt;Prometheus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour activer certaines métriques d’&lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html&quot;&gt;actuator&lt;/a&gt;, il suffit de :&lt;/p&gt;
+
+&lt;p&gt;Ajouter la/les dépendance(s)&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[...]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;implementation&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;springframework&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;starter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actuator&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;implementation&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;micrometer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;micrometer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prometheus&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;[...]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Spécifier la configuration adéquate:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;management:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;endpoints:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;web:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;exposure:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;include:&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'*'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;jmx:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;exposure:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;include:&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'*'&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;endpoint:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;health:&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;details:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;always&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;probes:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;shutdown:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;prometheus:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;metrics:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;health:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;livenessstate:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;readinessstate:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;datasource:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;metrics:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;web:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;client:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;request:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;autotime:&lt;/span&gt;
+            &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;opentracing&quot;&gt;OpenTracing&lt;/h2&gt;
+
+&lt;p&gt;Sur les applications distribuées, il peut s’avérer compliqué de concentrer les logs et de les corréler. Certes, avec un ID de corrélation, on peut avoir certaines informations. Cependant, il faut que les logs soient bien positionnées dans le code. On peut également passer à travers de certaines informations (ex. connexion aux bases de données, temps d’exécution des APIS,…). Je ne vous parle pas des soucis de volumétrie engendrées par des index Elasticsearch/Splunk sur des applications à forte volumétrie.&lt;/p&gt;
+
+&lt;p&gt;Depuis quelques temps, le &lt;a href=&quot;https://www.cncf.io/&quot;&gt;CNCF&lt;/a&gt; propose un projet (encore en incubation) : &lt;a href=&quot;https://opentracing.io/&quot;&gt;OpenTracing&lt;/a&gt;. Ce dernier fait désormais partie d’&lt;a href=&quot;https://opentelemetry.io/&quot;&gt;OpenTelemetry&lt;/a&gt;.&lt;br /&gt;
+Grâce à cet librairie, nous allons pouvoir tracer toutes les transactions de notre application microservices et pouvoir réaliser une corrélation « out of the box » grâce à l’intégration avec &lt;a href=&quot;https://www.jaegertracing.io/&quot;&gt;Jaeger&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour activer la fonctionnalité il suffit d’ajouter la dépendance au classpath:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;implementation&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;opentracing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contrib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opentracing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jaeger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;starter:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;et de configurer l’URL de Jaeger dans l’application&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Default&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;opentracing:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;jaeger:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;udp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;sender:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;host:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;port:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6831&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une fois l’application reconstruite et redémarrée, vous pourrez visualiser les transactions dans JAEGER:&lt;figure class=&quot;wp-block-gallery columns-2 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/07/screenshot-2021-07-26-at-11-38-31-jaeger-ui-1568x532.png&quot; alt=&quot;jaeger1&quot; /&gt;
+&lt;img src=&quot;/assets/images/2021/07/screenshot-2021-07-26-at-11-38-15-jaeger-ui-1568x759.png&quot; alt=&quot;jaeger2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Je ne vais pas exposer l’implémentation des tests unitaires et d’intégration. Si vous voulez voir comment j’ai réussi à mocker simplement les appels REST à une API distante, vous pouvez regarder &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/test/java/info/touret/bookstore/spring/book/controller/BookControllerIT.java&quot;&gt;cette classe&lt;/a&gt; pour voir une utilisation du &lt;a href=&quot;https://www.baeldung.com/mockserver&quot;&gt;MockServer&lt;/a&gt;.&lt;br /&gt;
+Aussi, n’hésitez pas à cloner, tester ce projet et me donner votre retour. J’essaierai de le mettre à jour au fur et à mesure de mes découvertes (par ex. OpenTelemetry).&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="java" /><category term="observability" /><category term="planetlibre" /><category term="spring" /><summary type="html">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio Concalves. Ce projet démontre les capacités de Quarkus sur les sujets suivants:</summary></entry><entry><title type="html">Ajouter un mode « maintenance » à votre API grâce à Spring boot</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="alternate" type="text/html" title="Ajouter un mode « maintenance » à votre API grâce à Spring boot" /><published>2021-06-10T15:01:20+00:00</published><updated>2021-06-10T15:01:20+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/">&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/06/pexels-photo-257736.jpeg&quot; alt=&quot;&quot; class=&quot;wp-image-543&quot; width=&quot;697&quot; height=&quot;463&quot; srcset=&quot;/assets/images/2021/06/pexels-photo-257736.jpeg 1880w, /assets/images/2021/06/pexels-photo-257736-300x200.jpeg 300w, /assets/images/2021/06/pexels-photo-257736-1024x681.jpeg 1024w, /assets/images/2021/06/pexels-photo-257736-768x511.jpeg 768w, /assets/images/2021/06/pexels-photo-257736-1536x1022.jpeg 1536w, /assets/images/2021/06/pexels-photo-257736-1568x1043.jpeg 1568w&quot; sizes=&quot;(max-width: 697px) 100vw, 697px&quot; /&gt;&lt;figcaption&gt;Photo by Pixabay on &lt;a href=&quot;https://www.pexels.com/photo/close-up-of-telephone-booth-257736/&quot; rel=&quot;nofollow&quot;&gt;Pexels.com&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p class=&quot;has-drop-cap&quot;&gt;
+  Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l&amp;rsquo;application en mode « maintenance ».&lt;br /&gt;Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex. (&lt;a href=&quot;https://httpd.apache.org/&quot;&gt;Apache HTTPD&lt;/a&gt;, &lt;a href=&quot;https://fr.wikipedia.org/wiki/Web_application_firewall&quot;&gt;WAF&lt;/a&gt;,&amp;#8230;)
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;Kubernetes a introduit ( ou popularisé ) les notions de « probes »&lt;/a&gt; et plus particulièrement les &lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;livenessProbes&lt;/a&gt; et &lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;readinessProbes&lt;/a&gt;.&lt;br /&gt;
+Le premier nous indique si l’application est en état de fonctionnement, le second nous permet de savoir si cette dernière est apte à recevoir des requêtes (ex. lors d’un démarrage).&lt;/p&gt;
+
+&lt;p&gt;Je vais exposer dans cet article comment utiliser au mieux ces probes et &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/&quot;&gt;les APIs SPRING&lt;/a&gt; pour intégrer dans une API un mode « maintenance »&lt;/p&gt;
+
+&lt;h2 id=&quot;stack-utilisée&quot;&gt;Stack utilisée&lt;/h2&gt;
+
+&lt;p&gt;Dans l’exemple que j’ai développé, j’ai pu utiliser les briques suivantes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OpenJDK 11.0.10&lt;/li&gt;
+  &lt;li&gt;Spring Boot 2.5.0 (web, actuator)&lt;/li&gt;
+  &lt;li&gt;Maven 3.8.1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bref, rien de neuf à l’horizon 🙂&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-de-spring-actuator&quot;&gt;Configuration de Spring Actuator&lt;/h2&gt;
+
+&lt;p&gt;Pour activer les différents probes, vous devez activer &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.4.0/actuator-api/&quot;&gt;Actuator&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dans le fichier pom.xml, vous devez ajouter le starter correspondant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;springframework&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;starter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actuator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis vous devez déclarer ces differentes &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/resources/application.properties&quot;&gt;propriétés&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;livenessstate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;readinessstate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;details&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;always&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;probes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Après avoir redémarré votre application, vous pourrez connaître son statut grâce à un appel HTTP&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;curl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;http:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//localhost:8080/actuator/health/readiness &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;comment-récupérer-le-statut-des-probes&quot;&gt;Comment récupérer le statut des probes?&lt;/h2&gt;
+
+&lt;p&gt;Avec Spring, vous pouvez modifier les différents statuts avec les classes &lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html&quot;&gt;ApplicationEventPublisher&lt;/a&gt; et &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.4.4/api/org/springframework/boot/availability/ApplicationAvailability.html&quot;&gt;ApplicationAvailability&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, pour connaître le statut &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.5.0-SNAPSHOT/api/org/springframework/boot/availability/ReadinessState.html&quot;&amp;gt;&quot;Readiness&quot;&amp;lt;/a&amp;gt;&lt;/code&gt; vous pouvez exécuter le code suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiResponses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ApiResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;responseCode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;200&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Checks if the application in under maitenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)})&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MaintenanceDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;retreiveInMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastChangeEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;availability&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLastChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ok&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MaintenanceDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REFUSING_TRAFFIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTimestamp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Et la modification ?&lt;/p&gt;
+
+&lt;p&gt;Grâce à la même API, on peut également modifier ce statut dans via du code:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiResponses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ApiResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;responseCode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;204&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Put the app under maitenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)})&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@PutMapping&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initInMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@NotNull&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;@RequestBody&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;AvailabilityChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventPublisher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REFUSING_TRAFFIC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ACCEPTING_TRAFFIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;noContent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;filtre-les-appels-et-indiquer-que-lapplication-est-en-maintenance&quot;&gt;Filtre les appels et indiquer que l’application est en maintenance&lt;/h2&gt;
+
+&lt;p&gt;Maintenant qu’on a codé les mécanismes de récupération du statut de l’application et de la mise en maintenance, on peut ajouter le mécanisme permettant de traiter ou non les appels entrants.&lt;br /&gt;
+Pour ça on va utiliser un &lt;a href=&quot;http://blog.paumard.org/cours/servlet/chap04-filtre-mise-en-place.html&quot;&gt;bon vieux filtre servlet&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ce dernier aura la tâche de laisser passer les requêtes entrantes si l’application n’est pas en maintenance et de déclencher une &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/java/info/touret/spring/maintenancemode/exception/MaintenanceException.java&quot;&gt;MaintenanceException&lt;/a&gt; le cas échéant qui sera traité par &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/java/info/touret/spring/maintenancemode/GlobalExceptionHandler.java&quot;&gt;la gestion d’erreur globale de l’application&lt;/a&gt; ( traité via un &lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RestControllerAdvice.html&quot;&gt;@RestControllerAdvice&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Pour que l’exception soit bien traitée par ce mécanisme, il faut le déclencher via le &lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/HandlerExceptionResolver.html&quot;&gt;HandlerExceptionResolver&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Component&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CheckMaintenanceFilter&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Logger&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LoggerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CheckMaintenanceFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationAvailability&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;availability&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Qualifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;handlerExceptionResolver&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HandlerExceptionResolver&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Checks if the application is under maintenance. If it is and if the requested URI is not '/api/maintenance', it throws a &amp;lt;code&amp;gt;MaintenanceException&amp;lt;/code&amp;gt;
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     * @throws info.touret.spring.maintenancemode.exception.MaintenanceException the application is under maintenance
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ServletRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ServletResponse&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterChain&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IOException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ServletException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;availability&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REFUSING_TRAFFIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;!((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRequestURI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;API_MAINTENANCE_URI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;warn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Message handled during maintenance [{}]&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRequestURI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;exceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;resolveException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MaintenanceException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Service currently in maintenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Enfin, voici la gestion des erreurs de l’API:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@RestControllerAdvice&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GlobalExceptionHandler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Indicates that the application is on maintenance
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ResponseStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;I_AM_A_TEAPOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ExceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MaintenanceException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;APIError&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;maintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;APIError&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;I_AM_A_TEAPOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Service currently in maintenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Any other exception
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ResponseStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INTERNAL_SERVER_ERROR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ExceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;APIError&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;anyException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;APIError&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INTERNAL_SERVER_ERROR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;An unexpected server error occured&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;On a pu voir comment intéragir simplement avec les APIS SPRING pour gérer le statut de l’application pour répondre à cette question :Est-elle disponible ou non?&lt;br /&gt;
+Bien évidemment, selon le contexte, il conviendra d’ajouter un peu de sécurité pour que cette API ne soit pas disponible à tout le monde 🙂&lt;/p&gt;
+
+&lt;p&gt;Le code exposé ici est disponible sur &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/&quot;&gt;Github&lt;/a&gt;. Le &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/README.md&quot;&gt;Readme&lt;/a&gt; est suffisamment détaillé pour que vous puissiez tester et réutiliser le code.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="actuator" /><category term="observability" /><category term="planetlibre" /><category term="spring" /><category term="springboot" /><summary type="html">Photo by Pixabay on Pexels.com</summary></entry></feed>

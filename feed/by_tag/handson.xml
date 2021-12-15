@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/handson.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/handson.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Touraine Tech 2019</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/02/02/touraine-tech-2019-2/" rel="alternate" type="text/html" title="Touraine Tech 2019" /><published>2019-02-02T08:59:35+00:00</published><updated>2019-02-02T08:59:35+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/02/02/touraine-tech-2019-2</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/02/02/touraine-tech-2019-2/">&lt;p&gt;J’ai fini l’édition 2019 du Touraine Tech. Tout d’abord, merci aux organisateurs pour l’accueil et l’organisation. C’était vraiment top!&lt;/p&gt;
+
+&lt;p&gt;Cette année, je n’ai pas pu faire beaucoup de conférences. Mon Hands on m’ayant retenu une bonne partie de l’après midi, que ça soit durant le talk ou après pour décompresser 🙂&lt;/p&gt;
+
+&lt;p&gt;Mon hands on portait sur l’architecture, j’ai eu une vingtaine de personnes qui l’on suivi et ont pratiqué sur différents sujets.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-145 size-large&quot; src=&quot;/assets/images/2019/02/dsc03972.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-144 size-large&quot; src=&quot;/assets/images/2019/02/dsc03973.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-143 size-large&quot; src=&quot;/assets/images/2019/02/dsc03974.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-142 size-large&quot; src=&quot;/assets/images/2019/02/dsc03975.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-148 size-large&quot; src=&quot;/assets/images/2019/02/dsc03976.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;918&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;La cave à vin connecté a remporté un franc succès, du moins pendant la présentation des sujets 🙂&lt;/p&gt;
+
+&lt;p&gt;Voici le feedback que j’ai eu sur ma présentation:&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-137 size-large&quot; src=&quot;/assets/images/2019/02/img_20190201_174057.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;458&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Vous trouverez les slides ci-dessous ( &lt;a href=&quot;https://www.slideshare.net/AlexandreTouret1/objectiftoparchitectefinal-190201181915&quot;&gt;voici le lien pour aller directement sur slideshare&lt;/a&gt;) :&lt;/p&gt;
+
+&lt;p&gt;[slideshare id=130266762&amp;amp;doc=objectiftoparchitectefinal-190201181915-190202084057]&lt;/p&gt;
+
+&lt;p&gt;RDV l’année prochaine !&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="architecture" /><category term="conférence" /><category term="handson" /><category term="TNT19" /><summary type="html">J’ai fini l’édition 2019 du Touraine Tech. Tout d’abord, merci aux organisateurs pour l’accueil et l’organisation. C’était vraiment top!</summary></entry></feed>

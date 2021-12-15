@@ -1,0 +1,833 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Installer docker ce sur Debian 9 - blog.touret.info</title>
+<meta name="description" content="Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.">
+
+
+  <meta name="author" content="Alexandre Touret">
+  
+  <meta property="article:author" content="Alexandre Touret">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr">
+<meta property="og:site_name" content="blog.touret.info">
+<meta property="og:title" content="Installer docker ce sur Debian 9">
+<meta property="og:url" content="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/">
+
+
+  <meta property="og:description" content="Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.">
+
+
+
+  <meta property="og:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/bouletmaton1.jpg">
+
+
+
+  <meta name="twitter:site" content="@touret_alex">
+  <meta name="twitter:title" content="Installer docker ce sur Debian 9">
+  <meta name="twitter:description" content="Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.">
+  <meta name="twitter:url" content="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/bouletmaton1.jpg">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2018-09-26T10:28:21+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://blog.touret.info/pages/alexandre-touret/",
+      "sameAs": ["https://twitter.com/touret_alex","https://www.linkedin.com/in/atouret"]
+    
+  }
+</script>
+
+
+
+  <meta name="msvalidate.01" content="F9655A4C8648E42154ECB4B4D6CF60A2">
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/pages/alexandre-touret/feed.xml" type="application/atom+xml" rel="alternate" title="blog.touret.info Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/pages/alexandre-touret/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/pages/alexandre-touret/">
+          blog.touret.info
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/talks/">Talks</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/a-propos/">A propos</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/contact/">Contact</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://blog.touret.info/pages/alexandre-touret/">
+        <img src="/pages/alexandre-touret/assets/images/bouletmaton1.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://blog.touret.info/pages/alexandre-touret/" itemprop="url">Alexandre Touret</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Architecte logiciel, développeur, bidouilleur (dans le désordre)</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Contact</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Installer docker ce sur Debian 9">
+    <meta itemprop="description" content="Bon, ça fait quelques temps que je n’ai rien posté…Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.">
+    <meta itemprop="datePublished" content="2018-09-26T10:28:21+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/" class="u-url" itemprop="url">Installer docker ce sur Debian 9
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2018-09-26T10:28:21+00:00">26/09/2018</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>Bon, ça fait quelques temps que je n’ai rien posté…<br />
+Voici un rapide tuto pour installer <a href="https://docs.docker.com/install/linux/docker-ce/debian/">docker-ce sur une debian9</a>. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.</p>
+
+<p><img loading="lazy" class="alignnone size-medium wp-image-96" src="/assets/images/2018/09/docker.png?w=300" alt="" width="300" height="268" srcset="/assets/images/2018/09/docker.png 1354w, /assets/images/2018/09/docker-300x268.png 300w, /assets/images/2018/09/docker-1024x914.png 1024w, /assets/images/2018/09/docker-768x685.png 768w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+
+<h2 id="pré-requis">Pré-requis</h2>
+
+<p>Supprimer les éventuelles installations de docker et docker-compose</p>
+
+<p>[code language= »bash »]</p>
+
+<p>#apt-get remove docker docker-compose<br />
+[/code]</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Lancer les commandes suivantes:</p>
+
+<p>[code language= »bash »]<br />
+# apt-get install apt-transport-https ca-certificates<br />
+# curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add –<br />
+# add-apt-repository \<br />
+“deb [arch=amd64] https://download.docker.com/linux/debian \<br />
+$(lsb_release -cs) \ stable”<br />
+[/code]</p>
+
+<p>Puis lancer</p>
+
+<p>[code language= »bash »]</p>
+
+<p># apt update</p>
+
+<p># apt install docker-ce</p>
+
+<p>[/code]</p>
+
+<h3 id="installation-de-docker-compose">Installation de docker-compose</h3>
+
+<p>Lancer les commandes suivantes:</p>
+
+<p>[code language= »bash »]</p>
+
+<p># curl -L “https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose</p>
+
+<p># chmod a+x /usr/local/bin/docker-compose<br />
+[/code]</p>
+
+<h2 id="configuration-des-droits">Configuration des droits</h2>
+
+<p>Pour lancer docker depuis un utiliser non root, il faut lancer les commandes suivantes:</p>
+
+<p>[code language= »bash »]</p>
+
+<p># groupadd docker</p>
+
+<p># adduser monutilisateur docker</p>
+
+<p># usermod -aG docker monutilisateur</p>
+
+<p>[/code]</p>
+
+<p>Après ceci, vaut mieux redémarrer le pc …</p>
+
+<h2 id="configuration-du-démon">Configuration du démon</h2>
+
+<p>Voici quelques config à appliquer pour que le démon soit accessible par des outils tels que le plugin maven ou encore configurer l’accès à un proxy</p>
+
+<h3 id="configuration-du-port">Configuration du port</h3>
+
+<p>Exécuter la commande:</p>
+
+<p>[code language= »bash »]</p>
+
+<p># systemctl edit docker.service</p>
+
+<p>[/code]</p>
+
+<p>Entrer le code suivant:</p>
+
+<p>[code language= »bash »]</p>
+
+<p>[Service]</p>
+
+<p>ExecStart=</p>
+
+<p>ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock</p>
+
+<p>[/code]</p>
+
+<p>Et l’enregistrer sous /etc/systemd/system/docker.service.d/docker.conf</p>
+
+<h3 id="configuration-du-proxy">Configuration du proxy</h3>
+
+<p>Avec la même commande</p>
+
+<p>[code language= »bash »]</p>
+
+<p># systemctl edit docker.service</p>
+
+<p>[/code]</p>
+
+<p>Entrer la configuration suivante:</p>
+
+<p>[code language= »bash »]</p>
+
+<p>[Service]</p>
+
+<p>Environment=”HTTP_PROXY=http://mon_proxy:mon_port/”</p>
+
+<p>Environment=”NO_PROXY=127.0.0.1”</p>
+
+<p>[/code]</p>
+
+<h3 id="activation-des-configurations">Activation des configurations</h3>
+
+<p>Lancer les commandes suivantes:</p>
+
+<p>[code language= »bash »]</p>
+
+<p># systemctl daemon-reload # systemctl restart docker</p>
+
+<p>[/code]</p>
+
+<h2 id="validation">Validation</h2>
+
+<p>Maintenant, vous pouvez valider votre configuration avec la commande:</p>
+
+<p>[code language= »bash »]</p>
+
+<p>$ docker run hello-world</p>
+
+<p>[/code]</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags : </strong>
+    <span itemprop="keywords">
+    
+      <a href="/pages/alexandre-touret/tags/#debian" class="page__taxonomy-item p-category" rel="tag">debian</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#docker" class="page__taxonomy-item p-category" rel="tag">docker</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#planetlibre" class="page__taxonomy-item p-category" rel="tag">planetlibre</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Mis à jour :</strong> <time class="dt-published" datetime="2018-09-26T10:28:21+00:00">26/09/2018</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Partager sur</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=touret_alex&text=Installer+docker+ce+sur+Debian+9%20https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2018%2F09%2F26%2Finstaller-docker-ce-sur-debian-9%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2018%2F09%2F26%2Finstaller-docker-ce-sur-debian-9%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2018%2F09%2F26%2Finstaller-docker-ce-sur-debian-9%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/pages/alexandre-touret/2018/04/20/devoxx-2018/" class="pagination--pager" title="Devoxx 2018
+">Précédent</a>
+    
+    
+      <a href="/pages/alexandre-touret/2018/10/29/premier-cross-over/" class="pagination--pager" title="Premier cross over …
+">Suivant</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">Vous pourriez aimer aussi</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="permalink">Migrer son blog Wordpress vers GitHub
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-06T10:00:00+00:00">06/12/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/07/rest-book-architecture.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="permalink">Observabilité et Circuit Breaker avec Spring
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-26T09:53:49+00:00">26/07/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/06/pexels-photo-257736.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="permalink">Ajouter un mode « maintenance » à votre API grâce à Spring boot
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-06-10T15:01:20+00:00">10/06/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/05/pexels-photo-261621.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/" rel="permalink">Utiliser GPG dans WSL2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-05-03T18:47:11+00:00">03/05/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Entrez votre recherche..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Contact</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> Licence du contenu de ce site</a></li>
+        
+      
+    
+
+    
+      <li><a href="/pages/alexandre-touret/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Flux</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 blog.touret.info. Propulsé par <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/pages/alexandre-touret/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr.min.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-store.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id= UA-31817514-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', ' UA-31817514-1', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

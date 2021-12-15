@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/cygwin.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/cygwin.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Ma configuration CYGWIN</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/02/16/ma-configuration-cygwin/" rel="alternate" type="text/html" title="Ma configuration CYGWIN" /><published>2018-02-16T08:42:24+00:00</published><updated>2018-02-16T08:42:24+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/02/16/ma-configuration-cygwin</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/02/16/ma-configuration-cygwin/">&lt;p&gt;Dans la série, &lt;a href=&quot;http://blog.touret.info/2018/02/10/ma-configuration-debian-9/&quot;&gt;j’essaye de sauvegarder toutes mes configurations&lt;/a&gt;, voici ce que j’ai fait pour configurer correctement &lt;a href=&quot;https://cygwin.com/&quot;&gt;cygwin&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour ceux qui ne connaissent pas ou qui n’ont pas la chance d’utiliser windows au travail, &lt;a href=&quot;https://cygwin.com/&quot;&gt;cygwin&lt;/a&gt; est un shell avec tous les outils GNU.&lt;/p&gt;
+
+&lt;p&gt;En attendant &lt;a href=&quot;https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;d’avoir windows 10 ( au travail ) et un BASH intégré&lt;/a&gt;, il n’y a pas mieux. Du moins à mon humble avis.&lt;img loading=&quot;lazy&quot; class=&quot;  wp-image-60 alignright&quot; src=&quot;/assets/images/2018/02/2000px-cygwin_logo-svg.png&quot; alt=&quot;2000px-Cygwin_logo.svg.png&quot; width=&quot;105&quot; height=&quot;105&quot; srcset=&quot;/assets/images/2018/02/2000px-cygwin_logo-svg.png 2000w, /assets/images/2018/02/2000px-cygwin_logo-svg-300x300.png 300w, /assets/images/2018/02/2000px-cygwin_logo-svg-1024x1024.png 1024w, /assets/images/2018/02/2000px-cygwin_logo-svg-150x150.png 150w, /assets/images/2018/02/2000px-cygwin_logo-svg-768x768.png 768w, /assets/images/2018/02/2000px-cygwin_logo-svg-1536x1536.png 1536w, /assets/images/2018/02/2000px-cygwin_logo-svg-1568x1568.png 1568w&quot; sizes=&quot;(max-width: 105px) 100vw, 105px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;git&quot;&gt;GIT&lt;/h2&gt;
+
+&lt;h3 id=&quot;complétion&quot;&gt;Complétion&lt;/h3&gt;
+
+&lt;p&gt;On a besoin des fichiers suivants&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/git/git/blob/master/contrib/completion/git-completion.bash&quot;&gt;git-completion.bash&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh&quot;&gt;git-prompt.sh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Je les ai téléchargé et placé dans le répertoire $HOME.&lt;/p&gt;
+
+&lt;h3 id=&quot;activation-de-la-configuration-et-affichage-de-la-branche-en-cours-dans-le-prompt&quot;&gt;Activation de la configuration et affichage de la branche en cours dans le prompt&lt;/h3&gt;
+
+&lt;p&gt;J’ai activé la configuration git en exécutant les scripts précédemment téléchargés.&lt;/p&gt;
+
+&lt;p&gt;Voici la personnalisation que j’ai paramétré dans la variable d’environnement PS1&lt;/p&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/d4b570813bb1b7bb44a393e69660827e&lt;/p&gt;
+
+&lt;p&gt;J’ai également activé des propriétés qui étaient en commentaire dans ce fichier. Je ne les ai pas listée pour ne pas trop surcharger l’article 🙂&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-nom-et-sécurité&quot;&gt;Configuration Nom et sécurité&lt;/h3&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/4ef7484bc00bf607e3c8e28c1d53afba&lt;/p&gt;
+
+&lt;h2 id=&quot;vim&quot;&gt;VIM&lt;/h2&gt;
+
+&lt;p&gt;Que serait un prompt sans vim ?&lt;/p&gt;
+
+&lt;p&gt;J’ai installé une suite de plugin : &lt;a href=&quot;https://github.com/amix/vimrc&quot;&gt;The ultimate vimrc&lt;/a&gt;. Il faut cloner le repo GIT et lancer un script&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+sh ~/.vim_runtime/install_awesome_vimrc.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="cygwin" /><category term="git" /><category term="gnu/linux" /><category term="planetlibre" /><summary type="html">Dans la série, j’essaye de sauvegarder toutes mes configurations, voici ce que j’ai fait pour configurer correctement cygwin.</summary></entry></feed>

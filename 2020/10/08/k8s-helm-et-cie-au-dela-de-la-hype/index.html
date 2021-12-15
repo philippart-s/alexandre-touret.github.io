@@ -1,0 +1,804 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>K8S, HELM et Cie: au delà de la hype - blog.touret.info</title>
+<meta name="description" content="Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.">
+
+
+  <meta name="author" content="Alexandre Touret">
+  
+  <meta property="article:author" content="Alexandre Touret">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr">
+<meta property="og:site_name" content="blog.touret.info">
+<meta property="og:title" content="K8S, HELM et Cie: au delà de la hype">
+<meta property="og:url" content="https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/">
+
+
+  <meta property="og:description" content="Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.">
+
+
+
+  <meta property="og:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/2020/10/gartner_hype_cycle.svg_.png">
+
+
+
+  <meta name="twitter:site" content="@touret_alex">
+  <meta name="twitter:title" content="K8S, HELM et Cie: au delà de la hype">
+  <meta name="twitter:description" content="Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.">
+  <meta name="twitter:url" content="https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/2020/10/gartner_hype_cycle.svg_.png">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2020-10-08T08:09:59+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://blog.touret.info/pages/alexandre-touret/",
+      "sameAs": ["https://twitter.com/touret_alex","https://www.linkedin.com/in/atouret"]
+    
+  }
+</script>
+
+
+
+  <meta name="msvalidate.01" content="F9655A4C8648E42154ECB4B4D6CF60A2">
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/pages/alexandre-touret/feed.xml" type="application/atom+xml" rel="alternate" title="blog.touret.info Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/pages/alexandre-touret/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/pages/alexandre-touret/">
+          blog.touret.info
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/talks/">Talks</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/a-propos/">A propos</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/contact/">Contact</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://blog.touret.info/pages/alexandre-touret/">
+        <img src="/pages/alexandre-touret/assets/images/bouletmaton1.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://blog.touret.info/pages/alexandre-touret/" itemprop="url">Alexandre Touret</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Architecte logiciel, développeur, bidouilleur (dans le désordre)</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Contact</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="K8S, HELM et Cie: au delà de la hype">
+    <meta itemprop="description" content="Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme.Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.">
+    <meta itemprop="datePublished" content="2020-10-08T08:09:59+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/" class="u-url" itemprop="url">K8S, HELM et Cie: au delà de la hype
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2020-10-08T08:09:59+00:00">08/10/2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>Depuis quelques années, <a href="https://kubernetes.io/">Kubernetes</a> (K8S) et <a href="https://www.cncf.io/">son écosystème</a> deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme.<br />
+Vous l’aurez compris, cette technologie n’échappe pas <a href="https://fr.wikipedia.org/wiki/Cycle_du_hype">au cycle du hype</a> et à la fameuse courbe du Gartner.</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter size-large"><img loading="lazy" width="320" height="208" src="/assets/images/2020/10/gartner_hype_cycle.svg_.png?w=320" alt="" class="wp-image-445" srcset="/assets/images/2020/10/gartner_hype_cycle.svg_.png 320w, /assets/images/2020/10/gartner_hype_cycle.svg_-300x195.png 300w" sizes="(max-width: 320px) 100vw, 320px" /></figure>
+</div>
+
+<p>Après quelques expériences sur cette plateforme ( et beaucoup sur d’autres 😀 ) je vais essayer de peser le pour et le contre qui m’apparaissent importants.<br />
+Bien évidemment, ce n’est que mon avis, j’ai sans doute omis certaines informations qui pourraient être indispensables pour d’ autres.</p>
+
+<h2 id="pourquoi-et-dans-quelles-conditions-il-ne-faut-pas-utiliser-k8s-">Pourquoi et dans quelles conditions il ne faut pas utiliser K8S ?</h2>
+
+<p>Avant de présenter les avantages des applications cloud, je vais essayer de réaliser l’anti thèse de mon propos.</p>
+
+<h3 id="en-avez-vous-vraiment-besoin-">En avez vous (vraiment) besoin ?</h3>
+
+<p>Vaste sujet et question délicate pour la population informaticienne qui a tendance à suivre les tendances du marché.</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash.png?w=986" alt="" class="wp-image-464" width="611" height="404" srcset="/assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash.png 986w, /assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash-300x199.png 300w, /assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash-768x509.png 768w" sizes="(max-width: 611px) 100vw, 611px" /></figure>
+</div>
+
+<p>Avant de foncer tête baissée dans cette technologie qui est très intéressante au demeurant, il est important de se poser ces quelques questions:</p>
+
+<ul>
+  <li>Est-ce que mes <a href="https://fr.wikipedia.org/wiki/Service-level_objectives">SLO</a> sont contraignantes?</li>
+  <li>Quel le cycle de déploiement de mes applications?</li>
+  <li>Qui gère les environnements ?</li>
+</ul>
+
+<p>Bref, il faut savoir si le jeu en vaut la chandelle. Si vous avez une application qui doit scaler dynamiquement, encaisser les pics, et avoir du <a href="https://dzone.com/articles/zero-downtime-deployment">zero downtime durant les mises à jour</a>, Kubernetes est fait pour vous. Si vous avez une application de gestion qui n’a pas d’exigences fortes si ce n’est de répondre aux besoins fonctionnels, l’utilisation de Kubernetes est discutable.</p>
+
+<h3 id="êtes-vous-taillé-pour-">Êtes vous taillé pour ?</h3>
+
+<p>Kubernetes et son écosystème peuvent s’avérer complexes à appréhender. Si votre entreprise opte pour une utilisation « <a href="https://en.wikipedia.org/wiki/On-premises_software">on premise</a>« , c’est pire. Vous devrez avoir une équipe dédiée qui gérera cette plateforme et offrir une expertise aux équipes de développement.<br />
+Ne vous trompez pas. Si votre rôle est de développer des applications métier, il vous sera très difficile d’avoir également une expertise sur l’administration de cette plateforme. Vous pourrez l’utiliser et être à l’aise, mais l’administration d’une telle technologie est très compliquée.</p>
+
+<p>Le seul conseil que je pourrais vous donner, c’est de ne partir sur Kubernetes que si vous avez une <strong>équipe support à disposition</strong>. C’est vrai si vous utilisez des services du Cloud tels que Google Cloud ou AWS. Ça l’est encore plus si vous utilisez des services « on premise » tels qu’ Openshift.</p>
+
+<h3 id="est-ce-que-vos-développements-sont-cloud-native-">Est-ce que vos développements sont <a href="https://www.redhat.com/fr/topics/cloud-native-apps">« cloud native »</a> ?</h3>
+
+<p>Au delà de la plateforme, vous devrez monter en compétence sur le développement et la conception de vos applications.</p>
+
+<p>Il vous faudra prendre en considération <a href="https://en.wikipedia.org/wiki/Twelve-Factor_App_methodology">les 12 facteurs clés</a> dans vos applications. Il n’est pas forcément la peine de passer sur des microservices. Il est également possible de faire des monolithes modulaires qui peuvent être légers et stateless. Beaucoup de ces facteurs sont communément admis comme des bonnes pratiques de développement logiciel (ex. Il faut une intégration continue).</p>
+
+<p>Aussi, cela va sans dire, il faut également monter (réellement) en compétence sur les conteneurs et leurs contraintes. Si vous n’avez pas l’habitude de travailler avec des conteneurs ( construction, déploiement, disponibilité d’une <a href="https://docs.docker.com/registry/">registry</a>). Il est préférable de définir une trajectoire avec des étapes intermédiaires.</p>
+
+<p>Bref, tous ces sujets doivent être adressés et compris pour toutes les parties prenantes de vos équipes que ça soit les développeurs, les chefs de projet et les équipes métiers à une moindre mesure. Cette technologie représente réellement un grand pas à franchir. Si vous ne vous sentez pas de le faire, ou si vous devez gagner en maturité sur ces sujets, attendez avant de vous lancer sur Kubernetes.</p>
+
+<p>On ne pourra jamais vous reprocher de ne pas opter sur Kubernetes si vous ne remplissez pas tous les pré-requis. Pour ce qui est du contraire…</p>
+
+<h3 id="avez-vous-des-interactions-avec-des-services-tiers-qui-sont-compatible-avec-kubernetes-">Avez vous des interactions avec des services tiers qui sont compatible avec Kubernetes ?</h3>
+
+<p>Quand vous restez dans votre cluster Kubernetes, généralement, tout va bien. Dès que vous avez des interactions avec des services tiers, ça peut se compliquer.<br />
+En effet, généralement vous devrez vous connecter à des services tiers qui ne sont pas orienté cloud : <a href="https://en.wikipedia.org/wiki/Hardware_security_module">des boitiers crypto</a>, des passerelles de transfert, …<br />
+Il se peut que certains protocoles soient également incompatibles avec Kubernetes. Il vous faudra vous assurer que tout la galaxie de logiciels et systèmes gravitant autour de votre application sera compatible avec une telle architecture. Ceci n’est pas une mince affaire. L’aide d’une équipe support (voir ci-dessus) vous sera d’une grande utilité.</p>
+
+<h2 id="pourquoi-sauter-le-pas-">Pourquoi sauter le pas ?</h2>
+
+<h3 id="la-scalabilité-et-la-résistance-à-la-panne">La scalabilité et la résistance à la panne</h3>
+
+<p>Personnellement, la première fonctionnalité qui m’a intéressé c’est la gestion de la scalabilité. Si vous avez des objectifs de 99.9% de disponibilité. Kubernetes sera une plus value indéniable dans votre architecture. Après quelques <s>jours</s> heures à batailler avec les fichiers YAML, vous pourrez gérer automatiquement la scalabilité en fonction de plusieurs indicateurs qu’ils soient techniques (ce sont les plus faciles à gérer) ou un peu plus métier <a href="https://www.metricfire.com/blog/prometheus-metrics-based-autoscaling-in-kubernetes/">en utilisant Prometheus</a> – et oui encore une technologie supplémentaire à connaître.</p>
+
+<p>En effet, au lieu de vous en soucier une fois arrivé en production, vous aurez lors du développement l’obligation de prendre en considération l’observabilité de votre application. Par exemple, vous aurez à renseigner <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">si votre application est prête et/ou disponible pour traiter les requêtes</a>. Ces indicateurs vous permettront de scaler <strong>automatiquement</strong> et de re-créer si nécessaire un <a href="https://kubernetes.io/docs/concepts/workloads/pods/">POD</a> en cas de panne.</p>
+
+<p>J’ai trouvé que cette pratique était vertueuse. Bien évidemment, pas besoin d’être sur Kubernetes pour avoir de l’observabilité dans des applications. Par contre, ici, c’est obligatoire et implémenté dès le développement.</p>
+
+<p>La scalabilité automatique est aussi très intéressante. On a souvent vu des serveurs en production qui n’étaient pas suffisamment utilisés. Ici vous n’aurez que les instances nécessaires pour votre cas d’utilisation.<br />
+La contrainte que l’on peut voir à cette fonctionnalité et qu’on ne maitrise pas complètement le nombre d’instances disponibles. C’est Kubernetes qui s’en charge en prenant en compte le paramétrage que vous aurez renseigné dans vos <a href="https://helm.sh/docs/chart_best_practices/templates/">templates HELM</a>.</p>
+
+<h3 id="le-déploiement">Le déploiement</h3>
+
+<p>Avant de déployer (dans la vraie vie), vous aurez à mettre en place un pipeline CI/CD qui orchestre les différents déploiements sur tous vos environnements. Attention, ce n’est pas une mince affaire 🙂 !</p>
+
+<p>Une fois réalisé, vous verrez automatiquement le gain. Vos déploiements seront réellement fluides. Bon OK, on peut le faire sur des <a href="https://en.wikipedia.org/wiki/Virtual_machine">VMS</a> standards. Mais on peut améliorer la procédure de déploiement pour mettre en place du <a href="https://dzone.com/articles/zero-downtime-deployment">zero downtime</a> pour ne pas interrompre le service lors d’un déploiement.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">strategy</span><span class="pi">:</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">RollingUpdate</span>
+<span class="na">rollingUpdate</span><span class="pi">:</span>
+<span class="na">maxSurge</span><span class="pi">:</span> <span class="m">1</span>
+<span class="na">maxUnavailable</span><span class="pi">:</span> <span class="m">0</span>
+</code></pre></div></div>
+
+<h3 id="linfrastructure-as-code">L’Infrastructure As Code</h3>
+
+<div class="wp-block-image">
+  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash.png?w=683" alt="" class="wp-image-462" width="452" height="678" srcset="/assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash.png 719w, /assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash-200x300.png 200w, /assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash-683x1024.png 683w" sizes="(max-width: 452px) 100vw, 452px" /></figure>
+</div>
+
+<p>Quand on pense à Kubernetes, et au cloud, on ne pense pas trop à l’<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">Infrastructure As Code</a> au début. Cependant, cette pratique est pour moi l’une des plus utiles.</p>
+
+<p>En effet, avoir votre système décrit dans des fichiers, versionnés vous permet de le tester dès le développement. Ça évite ( dans la majorité des cas ) les erreurs lors des installations d’environnement. La mise à jour des logiciels est largement accélérée.</p>
+
+<p>Bien évidemment, il existe <a href="https://www.terraform.io/">Terraform</a> et <a href="https://www.ansible.com/">Ansible</a> pour le provisionning des environnements. Ici je trouve qu’on pousse le concept encore plus loin. L’automatisation est à mon avis poussé à paroxysme.<br />
+Prenons par exemple la gestion des systèmes d’exploitation. La mise à jour sur des serveurs physiques ou virtuels peut prendre énormément de temps et générer des erreurs. Avec de l’infra as code, ceci est testé et validé automatiquement via des tests unitaires dès l’environnement de développement.<br />
+On peut suivre la gestion des environnements via un gestionnaire de sources et la promotion vers les autres environnements (recette[1-n], pré-production, production) est grandement accélérée.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Bon, vous l’aurez peut être compris, cette galaxie de technologies est intéressante et peut vous aider dans vos projets. Avant d’arriver à l’utiliser sereinement, il vous faudra sans doute définir une trajectoire et appréhender plusieurs sujets avant d’arriver à déployer vos applications sur un cloud interne ou externe.<br />
+J’espère que cet article vous aura permis de mettre en évidence les pour et contre d’une telle technologie et le cas échéant vous donnera envie de franchir le pas.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags : </strong>
+    <span itemprop="keywords">
+    
+      <a href="/pages/alexandre-touret/tags/#helm" class="page__taxonomy-item p-category" rel="tag">helm</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#hype" class="page__taxonomy-item p-category" rel="tag">hype</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#k8s" class="page__taxonomy-item p-category" rel="tag">k8s</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#kubernetes" class="page__taxonomy-item p-category" rel="tag">kubernetes</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Mis à jour :</strong> <time class="dt-published" datetime="2020-10-08T08:09:59+00:00">08/10/2020</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Partager sur</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=touret_alex&text=K8S%2C+HELM+et+Cie%3A+au+del%C3%A0+de+la+hype%20https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F10%2F08%2Fk8s-helm-et-cie-au-dela-de-la-hype%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F10%2F08%2Fk8s-helm-et-cie-au-dela-de-la-hype%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F10%2F08%2Fk8s-helm-et-cie-au-dela-de-la-hype%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/pages/alexandre-touret/2020/08/24/music-scores-as-code/" class="pagination--pager" title="Music Scores As Code
+">Précédent</a>
+    
+    
+      <a href="/pages/alexandre-touret/2021/01/09/gerer-efficacement-les-fichiers-de-configuration-dans-les-charts-helm/" class="pagination--pager" title="Gérer « efficacement » les fichiers de configuration dans les charts HELM
+">Suivant</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">Vous pourriez aimer aussi</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="permalink">Migrer son blog Wordpress vers GitHub
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-06T10:00:00+00:00">06/12/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/07/rest-book-architecture.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="permalink">Observabilité et Circuit Breaker avec Spring
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-26T09:53:49+00:00">26/07/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/06/pexels-photo-257736.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="permalink">Ajouter un mode « maintenance » à votre API grâce à Spring boot
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-06-10T15:01:20+00:00">10/06/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/05/pexels-photo-261621.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/" rel="permalink">Utiliser GPG dans WSL2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-05-03T18:47:11+00:00">03/05/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Entrez votre recherche..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Contact</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> Licence du contenu de ce site</a></li>
+        
+      
+    
+
+    
+      <li><a href="/pages/alexandre-touret/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Flux</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 blog.touret.info. Propulsé par <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/pages/alexandre-touret/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr.min.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-store.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id= UA-31817514-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', ' UA-31817514-1', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

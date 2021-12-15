@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/docker.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/docker.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/08/24/music-scores-as-code/">&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-428&quot; /&gt;&lt;/figure&gt;
+
+&lt;p&gt;Derrière ce nom pompeux qui peut effrayer, je vais essayer d’expliquer dans cet article comment on peut versionner facilement ses partitions et les publier sur le web.&lt;/p&gt;
+
+&lt;p&gt;En cherchant comment mettre de la documentation technique avec des diagrammes &lt;a href=&quot;https://plantuml.com/&quot;&gt;PlantUml&lt;/a&gt; dans des repos &lt;a href=&quot;https://about.gitlab.com/&quot;&gt;GITLAB&lt;/a&gt; et générés avec des pipelines, je me suis mis dans la tête de faire la même chose avec des partitions 🙂&lt;/p&gt;
+
+&lt;p&gt;Depuis plusieurs années, j’utilise &lt;a href=&quot;https://lilypond.org/&quot;&gt;lilypond&lt;/a&gt; pour créer mes partitions. C’est un peu difficile de s’y mettre, mais une fois la syntaxe assimilée, la saisie d’une partition est beaucoup plus efficace. Le rendu des partitions est vraiment optimisé.&lt;br /&gt;
+Si vous voulez plus de détails sur le pourquoi du comment je vous conseille &lt;a href=&quot;https://lilypond.org/doc/v2.19/Documentation/essay-big-page&quot;&gt;cette page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vous trouverez des exemples sur &lt;a href=&quot;https://lilypond.org/text-input.fr.html&quot;&gt;le site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;J’ai donc eu l’idée de:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Stocker ces partitions sur un repo github (&lt;em&gt;jusque là rien d’exceptionnel&lt;/em&gt;)&lt;/li&gt;
+  &lt;li&gt;Générer automatiquement les partitions au format PDF, PNG et MIDI via une &lt;a href=&quot;https://github.com/features/actions&quot;&gt;github action&lt;/a&gt; (&lt;em&gt;ça commence à devenir intéressant…&lt;/em&gt;)&lt;/li&gt;
+  &lt;li&gt;Les publier avec &lt;a href=&quot;https://pages.github.com/&quot;&gt;les github pages&lt;/a&gt; (&lt;em&gt;tant qu’à faire 🙂&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;stockage&quot;&gt;Stockage&lt;/h2&gt;
+
+&lt;p&gt;Pourquoi stocker dans un référentiel de sources tel que Github ? Pour les non informaticiens : les partitions sont stockées au format texte.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2.12.1&quot;&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Try a little tenderness&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;composer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Harry Woods, Jimmy Campbell &amp;amp; Reg Connely&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;subtitle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Commitments Version&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Poete&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;instrument&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Piano&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;editor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;L'éditeur&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Remarque sur le rhythme&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;style&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Soul&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Alexandre Touret&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;maintainerEmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;alexandre.touret@free.fr&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;maintainerWeb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://blog.touret.info&quot;&lt;/span&gt;     
+  &lt;span class=&quot;n&quot;&gt;lastupdated&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Music room&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;footer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Footer&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;copyright&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&quot;Delivered by A TOURET&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;upper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relative&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;treble&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tempo&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;176&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;major&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;d2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; 
+  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;||&quot;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://git-scm.com/&quot;&gt;GIT&lt;/a&gt; et &lt;a href=&quot;https://github.com&quot;&gt;GITHUB&lt;/a&gt; permettent de versionner facilement et pouvoir faire facilement un retour arrière en cas d’erreur.&lt;br /&gt;
+Aussi, GITHUB offre des &lt;a href=&quot;https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests&quot;&gt;fonctionnalités « sociales » et collaboratives qui facilitent la revue des modifications&lt;/a&gt; ( en cas de travail à plusieurs ).&lt;br /&gt;
+Bref, ça offre la sécurité d’une sauvegarde et la possibilité d’un retour arrière en cas d’erreur.&lt;/p&gt;
+
+&lt;h2 id=&quot;générer-les-partitions-avec-une-github-action&quot;&gt;Générer les partitions avec une github action&lt;/h2&gt;
+
+&lt;p&gt;Les &lt;a href=&quot;https://github.com/features/actions&quot;&gt;github actions&lt;/a&gt; sont des outils permettant:&lt;/p&gt;
+
+&lt;blockquote class=&quot;wp-block-quote&quot;&gt;
+  &lt;p&gt;
+    GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want.
+  &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;J’ai donc décidé de créer un workflow qui permet de générer les partitions au format lilypond.&lt;/p&gt;
+
+&lt;p&gt;J’ai mis à disposition &lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action&quot;&gt;le code sur github&lt;/a&gt; sous &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;licence GNU GPLv3&lt;/a&gt;. Elle est utilisable telle quelle.&lt;/p&gt;
+
+&lt;p&gt;Pour créer l’action, il faut créer un fichier action.yml à la racine du repo. Voici le contenu&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Lilypond&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Generator&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;description:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lilypond&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;music&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sheets&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;author:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@alexandre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touret&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;inputs:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;description:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lilyponid&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;required:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;runs:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;using:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;image:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Dockerfile&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;branding:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;icon:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;underline&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;color:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Vous aurez compris que ce fichier fait référence à une &lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action/blob/master/Dockerfile&quot;&gt;image Docker&lt;/a&gt;. Cette dernière n’est ni plus ni moins qu’une Debian avec lilypond d’installé.&lt;/p&gt;
+
+&lt;p&gt;Pour l’utiliser dans un repo github, on peut créer une action qui l’utilise. Voici un exemple:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;build_sheets:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;LILYPOND_FILES:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;*.ly&quot;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Checkout&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Source&lt;/span&gt; 
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Get&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;changed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;id:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getfile&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;::set-output name=files::$(find $ -name &quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; -printf &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; | xargs)&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LILYPOND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;considered&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Generate&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PDF&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;music&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sheets&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lilypond&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+            &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A la dernière ligne on peut passer &lt;a href=&quot;http://lilypond.org/doc/v2.18/Documentation/usage/command_002dline-usage&quot;&gt;les arguments nécessaires à lilypond&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;publication&quot;&gt;Publication&lt;/h2&gt;
+
+&lt;p&gt;La c’est l’étape la plus facile :). Il suffit d’activer &lt;a href=&quot;https://pages.github.com/&quot;&gt;les github pages&lt;/a&gt; et de commiter et pusher les partitions générées&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Push&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Local&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Changes&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Add changes&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;changes&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;github_token:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Il suffit de créer une page index.md à la racine et d’ajouter des liens vers les partitions générées ( dans mon cas, ça se passe dans le répertoire /docs ).&lt;br /&gt;
+Vous pouvez trouver un exemple &lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;ici&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Voila comment on peut générer un site avec des partitions crées avec Lilypond.&lt;br /&gt;
+Vous trouverez les différents liens ci-dessous. Peut être que je publierai cette action sur le marketplace une fois que j’aurai publié une documentation digne de ce nom :).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alexandre-touret/piano-sheets-as-code&quot;&gt;Exemple d’utilisation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;Exemple de site généré&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Alexandre Touret</name></author><category term="docker" /><category term="github" /><category term="lilypond" /><category term="planetlibre" /><summary type="html"></summary></entry><entry><title type="html">Erreur 139 à l’exécution d’un container docker</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/" rel="alternate" type="text/html" title="Erreur 139 à l’exécution d’un container docker" /><published>2020-04-01T09:09:44+00:00</published><updated>2020-04-01T09:09:44+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/">&lt;p&gt;Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une &lt;a href=&quot;https://medium.com/better-programming/understanding-docker-container-exit-codes-5ee79a1d58f6&quot;&gt;erreur SIGSEGV 139&lt;/a&gt;. Un crash avec aucune log.&lt;/p&gt;
+
+&lt;p&gt;Bref que du bonheur 🙂&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/man-person-street-shoes-2882.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-295&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Avant d’aller plus loin voici mon environnement:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.debian.org/&quot;&gt;Debian 10&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/debian/&quot;&gt;Docker CE&lt;/a&gt; 19.03.8&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Après quelques recherches, je me suis rendu compte qu’on pouvait reproduire ce comportement en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;gcc:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une des raisons trouvées serait &lt;a href=&quot;https://github.com/moby/moby/issues/28705&quot;&gt;un problème de compatibilité avec le noyau 4.8.5&lt;/a&gt; (oui ça remonte…).&lt;br /&gt;
+Une solution est d’activer l’émulation &lt;a href=&quot;https://davisdoesdownunder.blogspot.com/2011/02/linux-syscall-vsyscall-and-vdso-oh-my.html&quot;&gt;vsyscall&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Voici la configuration à effectuer:&lt;br /&gt;
+Dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt;, ajouter la ligne suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;quiet vsyscall=emulate&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grub&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reboot&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant le container devrait pouvoir s’exécuter correctement.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une erreur SIGSEGV 139. Un crash avec aucune log.</summary></entry><entry><title type="html">Installer docker ce sur Debian 9</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/" rel="alternate" type="text/html" title="Installer docker ce sur Debian 9" /><published>2018-09-26T10:28:21+00:00</published><updated>2018-09-26T10:28:21+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/">&lt;p&gt;Bon, ça fait quelques temps que je n’ai rien posté…&lt;br /&gt;
+Voici un rapide tuto pour installer &lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/debian/&quot;&gt;docker-ce sur une debian9&lt;/a&gt;. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-96&quot; src=&quot;/assets/images/2018/09/docker.png?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;268&quot; srcset=&quot;/assets/images/2018/09/docker.png 1354w, /assets/images/2018/09/docker-300x268.png 300w, /assets/images/2018/09/docker-1024x914.png 1024w, /assets/images/2018/09/docker-768x685.png 768w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pré-requis&quot;&gt;Pré-requis&lt;/h2&gt;
+
+&lt;p&gt;Supprimer les éventuelles installations de docker et docker-compose&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;#apt-get remove docker docker-compose&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+# apt-get install apt-transport-https ca-certificates&lt;br /&gt;
+# curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add –&lt;br /&gt;
+# add-apt-repository \&lt;br /&gt;
+“deb [arch=amd64] https://download.docker.com/linux/debian \&lt;br /&gt;
+$(lsb_release -cs) \ stable”&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;Puis lancer&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# apt update&lt;/p&gt;
+
+&lt;p&gt;# apt install docker-ce&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;h3 id=&quot;installation-de-docker-compose&quot;&gt;Installation de docker-compose&lt;/h3&gt;
+
+&lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# curl -L “https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose&lt;/p&gt;
+
+&lt;p&gt;# chmod a+x /usr/local/bin/docker-compose&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-des-droits&quot;&gt;Configuration des droits&lt;/h2&gt;
+
+&lt;p&gt;Pour lancer docker depuis un utiliser non root, il faut lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# groupadd docker&lt;/p&gt;
+
+&lt;p&gt;# adduser monutilisateur docker&lt;/p&gt;
+
+&lt;p&gt;# usermod -aG docker monutilisateur&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Après ceci, vaut mieux redémarrer le pc …&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-du-démon&quot;&gt;Configuration du démon&lt;/h2&gt;
+
+&lt;p&gt;Voici quelques config à appliquer pour que le démon soit accessible par des outils tels que le plugin maven ou encore configurer l’accès à un proxy&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-du-port&quot;&gt;Configuration du port&lt;/h3&gt;
+
+&lt;p&gt;Exécuter la commande:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# systemctl edit docker.service&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Entrer le code suivant:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;[Service]&lt;/p&gt;
+
+&lt;p&gt;ExecStart=&lt;/p&gt;
+
+&lt;p&gt;ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Et l’enregistrer sous /etc/systemd/system/docker.service.d/docker.conf&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-du-proxy&quot;&gt;Configuration du proxy&lt;/h3&gt;
+
+&lt;p&gt;Avec la même commande&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# systemctl edit docker.service&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Entrer la configuration suivante:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;[Service]&lt;/p&gt;
+
+&lt;p&gt;Environment=”HTTP_PROXY=http://mon_proxy:mon_port/”&lt;/p&gt;
+
+&lt;p&gt;Environment=”NO_PROXY=127.0.0.1”&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;h3 id=&quot;activation-des-configurations&quot;&gt;Activation des configurations&lt;/h3&gt;
+
+&lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# systemctl daemon-reload # systemctl restart docker&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;validation&quot;&gt;Validation&lt;/h2&gt;
+
+&lt;p&gt;Maintenant, vous pouvez valider votre configuration avec la commande:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;$ docker run hello-world&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.</summary></entry></feed>

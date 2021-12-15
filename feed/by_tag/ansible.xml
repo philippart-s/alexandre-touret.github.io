@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/ansible.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/ansible.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Ansible pour les provisionner tous !</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/06/25/ansible-pour-les-provisionner-tous/" rel="alternate" type="text/html" title="Ansible pour les provisionner tous !" /><published>2019-06-25T09:34:51+00:00</published><updated>2019-06-25T09:34:51+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/06/25/ansible-pour-les-provisionner-tous</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/06/25/ansible-pour-les-provisionner-tous/">&lt;p&gt;Si vous &lt;a href=&quot;http://blog.touret.info/2018/03/15/installation-de-vagrant/&quot;&gt;provisionnez vos VM VirtualBox avec Vagrant&lt;/a&gt;, vous avez sans doute eu l’idée d’automatiser le provisionning des machines virtuelles. Dans mon cas une VM GNU/Linux basée sur Debian 9.&lt;/p&gt;
+
+&lt;p&gt;Pour cela, soit vous faite tout manuellement et après les mises à jour deviennent fastidieuses, soit vous appliquez un script shell au démarrage de vagrant, soit vous utilisez &lt;a href=&quot;https://www.ansible.com/&quot;&gt;Ansible.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-180 aligncenter&quot; src=&quot;/assets/images/2019/06/ansible_logo.svg_.png?w=244&quot; alt=&quot;&quot; width=&quot;244&quot; height=&quot;300&quot; srcset=&quot;/assets/images/2019/06/ansible_logo.svg_.png 832w, /assets/images/2019/06/ansible_logo.svg_-244x300.png 244w, /assets/images/2019/06/ansible_logo.svg_-768x945.png 768w&quot; sizes=&quot;(max-width: 244px) 100vw, 244px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Ansible est un outil opensource permettant d’automatiser le provisionning et la mise à jour des environnements à distance (via SSH). L’avantage par rapport à des outils tels que &lt;a href=&quot;https://puppet.com&quot;&gt;Puppet&lt;/a&gt;, est qu’il ne nécessite pas l’installation &lt;a href=&quot;https://puppet.com/docs/puppet/6.0/man/agent.html&quot;&gt;d’agent.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Je vais essayer de vous montrer comment mettre en place le provisionning via Ansible pour &lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;VirtualBox&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-de-vagrant&quot;&gt;Configuration de Vagrant&lt;/h2&gt;
+
+&lt;p&gt;Dans le fichier Vagrantfile, on active le provisionning via Ansible:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config.vm.provision &quot;ansible_local&quot; 
+  do |ansible| ansible.playbook = &quot;site.yml&quot;
+  ansible.install_mode = &quot;pip&quot;
+  ansible.version = &quot;2.7.10&quot;
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Cette configuration fait référence à un fichier « playbook » site.yml. C’est la configuration qui sera appliqué lors du provisionning . Que ça soit à la création ou pour les mises à jour.&lt;/p&gt;
+
+&lt;p&gt;Voici un exemple de contenu:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;VirtualBox&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;all&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;become_user&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;root&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;become_method&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sudo&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;roles&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;common&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;vars_files&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;vars/environment.yml&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ce fichier est la racine de notre configuration Ansible. On y référence les rôles appliqués et les fichiers d’ environnement. Voici un exemple de rôle:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Remove&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;useless&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;the&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cache&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;autoclean&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;force_apt_get&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Remove&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;that&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;are&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;longer&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;required&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;autoremove&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;force_apt_get&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;and&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(may&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;take&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;while)&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dist&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;force_apt_get&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Install&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;useful&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;gcc&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;g++&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;...&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;zsh&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;firewalld&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;present&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;no&lt;/span&gt; 
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ansible create directory example&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/.m2&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;directory&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Install Maven settings.xml&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;settings.xml&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/.m2/settings.xml&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Install&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Maven&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;curl&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-sL&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;http://mirror.ibcp.fr/pub/apache/maven/maven-3//binaries/apache-maven--bin.tar.gz&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-o&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/opt/apache-maven.tar.gz&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;tar&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-zxf&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/opt/apache-maven.tar.gz&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-C&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/opt&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become_user&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become_method&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sudo&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Change&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Maven&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Rights&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/opt/*&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;touch&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;modification_time&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;preserve&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;access_time&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;preserve&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Les variables d’environnement permettent de variabiliser certains champs de vos rôles. On peut trouver par exemple les versions de certains outils déployés&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;maven_version: 3.5.4
+username: vagrant
+home: /home/vagrant
+docker_compose_version: 1.22.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Il y a &lt;a href=&quot;https://docs.ansible.com/ansible/latest/modules/modules_by_category.html&quot;&gt;une quantité impressionnante de modules Ansible que l’on peut utiliser&lt;/a&gt;. Que ça soit pour lancer des commandes shell ou lancer des services. Contrairement à la création d’un script shell qui pourrait faire les mêmes actions à la création, on peut facilement gérer la mise à jour de la VM car Ansible détecte les modifications lors de son exécution.&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-spécifique-pour-virtualbox&quot;&gt;Configuration spécifique pour VirtualBox&lt;/h3&gt;
+
+&lt;p&gt;Pour VirtualBox, j’ai ajouté deux fichiers de configuration supplémentaires à la racine:&lt;/p&gt;
+
+&lt;h5 id=&quot;ansiblecfg&quot;&gt;ansible.cfg&lt;/h5&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[defaults]&lt;/span&gt;
+  &lt;span class=&quot;py&quot;&gt;hostfile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;hosts&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;hosts&quot;&gt;hosts&lt;/h5&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[local]&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;localhost&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;ansible_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;local&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;provisionning&quot;&gt;Provisionning&lt;/h2&gt;
+
+&lt;h3 id=&quot;a-la-création&quot;&gt;A la création&lt;/h3&gt;
+
+&lt;p&gt;le provisionning peut se faire au lancement de vagrant via la commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vagrant up
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Pour faire une mise à jour&lt;/p&gt;
+
+&lt;p&gt;Directement dans la box, vous pouvez lancer les commandes suivantes :&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; vboxsf vagrant /vagrant
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p dir=&quot;auto&quot;&gt;
+  Puis, vous pouvez lancer les commandes suivantes dans la box:
+&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;su -
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /vagrant
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANSIBLE_CONFIG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/vagrant
+ansible-playbook site.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Alexandre Touret</name></author><category term="ansible" /><category term="debian" /><category term="planetlibre" /><summary type="html">Si vous provisionnez vos VM VirtualBox avec Vagrant, vous avez sans doute eu l’idée d’automatiser le provisionning des machines virtuelles. Dans mon cas une VM GNU/Linux basée sur Debian 9.</summary></entry></feed>

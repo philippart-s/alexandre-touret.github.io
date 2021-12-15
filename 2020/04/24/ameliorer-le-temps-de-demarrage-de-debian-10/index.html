@@ -1,0 +1,784 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Améliorer le temps de démarrage de Debian 10 - blog.touret.info</title>
+<meta name="description" content="Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.">
+
+
+  <meta name="author" content="Alexandre Touret">
+  
+  <meta property="article:author" content="Alexandre Touret">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr">
+<meta property="og:site_name" content="blog.touret.info">
+<meta property="og:title" content="Améliorer le temps de démarrage de Debian 10">
+<meta property="og:url" content="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">
+
+
+  <meta property="og:description" content="Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.">
+
+
+
+  <meta property="og:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/2020/04/boot_avant.png">
+
+
+
+  <meta name="twitter:site" content="@touret_alex">
+  <meta name="twitter:title" content="Améliorer le temps de démarrage de Debian 10">
+  <meta name="twitter:description" content="Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.">
+  <meta name="twitter:url" content="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/2020/04/boot_avant.png">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2020-04-24T18:06:13+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://blog.touret.info/pages/alexandre-touret/",
+      "sameAs": ["https://twitter.com/touret_alex","https://www.linkedin.com/in/atouret"]
+    
+  }
+</script>
+
+
+
+  <meta name="msvalidate.01" content="F9655A4C8648E42154ECB4B4D6CF60A2">
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/pages/alexandre-touret/feed.xml" type="application/atom+xml" rel="alternate" title="blog.touret.info Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/pages/alexandre-touret/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/pages/alexandre-touret/">
+          blog.touret.info
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/talks/">Talks</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/a-propos/">A propos</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/contact/">Contact</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://blog.touret.info/pages/alexandre-touret/">
+        <img src="/pages/alexandre-touret/assets/images/bouletmaton1.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://blog.touret.info/pages/alexandre-touret/" itemprop="url">Alexandre Touret</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Architecte logiciel, développeur, bidouilleur (dans le désordre)</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Contact</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Améliorer le temps de démarrage de Debian 10">
+    <meta itemprop="description" content="Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.">
+    <meta itemprop="datePublished" content="2020-04-24T18:06:13+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" class="u-url" itemprop="url">Améliorer le temps de démarrage de Debian 10
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2020-04-24T18:06:13+00:00">24/04/2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.</p>
+
+<figure class="wp-block-image size-large">
+<img loading="lazy" width="819" height="45" src="/assets/images/2020/04/boot_time.png?w=819" alt="" class="wp-image-346" srcset="/assets/images/2020/04/boot_time.png 819w, /assets/images/2020/04/boot_time-300x16.png 300w, /assets/images/2020/04/boot_time-768x42.png 768w" sizes="(max-width: 819px) 100vw, 819px" /> 
+</figure>
+
+<p>Tout d’abord, vous devez analyser les services qui prennent du temps au démarrage. Vous pouvez le faire avec cette commande:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemd-analyze plot <span class="o">&gt;</span> plot.svg
+</code></pre></div></div>
+
+<p>J’ai obtenu le graphique suivant:<figure class="wp-block-gallery aligncenter columns-1 is-cropped"></figure></p>
+
+<ul class="blocks-gallery-grid">
+  <li class="blocks-gallery-item">
+    <figure><a href="/assets/images/2020/04/boot_avant.png"><img loading="lazy" width="6066" height="4013" src="/assets/images/2020/04/boot_avant.png" alt="" data-id="350" class="wp-image-350" srcset="/assets/images/2020/04/boot_avant.png 6066w, /assets/images/2020/04/boot_avant-300x198.png 300w, /assets/images/2020/04/boot_avant-1024x677.png 1024w, /assets/images/2020/04/boot_avant-768x508.png 768w, /assets/images/2020/04/boot_avant-1536x1016.png 1536w, /assets/images/2020/04/boot_avant-2048x1355.png 2048w, /assets/images/2020/04/boot_avant-1568x1037.png 1568w" sizes="(max-width: 6066px) 100vw, 6066px" /></a></figure>
+  </li>
+</ul>
+<figcaption class="blocks-gallery-caption">Avant</figcaption>
+<p>&lt;/figure&gt;</p>
+
+<h2 id="configuration-grub">Configuration GRUB</h2>
+
+<p>La première manipulation à réaliser est de désactiver le timeout de <a href="https://wiki.debian.org/Grub">GRUB</a>. Pour celà, vous pouvez modifier la variable <code class="language-plaintext highlighter-rouge">GRUB_TIMEOUT</code> dans le fichier <code class="language-plaintext highlighter-rouge">/etc/default/grub</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">GRUB_TIMEOUT</span><span class="o">=</span><span class="mi">0</span>
+</code></pre></div></div>
+
+<p>Ensuite, vous devez mettre à jour la configuration <a href="https://wiki.debian.org/Grub">GRUB</a> en exécutant cette commande:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="n">update</span><span class="o">-</span><span class="n">grub2</span>
+</code></pre></div></div>
+
+<p>Au prochain reboot, vous ne verrez plus le menu <a href="https://wiki.debian.org/Grub">GRUB</a>.</p>
+
+<h2 id="configuration-networkmanager">Configuration NetworkManager</h2>
+
+<p>Dans mon cas, le service <a href="https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do"><code class="language-plaintext highlighter-rouge">NetworkManager-wait-online.service</code> prenait près de 9 secondes</a>. Après avoir lu <a href="https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do">plusieurs billets</a> et rapports de bug, je me suis aperçu que je pouvais le désactiver au boot. Vous pouvez le faire en lançant la commande suivante</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">disable</span> <span class="nc">NetworkManager</span><span class="o">-</span><span class="n">wait</span><span class="o">-</span><span class="n">online</span><span class="o">.</span><span class="na">service</span>
+</code></pre></div></div>
+
+<h2 id="configuration-apt">Configuration Apt</h2>
+
+<p>Un autre service qui prenait pas mal de temps était <a href="https://askubuntu.com/questions/1038923/do-i-really-need-apt-daily-service-and-apt-daily-upgrade-service">apt-daily.timer qui vérifiait au boot</a> qu’il y avait des mises à jour de l’OS. Après quelques recherches, j’ ai vu qu’on pouvait soit le désactiver ( ce qui n’est pas recommandé pour les mises à jour de sécurité ) soit décaler la recherche. J’ai choisi cette solution. Vous devez donc exécuter la commande suivante:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">edit</span> <span class="n">apt</span><span class="o">-</span><span class="n">daily</span><span class="o">.</span><span class="na">timer</span>
+</code></pre></div></div>
+
+<p>Et renseigner le contenu suivant:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span><span class="nc">Timer</span><span class="o">]</span>
+<span class="nc">OnBootSec</span><span class="o">=</span><span class="mi">15</span><span class="n">min</span>
+<span class="nc">OnUnitActiveSec</span><span class="o">=</span><span class="mi">1</span><span class="n">d</span>
+<span class="nc">AccuracySec</span><span class="o">=</span><span class="mi">1</span><span class="n">h</span>
+<span class="nc">RandomizedDelaySec</span><span class="o">=</span><span class="mi">30</span><span class="n">min</span>
+</code></pre></div></div>
+
+<p>Ce service sera donc lancé 15 minutes après le boot. Ce qui est largement suffisant.</p>
+
+<p><strong>[EDIT]</strong> Vous pouvez appliquer la même configuration pour le service <code class="language-plaintext highlighter-rouge">apt-daily-upgrade</code> en exécutant la commande:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">edit</span> <span class="n">apt</span><span class="o">-</span><span class="n">daily</span><span class="o">-</span><span class="n">upgrade</span><span class="o">.</span><span class="na">timer</span>
+</code></pre></div></div>
+
+<p>Ensuite, vous pouvez recharger la configuration en exécutant cette commande:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</code></pre></div></div>
+
+<h2 id="résultats">Résultats</h2>
+
+<p>Après ces quelques manipulations qui peuvent prendre 5 minutes grand maximum, j’ai réussi à optimiser le boot en réduisant le démarrage à <strong>5 secondes!</strong><figure class="wp-block-image size-large"></figure></p>
+
+<p><img loading="lazy" width="783" height="55" src="/assets/images/2020/04/boot_apres_header.png?w=783" alt="" class="wp-image-360" srcset="/assets/images/2020/04/boot_apres_header.png 783w, /assets/images/2020/04/boot_apres_header-300x21.png 300w, /assets/images/2020/04/boot_apres_header-768x54.png 768w" sizes="(max-width: 783px) 100vw, 783px" /> &lt;/figure&gt;</p>
+
+<p>Vous pourrez trouver le détail ci-dessous:<figure class="wp-block-gallery aligncenter columns-1 is-cropped"></figure></p>
+
+<ul class="blocks-gallery-grid">
+  <li class="blocks-gallery-item">
+    <figure><a href="/assets/images/2020/04/boot_apres-2.png?w=287"><img loading="lazy" width="1102" height="3930" src="/assets/images/2020/04/boot_apres-2.png?w=287" alt="" data-id="362" data-link="https://blog.touret.info/boot_apres-2/" class="wp-image-362" srcset="/assets/images/2020/04/boot_apres-2.png 1102w, /assets/images/2020/04/boot_apres-2-84x300.png 84w, /assets/images/2020/04/boot_apres-2-287x1024.png 287w, /assets/images/2020/04/boot_apres-2-768x2739.png 768w, /assets/images/2020/04/boot_apres-2-431x1536.png 431w, /assets/images/2020/04/boot_apres-2-574x2048.png 574w" sizes="(max-width: 1102px) 100vw, 1102px" /></a></figure>
+  </li>
+</ul>
+<figcaption class="blocks-gallery-caption">Après</figcaption>
+<p>&lt;/figure&gt;</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags : </strong>
+    <span itemprop="keywords">
+    
+      <a href="/pages/alexandre-touret/tags/#debian" class="page__taxonomy-item p-category" rel="tag">debian</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#planetlibre" class="page__taxonomy-item p-category" rel="tag">planetlibre</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Mis à jour :</strong> <time class="dt-published" datetime="2020-04-24T18:06:13+00:00">24/04/2020</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Partager sur</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=touret_alex&text=Am%C3%A9liorer+le+temps+de+d%C3%A9marrage+de+Debian+10%20https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F04%2F24%2Fameliorer-le-temps-de-demarrage-de-debian-10%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F04%2F24%2Fameliorer-le-temps-de-demarrage-de-debian-10%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F04%2F24%2Fameliorer-le-temps-de-demarrage-de-debian-10%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" class="pagination--pager" title="Répéter avec JjazzLab tout seul dans son garage
+">Précédent</a>
+    
+    
+      <a href="/pages/alexandre-touret/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/" class="pagination--pager" title="Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine
+">Suivant</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">Vous pourriez aimer aussi</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="permalink">Migrer son blog Wordpress vers GitHub
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-06T10:00:00+00:00">06/12/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/07/rest-book-architecture.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="permalink">Observabilité et Circuit Breaker avec Spring
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-26T09:53:49+00:00">26/07/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/06/pexels-photo-257736.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="permalink">Ajouter un mode « maintenance » à votre API grâce à Spring boot
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-06-10T15:01:20+00:00">10/06/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/05/pexels-photo-261621.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/" rel="permalink">Utiliser GPG dans WSL2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-05-03T18:47:11+00:00">03/05/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Entrez votre recherche..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Contact</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> Licence du contenu de ce site</a></li>
+        
+      
+    
+
+    
+      <li><a href="/pages/alexandre-touret/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Flux</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 blog.touret.info. Propulsé par <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/pages/alexandre-touret/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr.min.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-store.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id= UA-31817514-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', ' UA-31817514-1', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

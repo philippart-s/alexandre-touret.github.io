@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/springboo.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/springboo.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Programmmation par aspect avec Spring AOP</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/11/05/programmmation-par-aspect-avec-spring-aop/" rel="alternate" type="text/html" title="Programmmation par aspect avec Spring AOP" /><published>2019-11-05T17:12:54+00:00</published><updated>2019-11-05T17:12:54+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/11/05/programmmation-par-aspect-avec-spring-aop</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/11/05/programmmation-par-aspect-avec-spring-aop/">&lt;p&gt;Une fois n’est pas coutume, voici un article qui reprend des basiques de la programmation. J’aborde une stack JAVA, mais c’est applicable à d’autres langages.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2019/11/stanley-dai-73ozynjvoni-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-231&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il existe une fonctionnalité très intéressante dans Spring (et dans J(akarta)EE) que l’on oublie assez souvent : l’&lt;a href=&quot;https://fr.wikipedia.org/wiki/Programmation_orient%C3%A9e_aspect&quot;&gt;AOP&lt;/a&gt; ou encore la programmation par aspect. Cette manière de programmer permet notamment de séparer le code fonctionnel et technique.&lt;br /&gt;
+Si vous faites du JAVA, vous utilisez déjà l’&lt;a href=&quot;https://fr.wikipedia.org/wiki/Programmation_orient%C3%A9e_aspect&quot;&gt;AOP&lt;/a&gt;. En effet, quand vous faites une insertion en base via JPA dans un EJB ou un bean annoté &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@Transactional&lt;/code&gt;, une transaction est initiée au début de la méthode et fermée à la fin.&lt;/p&gt;
+
+&lt;p&gt;Avec &lt;a href=&quot;https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html&quot;&gt;Spring&lt;/a&gt; et notamment dans &lt;a href=&quot;https://github.com/spring-projects/spring-boot/&quot;&gt;Spring boot&lt;/a&gt;, voici comment initier l’&lt;a href=&quot;https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-api-advice&quot;&gt;AOP&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-maven&quot;&gt;Configuration maven&lt;/h2&gt;
+
+&lt;p&gt;Ajouter le starter AOP:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;springframework&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;starter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;activation-des-aspects&quot;&gt;Activation des aspects&lt;/h2&gt;
+
+&lt;p&gt;Dans la configuration ci-dessous, je prendrai comme exemple le logging des méthodes ( un log en début de méthode et un log en fin ). &lt;/p&gt;
+
+&lt;p&gt;La définition des aspects se fait dans des classes annotées par &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@Configuration&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Aspect&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ConditionalOnProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;debug.enabled&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;havingValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DebuggingConfiguration&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Logger&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LoggerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;DebuggingConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;WITHIN_MY_PACKAGE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;within(my.package..*)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/**
+* Log before execution
+*
+* @param joinPoint the current method
+*/&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Before&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;WITHIN_MY_PACKAGE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;logBeforeExecution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JoinPoint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joinPoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTraceEnabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Beginning of method : [{}]&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joinPoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSignature&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/**
+* Log after execution
+*
+* @param joinPoint the current method
+*/&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@After&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;WITHIN_MY_PACKAGE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;logAfterExecution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JoinPoint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joinPoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTraceEnabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;trace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;End of method : [{}]&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joinPoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSignature&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;L’utilisation de l’ annotation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@ConditionalOnProperty&lt;/code&gt; me permet d’activer cette classe de configuration seulement si la propriété &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debug.enabled&lt;/code&gt; est initialisée à &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Les annotations &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@Before&lt;/code&gt; et &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@After&lt;/code&gt; indiquent à Spring AOP quand exécuter ces méthodes ou sur quelles méthodes. Dans mon cas, quand les méthodes appelées sont définies dans les classes d’un package défini.&lt;/p&gt;
+
+&lt;p&gt;Pour plus de détails sur la syntaxe et les possibilités, vous pouvez vous référer &lt;a href=&quot;https://docs.spring.io/spring/docs/2.0.x/reference/aop.html&quot;&gt;à la documentation&lt;/a&gt;.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="aop" /><category term="java" /><category term="planetlibre" /><category term="spring" /><category term="springboo" /><summary type="html">Une fois n’est pas coutume, voici un article qui reprend des basiques de la programmation. J’aborde une stack JAVA, mais c’est applicable à d’autres langages.</summary></entry></feed>

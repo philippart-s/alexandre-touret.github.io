@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/camel.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/camel.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Intégration et médiation avec Apache Camel</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/04/10/integration-et-mediation-avec-apache-camel/" rel="alternate" type="text/html" title="Intégration et médiation avec Apache Camel" /><published>2018-04-10T13:15:05+00:00</published><updated>2018-04-10T13:15:05+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/04/10/integration-et-mediation-avec-apache-camel</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/04/10/integration-et-mediation-avec-apache-camel/">&lt;p&gt;Depuis quelques jours, je teste &lt;a href=&quot;https://camel.apache.org/&quot;&gt;Apache Camel&lt;/a&gt; pour la mise en œuvre  de médiations.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot; size-full wp-image-80 aligncenter&quot; src=&quot;/assets/images/2018/04/apache-camel-logo.png&quot; alt=&quot;Apache-camel-logo&quot; width=&quot;349&quot; height=&quot;171&quot; srcset=&quot;/assets/images/2018/04/apache-camel-logo.png 349w, /assets/images/2018/04/apache-camel-logo-300x147.png 300w&quot; sizes=&quot;(max-width: 349px) 100vw, 349px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://camel.apache.org/&quot;&gt;Apache Camel&lt;/a&gt; est un framework assez ancien. Il est similaire à &lt;a href=&quot;https://projects.spring.io/spring-integration/&quot;&gt;Spring Intégration&lt;/a&gt; et permet l’ implémentation de &lt;a href=&quot;http://www.enterpriseintegrationpatterns.com/patterns/messaging/Chapter1.html&quot;&gt;patterns d’intégration&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;les-patterns-dintégration&quot;&gt;Les patterns d’intégration&lt;/h2&gt;
+
+&lt;p&gt;Qu’est-ce qu’un &lt;a href=&quot;http://www.enterpriseintegrationpatterns.com/patterns/messaging/Chapter1.html&quot;&gt;pattern d’intégration&lt;/a&gt; allez-vous me dire ? C’est une solution d’architecture ou plus simplement une recette de cuisine permettant d’avoir une solution toute prête à une problématique d’intégration donnée. L’ensemble de ces patterns est décrit sur &lt;a href=&quot;http://www.enterpriseintegrationpatterns.com/&quot;&gt;ce site&lt;/a&gt; ( ne vous attardez pas sur le look des années 90 … ).&lt;/p&gt;
+
+&lt;p&gt;Exemple :&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-79&quot; src=&quot;/assets/images/2018/04/publishsubscribesolution.gif&quot; alt=&quot;PublishSubscribeSolution&quot; width=&quot;504&quot; height=&quot;330&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;Camel permet simplement de gérer l’intégration via un DSL.&lt;/p&gt;
+
+&lt;h3 id=&quot;choix-dimplémentations&quot;&gt;Choix d’implémentations&lt;/h3&gt;
+
+&lt;p&gt;On peut faire pas mal de choses avec ce FRAMEWORK et de plusieurs manières. J’ai fait les choix d’implémentation suivants :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Tout se fera avec SPRING … et pas en XML 🙂&lt;/li&gt;
+  &lt;li&gt;Il faut que toutes les médiations soient testables&lt;/li&gt;
+  &lt;li&gt;J’exécute le code dans un FATJAR ( pourquoi avec springboot )&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;configuration-de-la-route&quot;&gt;Configuration de la route&lt;/h2&gt;
+
+&lt;p&gt;Apache Camel définit les médiations dans des routes. Elles se définissent assez rapidement .&lt;/p&gt;
+
+&lt;p&gt;Les routes commencent par une instruction from et se terminent par une ou plusieurs instructions to.&lt;/p&gt;
+
+&lt;p&gt;Pour mon exemple, j’extrais les données d’une table et les stocke dans un fichier.&lt;/p&gt;
+
+&lt;p&gt;Tout se configure par des URLs. La première permet d’extraire les données via JPA/HIBERNATE. Une entité Address permet le requêtage. La seconde permet le stockage dans un fichier texte JSON.&lt;/p&gt;
+
+&lt;p&gt;Elles sont externalisées dans des fichiers de configuration pour faciliter les tests et accessibles via SPRING.&lt;/p&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/470b84ac760c4f70d093753c63ec153b&lt;/p&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/470b84ac760c4f70d093753c63ec153b#file-camel-properties&lt;/p&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/470b84ac760c4f70d093753c63ec153b#file-routebuilder-java&lt;/p&gt;
+
+&lt;h2 id=&quot;lancement-de-la-route&quot;&gt;Lancement de la route&lt;/h2&gt;
+
+&lt;p&gt;Le lancement de la route se fait dans une méthode main() :&lt;/p&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/40f3cfa13f5947aa922fc1f796668c59&lt;/p&gt;
+
+&lt;h2 id=&quot;tests&quot;&gt;Tests&lt;/h2&gt;
+
+&lt;p&gt;Camel fournit une API de test assez bien fournie. Elle permet notamment de mocker des endpoints existants (ex. : le fichier de sortie de mon cas de test).&lt;/p&gt;
+
+&lt;p&gt;Dans mon cas, j’ai décidé de remplacer la base de données que j’interroge en input par une &lt;a href=&quot;http://hsqldb.org/doc/guide/ch01.html#N101CA&quot;&gt;base HSQLDB chargée en mémoire&lt;/a&gt;. Le fichier de sortie est, lui, remplacé dynamiquement par un &lt;a href=&quot;https://camel.apache.org/mock.html&quot;&gt;mock&lt;/a&gt;. Pour ce faire, j’ai utilisé les « adviceWith »&lt;/p&gt;
+
+&lt;p&gt;https://gist.github.com/littlewing/391305e01510e65703a26c46c2e233f5&lt;/p&gt;
+
+&lt;h2 id=&quot;pour-aller-plus-loin&quot;&gt;Pour aller plus loin&lt;/h2&gt;
+
+&lt;p&gt;Il y a pas mal d’exemples sur le GITHUB de CAMEL. Vous pouvez également acheter &lt;a href=&quot;https://www.manning.com/books/camel-in-action-second-edition&quot;&gt;le livre « Camel In Action »&lt;/a&gt;. Ca ne vaut pas &lt;a href=&quot;https://www.amazon.fr/dp/B00B8V09HY/ref=dp-kindle-redirect?_encoding=UTF8&amp;amp;btkr=1&quot;&gt;Effective Java&lt;/a&gt; 🙂 , mais vu qu’il est écrit par le principal développeur, c’est une très bonne référence.&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="camel" /><category term="integration" /><category term="planetlibre" /><summary type="html">Depuis quelques jours, je teste Apache Camel pour la mise en œuvre  de médiations.</summary></entry></feed>

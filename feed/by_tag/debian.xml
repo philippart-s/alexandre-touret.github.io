@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/debian.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/debian.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
+
+&lt;figure class=&quot;wp-block-image size-large&quot;&gt;
+&lt;img loading=&quot;lazy&quot; width=&quot;819&quot; height=&quot;45&quot; src=&quot;/assets/images/2020/04/boot_time.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-346&quot; srcset=&quot;/assets/images/2020/04/boot_time.png 819w, /assets/images/2020/04/boot_time-300x16.png 300w, /assets/images/2020/04/boot_time-768x42.png 768w&quot; sizes=&quot;(max-width: 819px) 100vw, 819px&quot; /&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;Tout d’abord, vous devez analyser les services qui prennent du temps au démarrage. Vous pouvez le faire avec cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemd-analyze plot &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; plot.svg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai obtenu le graphique suivant:&lt;figure class=&quot;wp-block-gallery aligncenter columns-1 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;a href=&quot;/assets/images/2020/04/boot_avant.png&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;6066&quot; height=&quot;4013&quot; src=&quot;/assets/images/2020/04/boot_avant.png&quot; alt=&quot;&quot; data-id=&quot;350&quot; class=&quot;wp-image-350&quot; srcset=&quot;/assets/images/2020/04/boot_avant.png 6066w, /assets/images/2020/04/boot_avant-300x198.png 300w, /assets/images/2020/04/boot_avant-1024x677.png 1024w, /assets/images/2020/04/boot_avant-768x508.png 768w, /assets/images/2020/04/boot_avant-1536x1016.png 1536w, /assets/images/2020/04/boot_avant-2048x1355.png 2048w, /assets/images/2020/04/boot_avant-1568x1037.png 1568w&quot; sizes=&quot;(max-width: 6066px) 100vw, 6066px&quot; /&gt;&lt;/a&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;figcaption class=&quot;blocks-gallery-caption&quot;&gt;Avant&lt;/figcaption&gt;
+&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-grub&quot;&gt;Configuration GRUB&lt;/h2&gt;
+
+&lt;p&gt;La première manipulation à réaliser est de désactiver le timeout de &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt;. Pour celà, vous pouvez modifier la variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRUB_TIMEOUT&lt;/code&gt; dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;GRUB_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous devez mettre à jour la configuration &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt; en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grub2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Au prochain reboot, vous ne verrez plus le menu &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-networkmanager&quot;&gt;Configuration NetworkManager&lt;/h2&gt;
+
+&lt;p&gt;Dans mon cas, le service &lt;a href=&quot;https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NetworkManager-wait-online.service&lt;/code&gt; prenait près de 9 secondes&lt;/a&gt;. Après avoir lu &lt;a href=&quot;https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do&quot;&gt;plusieurs billets&lt;/a&gt; et rapports de bug, je me suis aperçu que je pouvais le désactiver au boot. Vous pouvez le faire en lançant la commande suivante&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disable&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NetworkManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;online&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;configuration-apt&quot;&gt;Configuration Apt&lt;/h2&gt;
+
+&lt;p&gt;Un autre service qui prenait pas mal de temps était &lt;a href=&quot;https://askubuntu.com/questions/1038923/do-i-really-need-apt-daily-service-and-apt-daily-upgrade-service&quot;&gt;apt-daily.timer qui vérifiait au boot&lt;/a&gt; qu’il y avait des mises à jour de l’OS. Après quelques recherches, j’ ai vu qu’on pouvait soit le désactiver ( ce qui n’est pas recommandé pour les mises à jour de sécurité ) soit décaler la recherche. J’ai choisi cette solution. Vous devez donc exécuter la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timer&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Et renseigner le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Timer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;OnBootSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;OnUnitActiveSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;AccuracySec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ce service sera donc lancé 15 minutes après le boot. Ce qui est largement suffisant.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[EDIT]&lt;/strong&gt; Vous pouvez appliquer la même configuration pour le service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt-daily-upgrade&lt;/code&gt; en exécutant la commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timer&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous pouvez recharger la configuration en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daemon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reload&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;résultats&quot;&gt;Résultats&lt;/h2&gt;
+
+&lt;p&gt;Après ces quelques manipulations qui peuvent prendre 5 minutes grand maximum, j’ai réussi à optimiser le boot en réduisant le démarrage à &lt;strong&gt;5 secondes!&lt;/strong&gt;&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;783&quot; height=&quot;55&quot; src=&quot;/assets/images/2020/04/boot_apres_header.png?w=783&quot; alt=&quot;&quot; class=&quot;wp-image-360&quot; srcset=&quot;/assets/images/2020/04/boot_apres_header.png 783w, /assets/images/2020/04/boot_apres_header-300x21.png 300w, /assets/images/2020/04/boot_apres_header-768x54.png 768w&quot; sizes=&quot;(max-width: 783px) 100vw, 783px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Vous pourrez trouver le détail ci-dessous:&lt;figure class=&quot;wp-block-gallery aligncenter columns-1 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;a href=&quot;/assets/images/2020/04/boot_apres-2.png?w=287&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;1102&quot; height=&quot;3930&quot; src=&quot;/assets/images/2020/04/boot_apres-2.png?w=287&quot; alt=&quot;&quot; data-id=&quot;362&quot; data-link=&quot;https://blog.touret.info/boot_apres-2/&quot; class=&quot;wp-image-362&quot; srcset=&quot;/assets/images/2020/04/boot_apres-2.png 1102w, /assets/images/2020/04/boot_apres-2-84x300.png 84w, /assets/images/2020/04/boot_apres-2-287x1024.png 287w, /assets/images/2020/04/boot_apres-2-768x2739.png 768w, /assets/images/2020/04/boot_apres-2-431x1536.png 431w, /assets/images/2020/04/boot_apres-2-574x2048.png 574w&quot; sizes=&quot;(max-width: 1102px) 100vw, 1102px&quot; /&gt;&lt;/a&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;figcaption class=&quot;blocks-gallery-caption&quot;&gt;Après&lt;/figcaption&gt;
+&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><summary type="html">Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.</summary></entry><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-303&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il y a plusieurs logiciels payants/propriétaires sur différentes plateformes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.bandinabox.com/bb.php?os=win&amp;amp;lang=fr&quot;&gt;Band in a box&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.apple.com/fr/mac/garageband/&quot;&gt;irealpro&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.apple.com/fr/mac/garageband/&quot;&gt;Garage band&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jjazzlab.com/en/&quot;&gt;Jjazzlabs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;J’ai découvert ce dernier récemment en naviguant sur le site &lt;a href=&quot;http://linuxmao.org/JJazzLab&quot;&gt;Linux Mao&lt;/a&gt;. Il a l’avantage d’être gratuit (&lt;a href=&quot;https://github.com/jjazzboss/JJazzLab-X&quot;&gt;le moteur est sous licence LGPL 3.0&lt;/a&gt;, pas le logiciel en tant que tel), de fonctionner sous GNU/LINUX, d’ offrir un son pas mal du tout et de permettre la configuration de la dynamique au fur et à mesure du morceau.&lt;/p&gt;
+
+&lt;p&gt;Je vais expliquer comment l’installer sur &lt;a href=&quot;https://www.debian.org/&quot;&gt;Debian&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-midi&quot;&gt;Configuration Midi&lt;/h2&gt;
+
+&lt;h3 id=&quot;activation-des-périphériques-virtuels-midi&quot;&gt;Activation des périphériques virtuels MIDI&lt;/h3&gt;
+
+&lt;p&gt;Créer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/modules.load.d/midi.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite créer le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/modprobe.d/midi.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Logiquement à ce stade, lors du prochain reboot, vous aurez un périphérique virtuel MIDI activé. En attendant vous pouvez lancer la commande suivante&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;modprobe&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;synthétiser-du-midi&quot;&gt;Synthétiser du MIDI&lt;/h3&gt;
+
+&lt;p&gt;Pour faire fonctionner ce logiciel, il faut installer une banque de son ( &lt;a href=&quot;https://fr.wikipedia.org/wiki/SoundFont&quot;&gt;au format SF2&lt;/a&gt;) et un logiciel permettant de l’utiliser pour synthétiser du MIDI.&lt;br /&gt;
+La banque de son recommandée est disponible via &lt;a href=&quot;https://musical-artifacts.com/artifacts/1036&quot;&gt;ce lien&lt;/a&gt;. Téléchargez là et copiez la dans un répertoire accessible.&lt;/p&gt;
+
+&lt;p&gt;Pour le second, il vous faudra installer &lt;a href=&quot;http://www.fluidsynth.org/&quot;&gt;fluidsynth&lt;/a&gt;. Voic les quelques commandes à lancer:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fluid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qsynth&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;petite-vérification&quot;&gt;Petite vérification…&lt;/h3&gt;
+
+&lt;p&gt;Avant d’ aller plus loin dans la configuration de fluidsynth, vous pouvez vous assurer que tout est OK &lt;a href=&quot;https://en.wikipedia.org/wiki/File:MIDI_sample.mid?qsrc=3044&quot;&gt;en récupérant un fichier MIDI&lt;/a&gt; et en lançant la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fluidsynth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pulseaudio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alsa_seq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Linux&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SoundFont&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sf2&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;MIDI_sample&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mid&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Normalement vous devriez avoir du son.&lt;/p&gt;
+
+&lt;h3 id=&quot;configurer-fluidsynth&quot;&gt;Configurer fluidsynth&lt;/h3&gt;
+
+&lt;p&gt;Lancez qsynth et cliquez sur le bouton « configuration »&lt;/p&gt;
+
+&lt;p&gt;Vous trouverez ci-dessous la configuration que j’ai appliqué. Elle diffère légèrement de &lt;a href=&quot;https://www.jjazzlab.com/en/doc/fluidsynth/&quot;&gt;celle présentée dans la documentation&lt;/a&gt;.&lt;figure class=&quot;wp-block-gallery columns-3 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png?w=656&quot; alt=&quot;&quot; data-id=&quot;307&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-04-39/&quot; class=&quot;wp-image-307&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png?w=656&quot; alt=&quot;&quot; data-id=&quot;308&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-05-02/&quot; class=&quot;wp-image-308&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png?w=656&quot; alt=&quot;&quot; data-id=&quot;309&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-05-13/&quot; class=&quot;wp-image-309&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Pensez à redémarrer fluidsynth après application de ces nouveaux paramètres.&lt;/p&gt;
+
+&lt;h3 id=&quot;configurer-aconnect&quot;&gt;Configurer aconnect&lt;/h3&gt;
+
+&lt;p&gt;Disclaimer: La c’est la partie la plus obscure…&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image is-style-default&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-312&quot; width=&quot;247&quot; height=&quot;302&quot; srcset=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png 819w, /assets/images/2020/04/pegi_18_annotated_2009-2010-246x300.png 246w, /assets/images/2020/04/pegi_18_annotated_2009-2010-768x938.png 768w&quot; sizes=&quot;(max-width: 247px) 100vw, 247px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il faut maintenant « brancher » la sortie du synthétiseur virtuel MIDI à fluidsynth pour que le son MIDI soit interprété par ce dernier à travers sa banque de son. Ce n’est pas intuitif, je vous avais prévenu …&lt;br /&gt;
+Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de console est plus parlante ( c’est pour dire ) .&lt;/p&gt;
+
+&lt;p&gt;Exécutez la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aconnect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lo&lt;/span&gt;                                            
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Virtual&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Raw&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;card&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;VirMIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;FLUID&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JJLAB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utilisateur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17838&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;JJLAB:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dans mon cas, je vais avoir à connecter le client 24:0 au synthétiseur 128:0 grâce à la commande :&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aconnect&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant, si on relance la commande &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aconnect -lo&lt;/code&gt; on obtient le résultat suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Virtual&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Raw&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;card&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;VirMIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+	&lt;span class=&quot;nc&quot;&gt;Connexion&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;À:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;FLUID&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JJLAB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utilisateur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17838&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;JJLAB:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+	&lt;span class=&quot;nc&quot;&gt;Connecté&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Depuis:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Attention, cette commande devra être lancée ( ainsi que fluidsynth) avant chaque démarrage de jjazzlab.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation-de-jjazzlab&quot;&gt;Installation de Jjazzlab&lt;/h2&gt;
+
+&lt;p&gt;Téléchargez les binaires sur &lt;a href=&quot;https://www.jjazzlab.com/en/download/&quot;&gt;ce site&lt;/a&gt;, puis décompressez l’archive dans le répertoire &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opt&lt;/code&gt; par ex.&lt;/p&gt;
+
+&lt;p&gt;Vous devez également installer java&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;openjdk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jdk&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous devez créer le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.local/share/applications/jjazzlab.desktop&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Desktop&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Entry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;GenericName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Icon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/opt/JJazzLab-2.0-Linux/bin/jjazzlab&quot;&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Terminal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Categories&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Audio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;AudioVideo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant vous pouvez directement démarrer JJazzlab via le menu.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
+
+&lt;p&gt;Une fois jjazzlab démarré, vous devez aller dans le menu « Tools&amp;gt;Options » et sélectionnez les valeurs suivantes:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;750&quot; height=&quot;692&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png?w=750&quot; alt=&quot;&quot; class=&quot;wp-image-316&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png 750w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27-300x277.png 300w&quot; sizes=&quot;(max-width: 750px) 100vw, 750px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Ouvrez un fichier example (ex. sunny )&lt;/p&gt;
+
+&lt;p&gt;Cliquez sur le menu décrit par un clavier&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;341&quot; height=&quot;48&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png?w=341&quot; alt=&quot;&quot; class=&quot;wp-image-317&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png 341w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11-300x42.png 300w&quot; sizes=&quot;(max-width: 341px) 100vw, 341px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Puis configurez comme suit:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;828&quot; height=&quot;591&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png?w=828&quot; alt=&quot;&quot; class=&quot;wp-image-318&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png 828w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04-300x214.png 300w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04-768x548.png 768w&quot; sizes=&quot;(max-width: 828px) 100vw, 828px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Maintenant vous pouvez &lt;a href=&quot;https://www.jjazzlab.com/docs/JJazzLab-Realbook.zip&quot;&gt;télécharger les standards fournis sur le site&lt;/a&gt; et improviser dessus 🙂&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="musique" /><category term="planetlibre" /><summary type="html">Avec les contraintes liées au confinement, les répétitions se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.</summary></entry><entry><title type="html">Erreur 139 à l’exécution d’un container docker</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/" rel="alternate" type="text/html" title="Erreur 139 à l’exécution d’un container docker" /><published>2020-04-01T09:09:44+00:00</published><updated>2020-04-01T09:09:44+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/">&lt;p&gt;Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une &lt;a href=&quot;https://medium.com/better-programming/understanding-docker-container-exit-codes-5ee79a1d58f6&quot;&gt;erreur SIGSEGV 139&lt;/a&gt;. Un crash avec aucune log.&lt;/p&gt;
+
+&lt;p&gt;Bref que du bonheur 🙂&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/man-person-street-shoes-2882.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-295&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Avant d’aller plus loin voici mon environnement:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.debian.org/&quot;&gt;Debian 10&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/debian/&quot;&gt;Docker CE&lt;/a&gt; 19.03.8&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Après quelques recherches, je me suis rendu compte qu’on pouvait reproduire ce comportement en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;gcc:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une des raisons trouvées serait &lt;a href=&quot;https://github.com/moby/moby/issues/28705&quot;&gt;un problème de compatibilité avec le noyau 4.8.5&lt;/a&gt; (oui ça remonte…).&lt;br /&gt;
+Une solution est d’activer l’émulation &lt;a href=&quot;https://davisdoesdownunder.blogspot.com/2011/02/linux-syscall-vsyscall-and-vdso-oh-my.html&quot;&gt;vsyscall&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Voici la configuration à effectuer:&lt;br /&gt;
+Dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt;, ajouter la ligne suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;quiet vsyscall=emulate&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grub&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reboot&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant le container devrait pouvoir s’exécuter correctement.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une erreur SIGSEGV 139. Un crash avec aucune log.</summary></entry><entry><title type="html">Ansible pour les provisionner tous !</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/06/25/ansible-pour-les-provisionner-tous/" rel="alternate" type="text/html" title="Ansible pour les provisionner tous !" /><published>2019-06-25T09:34:51+00:00</published><updated>2019-06-25T09:34:51+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/06/25/ansible-pour-les-provisionner-tous</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/06/25/ansible-pour-les-provisionner-tous/">&lt;p&gt;Si vous &lt;a href=&quot;http://blog.touret.info/2018/03/15/installation-de-vagrant/&quot;&gt;provisionnez vos VM VirtualBox avec Vagrant&lt;/a&gt;, vous avez sans doute eu l’idée d’automatiser le provisionning des machines virtuelles. Dans mon cas une VM GNU/Linux basée sur Debian 9.&lt;/p&gt;
+
+&lt;p&gt;Pour cela, soit vous faite tout manuellement et après les mises à jour deviennent fastidieuses, soit vous appliquez un script shell au démarrage de vagrant, soit vous utilisez &lt;a href=&quot;https://www.ansible.com/&quot;&gt;Ansible.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-180 aligncenter&quot; src=&quot;/assets/images/2019/06/ansible_logo.svg_.png?w=244&quot; alt=&quot;&quot; width=&quot;244&quot; height=&quot;300&quot; srcset=&quot;/assets/images/2019/06/ansible_logo.svg_.png 832w, /assets/images/2019/06/ansible_logo.svg_-244x300.png 244w, /assets/images/2019/06/ansible_logo.svg_-768x945.png 768w&quot; sizes=&quot;(max-width: 244px) 100vw, 244px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Ansible est un outil opensource permettant d’automatiser le provisionning et la mise à jour des environnements à distance (via SSH). L’avantage par rapport à des outils tels que &lt;a href=&quot;https://puppet.com&quot;&gt;Puppet&lt;/a&gt;, est qu’il ne nécessite pas l’installation &lt;a href=&quot;https://puppet.com/docs/puppet/6.0/man/agent.html&quot;&gt;d’agent.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Je vais essayer de vous montrer comment mettre en place le provisionning via Ansible pour &lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;VirtualBox&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-de-vagrant&quot;&gt;Configuration de Vagrant&lt;/h2&gt;
+
+&lt;p&gt;Dans le fichier Vagrantfile, on active le provisionning via Ansible:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config.vm.provision &quot;ansible_local&quot; 
+  do |ansible| ansible.playbook = &quot;site.yml&quot;
+  ansible.install_mode = &quot;pip&quot;
+  ansible.version = &quot;2.7.10&quot;
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Cette configuration fait référence à un fichier « playbook » site.yml. C’est la configuration qui sera appliqué lors du provisionning . Que ça soit à la création ou pour les mises à jour.&lt;/p&gt;
+
+&lt;p&gt;Voici un exemple de contenu:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;VirtualBox&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;all&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;become_user&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;root&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;become_method&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sudo&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;roles&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;common&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;vars_files&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;vars/environment.yml&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ce fichier est la racine de notre configuration Ansible. On y référence les rôles appliqués et les fichiers d’ environnement. Voici un exemple de rôle:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Remove&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;useless&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;the&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cache&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;autoclean&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;force_apt_get&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Remove&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;that&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;are&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;longer&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;required&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;autoremove&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;force_apt_get&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Update&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;and&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(may&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;take&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;while)&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dist&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;force_apt_get&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Install&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;useful&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;gcc&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;g++&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;...&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;zsh&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;firewalld&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;present&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;update_cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;no&lt;/span&gt; 
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ansible create directory example&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/.m2&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;directory&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Install Maven settings.xml&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;settings.xml&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/.m2/settings.xml&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Install&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Maven&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;curl&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-sL&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;http://mirror.ibcp.fr/pub/apache/maven/maven-3//binaries/apache-maven--bin.tar.gz&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-o&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/opt/apache-maven.tar.gz&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;tar&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-zxf&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/opt/apache-maven.tar.gz&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-C&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/opt&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become_user&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;become_method&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sudo&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Change&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Maven&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Rights&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/opt/*&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;touch&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;modification_time&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;preserve&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;access_time&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;preserve&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Les variables d’environnement permettent de variabiliser certains champs de vos rôles. On peut trouver par exemple les versions de certains outils déployés&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;maven_version: 3.5.4
+username: vagrant
+home: /home/vagrant
+docker_compose_version: 1.22.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Il y a &lt;a href=&quot;https://docs.ansible.com/ansible/latest/modules/modules_by_category.html&quot;&gt;une quantité impressionnante de modules Ansible que l’on peut utiliser&lt;/a&gt;. Que ça soit pour lancer des commandes shell ou lancer des services. Contrairement à la création d’un script shell qui pourrait faire les mêmes actions à la création, on peut facilement gérer la mise à jour de la VM car Ansible détecte les modifications lors de son exécution.&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-spécifique-pour-virtualbox&quot;&gt;Configuration spécifique pour VirtualBox&lt;/h3&gt;
+
+&lt;p&gt;Pour VirtualBox, j’ai ajouté deux fichiers de configuration supplémentaires à la racine:&lt;/p&gt;
+
+&lt;h5 id=&quot;ansiblecfg&quot;&gt;ansible.cfg&lt;/h5&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[defaults]&lt;/span&gt;
+  &lt;span class=&quot;py&quot;&gt;hostfile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;hosts&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;hosts&quot;&gt;hosts&lt;/h5&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[local]&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;localhost&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;ansible_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;local&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;provisionning&quot;&gt;Provisionning&lt;/h2&gt;
+
+&lt;h3 id=&quot;a-la-création&quot;&gt;A la création&lt;/h3&gt;
+
+&lt;p&gt;le provisionning peut se faire au lancement de vagrant via la commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vagrant up
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Pour faire une mise à jour&lt;/p&gt;
+
+&lt;p&gt;Directement dans la box, vous pouvez lancer les commandes suivantes :&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; vboxsf vagrant /vagrant
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p dir=&quot;auto&quot;&gt;
+  Puis, vous pouvez lancer les commandes suivantes dans la box:
+&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;su -
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /vagrant
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;ANSIBLE_CONFIG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/vagrant
+ansible-playbook site.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Alexandre Touret</name></author><category term="ansible" /><category term="debian" /><category term="planetlibre" /><summary type="html">Si vous provisionnez vos VM VirtualBox avec Vagrant, vous avez sans doute eu l’idée d’automatiser le provisionning des machines virtuelles. Dans mon cas une VM GNU/Linux basée sur Debian 9.</summary></entry><entry><title type="html">Installer docker ce sur Debian 9</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/" rel="alternate" type="text/html" title="Installer docker ce sur Debian 9" /><published>2018-09-26T10:28:21+00:00</published><updated>2018-09-26T10:28:21+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/09/26/installer-docker-ce-sur-debian-9/">&lt;p&gt;Bon, ça fait quelques temps que je n’ai rien posté…&lt;br /&gt;
+Voici un rapide tuto pour installer &lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/debian/&quot;&gt;docker-ce sur une debian9&lt;/a&gt;. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-96&quot; src=&quot;/assets/images/2018/09/docker.png?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;268&quot; srcset=&quot;/assets/images/2018/09/docker.png 1354w, /assets/images/2018/09/docker-300x268.png 300w, /assets/images/2018/09/docker-1024x914.png 1024w, /assets/images/2018/09/docker-768x685.png 768w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pré-requis&quot;&gt;Pré-requis&lt;/h2&gt;
+
+&lt;p&gt;Supprimer les éventuelles installations de docker et docker-compose&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;#apt-get remove docker docker-compose&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+# apt-get install apt-transport-https ca-certificates&lt;br /&gt;
+# curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add –&lt;br /&gt;
+# add-apt-repository \&lt;br /&gt;
+“deb [arch=amd64] https://download.docker.com/linux/debian \&lt;br /&gt;
+$(lsb_release -cs) \ stable”&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;Puis lancer&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# apt update&lt;/p&gt;
+
+&lt;p&gt;# apt install docker-ce&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;h3 id=&quot;installation-de-docker-compose&quot;&gt;Installation de docker-compose&lt;/h3&gt;
+
+&lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# curl -L “https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose&lt;/p&gt;
+
+&lt;p&gt;# chmod a+x /usr/local/bin/docker-compose&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-des-droits&quot;&gt;Configuration des droits&lt;/h2&gt;
+
+&lt;p&gt;Pour lancer docker depuis un utiliser non root, il faut lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# groupadd docker&lt;/p&gt;
+
+&lt;p&gt;# adduser monutilisateur docker&lt;/p&gt;
+
+&lt;p&gt;# usermod -aG docker monutilisateur&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Après ceci, vaut mieux redémarrer le pc …&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-du-démon&quot;&gt;Configuration du démon&lt;/h2&gt;
+
+&lt;p&gt;Voici quelques config à appliquer pour que le démon soit accessible par des outils tels que le plugin maven ou encore configurer l’accès à un proxy&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-du-port&quot;&gt;Configuration du port&lt;/h3&gt;
+
+&lt;p&gt;Exécuter la commande:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# systemctl edit docker.service&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Entrer le code suivant:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;[Service]&lt;/p&gt;
+
+&lt;p&gt;ExecStart=&lt;/p&gt;
+
+&lt;p&gt;ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Et l’enregistrer sous /etc/systemd/system/docker.service.d/docker.conf&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-du-proxy&quot;&gt;Configuration du proxy&lt;/h3&gt;
+
+&lt;p&gt;Avec la même commande&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# systemctl edit docker.service&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;p&gt;Entrer la configuration suivante:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;[Service]&lt;/p&gt;
+
+&lt;p&gt;Environment=”HTTP_PROXY=http://mon_proxy:mon_port/”&lt;/p&gt;
+
+&lt;p&gt;Environment=”NO_PROXY=127.0.0.1”&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;h3 id=&quot;activation-des-configurations&quot;&gt;Activation des configurations&lt;/h3&gt;
+
+&lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;# systemctl daemon-reload # systemctl restart docker&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;validation&quot;&gt;Validation&lt;/h2&gt;
+
+&lt;p&gt;Maintenant, vous pouvez valider votre configuration avec la commande:&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;/p&gt;
+
+&lt;p&gt;$ docker run hello-world&lt;/p&gt;
+
+&lt;p&gt;[/code]&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.</summary></entry><entry><title type="html">Activer l’ equalizer sur Debian 9</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/03/25/activer-l-equalizer-sur-debian-9/" rel="alternate" type="text/html" title="Activer l’ equalizer sur Debian 9" /><published>2018-03-25T11:38:27+00:00</published><updated>2018-03-25T11:38:27+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/03/25/activer-l-equalizer-sur-debian-9</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/03/25/activer-l-equalizer-sur-debian-9/">&lt;p&gt;Et oui, il y a un equalizer dans debian….&lt;a href=&quot;https://www.freedesktop.org/wiki/Software/PulseAudio/&quot;&gt;Pulse Audio dispose d’un equalizer&lt;/a&gt;. Bon ce n’est encore très user friendly, mais ça fonctionne!&lt;/p&gt;
+
+&lt;h2 id=&quot;installation-de-lequalizer&quot;&gt;Installation de l’equalizer&lt;/h2&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+#apt-get install pulseaudio-equalizer&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;activation&quot;&gt;Activation&lt;/h2&gt;
+
+&lt;p&gt;Ajouter les lignes suivantes dans le fichier /etc/pulse/default.pa&lt;/p&gt;
+
+&lt;p&gt;[code language= »text »]&lt;br /&gt;
+load-module module-equalizer-sink&lt;br /&gt;
+load-module module-dbus-protocol&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;Relancer le démon pulseaudio&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+# pulseaudio -k &amp;amp;&amp;amp; pulseaudio -D&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;A ce stade, vous devriez avoir dans le panneau de configuration la référence à l’equalizer&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-74&quot; src=&quot;/assets/images/2018/03/sc3a9lection_001.png&quot; alt=&quot;Sélection_001&quot; width=&quot;431&quot; height=&quot;177&quot; srcset=&quot;/assets/images/2018/03/sc3a9lection_001.png 431w, /assets/images/2018/03/sc3a9lection_001-300x123.png 300w&quot; sizes=&quot;(max-width: 431px) 100vw, 431px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;lancement&quot;&gt;Lancement&lt;/h2&gt;
+
+&lt;p&gt;En ligne de commande ( je vous disais que ce n’était pas trop user-friendly), lancer la commande&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+$ qpaeq &amp;amp;&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;On obtient cette interface:&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-75&quot; src=&quot;/assets/images/2018/03/qpaeq_002.png&quot; alt=&quot;qpaeq_002&quot; width=&quot;1382&quot; height=&quot;368&quot; srcset=&quot;/assets/images/2018/03/qpaeq_002.png 1382w, /assets/images/2018/03/qpaeq_002-300x80.png 300w, /assets/images/2018/03/qpaeq_002-1024x273.png 1024w, /assets/images/2018/03/qpaeq_002-768x205.png 768w&quot; sizes=&quot;(max-width: 1382px) 100vw, 1382px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Arrivé à ce niveau, je suis quand même un peu déçu/ Il n’y a pas une vrai intégration dans debian ( pas de lanceur pour l’equalizer ) et il n’y a pas de presets configurés ( #souvienstoiwinamp)&lt;/p&gt;
+
+&lt;p&gt;J’ai essayé de poster mon soucis sur IRC, mais je n’ai pas encore eu de réponse. Je pense soumettre un bug dans les prochains jours.&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><category term="pulseaudio" /><summary type="html">Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne!</summary></entry><entry><title type="html">Ma Configuration Debian 9</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/02/10/ma-configuration-debian-9/" rel="alternate" type="text/html" title="Ma Configuration Debian 9" /><published>2018-02-10T07:58:47+00:00</published><updated>2018-02-10T07:58:47+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/02/10/ma-configuration-debian-9</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/02/10/ma-configuration-debian-9/">&lt;p&gt;Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot; size-full wp-image-39 aligncenter&quot; src=&quot;/assets/images/2018/02/220px-debian-openlogo-svg.png&quot; alt=&quot;220px-Debian-OpenLogo.svg&quot; width=&quot;220&quot; height=&quot;291&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Voici ce que j’ai réalisé post-installation:&lt;/p&gt;
+
+&lt;h2 id=&quot;ajout-dépôts-supplémentaires&quot;&gt;Ajout dépôts supplémentaires&lt;/h2&gt;
+
+&lt;p&gt;Dans le fichier /etc/apt/sources.list, ajouter les repo contrib et non-free . Activer également les mises à jour de sécurité.&lt;/p&gt;
+
+&lt;pre&gt;deb http://ftp.fr.debian.org/debian/ stretch main non-free contrib
+deb-src http://ftp.fr.debian.org/debian/ stretch main non-free contrib
+
+deb http://security.debian.org/debian-security stretch/updates main non-free contrib
+deb-src http://security.debian.org/debian-security stretch/updates main non-free contrib
+
+# stretch-updates, previously known as 'volatile'
+deb http://ftp.fr.debian.org/debian/ stretch-updates main non-free contrib
+deb-src http://ftp.fr.debian.org/debian/ stretch-updates main non-free contrib
+```
+
+
+## Logiciels tiers
+
+### Etcher
+
+    #echo &quot;deb https://dl.bintray.com/resin-io/debian stable etcher&quot; | sudo tee /etc/apt/sources.list.d/etcher.list
+    
+
+&lt;div class=&quot;highlight highlight-source-shell&quot;&gt;
+  &lt;pre&gt;#apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 379CE192D401AB61
+```
+
+&amp;lt;/div&amp;gt;
+
+### Virtualbox
+
+&lt;pre&gt;# wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+```
+
+
+Dans le fichier /etc/apt/sources.list.d/virtualbox.list
+
+&lt;pre&gt;deb https://download.virtualbox.org/virtualbox/debian stretch contrib
+```
+
+
+### Spotify
+
+Dans le fichier /etc/apt/sources.list.d/spotify.list
+
+&lt;pre&gt;deb http://repository.spotify.com stable non-free
+```
+
+
+## Installation paquets supplémentaires
+
+&lt;pre&gt;# apt-get update
+# apt-get install firmware-iwlwifi virtualbox-5.2\
+ttf-mscorefonts-installer easytag tuxguitar-jsa htop\
+ frescobaldi gparted grsync ntfs-config chromium autofs\
+ openjdk-8-jdk openjdk-8-jre gnome-tweak-tool ntfs-config \
+ntfs-3g cifs-utils geogebra-gnome arduino libmediainfo \
+libmediainfo0v5 network-manager-openvpn-gnome dirmngr \
+spotify-client spotify-client-gnome-support \
+ etcher apt-transport-https etcher-electron vim \
+fonts-powerline audacity ffmpeg lame unrar rar gdebi \
+sound-juicer traceroute scala net-tools nmap \
+gnome-shell-pomodoro hplip dig dnsutils build-essential \
+linux-headers-amd64 firmware-linux-nonfree lshw ethtool \
+libsane-hpaio xsane autofs vlc
+```
+
+
+## Configuration autofs
+
+Pour ceux qui ne connaissent pas , [autofs](https://wiki.debian.org/AutoFs) est un outil permettant de monter directement des partages [nfs](https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux) et cicfs à l&amp;rsquo;utilisation et non au démarrage de l&amp;rsquo;ordinateur.
+
+Dans le fichier /etc/auto.master
+
+&lt;pre&gt;/mnt/SERV1/nfs /etc/auto.nfs --ghost, --timeout=60 
+/mnt/SERV1/cifs /etc/auto.SERV1.cifs --ghost, --timeout=60 
+/mnt/SERV2 /etc/auto.cifs --ghost, --timeout=60
+```
+
+
+ensuite insérer la configuration adéquate dans les fichiers référencés :
+
+### auto.cicfs
+
+&lt;pre&gt;data -fstype=cifs,credentials=/home/USER/.cred-file,user=littlewing,uid=1000,gid=1000 ://192.168.0.XX/REPERTOIRE
+```
+
+
+Les identifiants / mots de passe sont stockés dans un fichier .cred-file stocké à la racine du répertoire utilisateur.
+
+Voici un exemple :
+
+&lt;pre&gt;username=user
+password=password
+```
+
+
+Le fichier auto.SERV1.cifs reprend la même structure
+
+### auto.nfs
+
+&lt;pre&gt;REP1 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP1
+REP2 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP2
+```
+
+
+## Installation d&amp;rsquo;atom
+
+J&amp;rsquo;ai choisi d&amp;rsquo;installer [atom](https://atom.io/) via le package .deb fourni par [github](http://github.com/). Afin d&amp;rsquo;automatiser l&amp;rsquo;installation et la mise à jour, voici le script que j&amp;rsquo;ai réalisé :
+
+&lt;pre&gt;#!/bin/sh
+SETUP_ROOT=/tmp
+wget -O $SETUP_ROOT/atom.deb &quot;https://atom.io/download/deb&quot;
+echo &quot;Installation du paquet...&quot;
+dpkg -i $SETUP_ROOT/atom.deb
+echo &quot;Fini :)&quot;
+```
+
+
+Ce script est placé dans le répertoire /usr/local/sbin et lancé comme suit :
+
+&lt;pre&gt;# upgrade-atom.sh
+```
+
+
+## Installation de Firefox
+
+Afin d&amp;rsquo;avoir la dernière version de firefox, voici le script que j&amp;rsquo;ai réalisé:
+
+&lt;pre&gt;#!/bin/sh
+SETUP_ROOT=/tmp
+BIN_ROOT=/usr/local/firefox
+DATE=`date +%Y-%m-%d`
+OLD_EXE=/usr/lib/firefox-esr/firefox-esr
+wget -O $SETUP_ROOT/FirefoxSetup.tar.bz2 &quot;https://download.mozilla.org/?product=firefox-latest&amp;amp;os=linux64&amp;amp;lang=fr&quot;
+echo &quot;Extraction de l'archive...&quot;
+tar xjf $SETUP_ROOT/FirefoxSetup.tar.bz2 -C /usr/local
+echo &quot;Changement des droits utilisateur&quot;
+chown -R :users $BIN_ROOT
+chmod a+x $BIN_ROOT/firefox
+echo &quot;Sauvegarde de l'ancien binaire et Creation des liens symboliques&quot;
+if [ -e $OLD_EXE ]
+then
+ OLD_BINARY=${OLD_EXE}_orig_${DATE}
+ mv $OLD_EXE $OLD_BINARY
+fi 
+ln -s $BIN_ROOT/firefox $OLD_EXE
+chmod a+x $OLD_EXE
+echo &quot;Fini :)&quot;
+```
+
+
+## Minecraft
+
+Voila l&amp;rsquo;étape la plus importante, du moins pour mes enfants &amp;#8230;
+
+J&amp;rsquo;ai crée le script /usr/local/bin/minecraft.sh
+
+&lt;pre&gt;#!/bin/bash
+cd /usr/local/minecraft
+java -Xmx1G -Xms512M -cp /usr/local/minecraft/Minecraft.jar net.minecraft.bootstrap.Bootstrap
+```
+
+
+J&amp;rsquo;ai placé le JAR en question dans le répertoire /usr/local/minecraft.
+
+Enfin, j&amp;rsquo;ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop
+
+&lt;pre&gt;[Desktop Entry] 
+Name=Minecraft
+Comment=
+Categories=Game;BoardGame;
+Exec=/usr/local/bin/minecraft.sh
+Icon=Minecraft_Block
+Terminal=false
+Type=Application
+StartupNotify=true
+```
+
+
+J&amp;rsquo;ai également mis une icone SVG dans le répertoire /usr/share/icons/
+
+## Optimisation du boot
+
+Après toutes ces installations, il faut vérifier que les performances, notamment au démarrage ne sont pas trop altérées
+
+Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze
+
+&lt;pre&gt;#systemd-analyze blame
+ 8.113s NetworkManager-wait-online.service
+ 2.549s apt-daily-upgrade.service
+ 803ms networking.service
+ 228ms colord.service
+ 213ms dev-sda1.device
+ 145ms systemd-timesyncd.service
+ 128ms ModemManager.service
+ 102ms autofs.service
+....
+```
+
+
+On peut également voir le chemin critique avec cette commande:
+
+&lt;pre&gt;#systemd-analyze critical-chain 
+The time after the unit is active or started is printed after the &quot;@&quot; character.
+The time the unit takes to start is printed after the &quot;+&quot; character.
+
+graphical.target @8.944s
+└─multi-user.target @8.944s
+ └─autofs.service @8.841s +102ms
+ └─network-online.target @8.841s
+ └─NetworkManager-wait-online.service @723ms +8.113s
+ └─NetworkManager.service @642ms +80ms
+ └─dbus.service @612ms
+ └─basic.target @612ms
+ └─paths.target @612ms
+ └─acpid.path @610ms
+ └─sysinit.target @608ms
+ └─systemd-backlight@backlight:acpi_video0.service @1.042s +8ms
+ └─system-systemd\x2dbacklight.slice @1.042s
+ └─system.slice @119ms
+ └─-.slice @108ms
+```
+
+
+### Désactivation des services
+
+Par exemple, si vous voulez désactiver le service virtualbox au démarrage
+
+&lt;pre&gt;# systemctl disable vboxautostart-service.service
+```
+
+
+et ainsi de suite pour tous les services inutiles au démarrage
+
+## Analyse du démarrage d&amp;rsquo;un service
+
+Pour analyser le démarrage d&amp;rsquo;un service, on peut utiliser la commande journalctl
+
+&lt;pre&gt;# journalctl -b -u NetworkManager-wait-online.service
+```
+
+
+&amp;nbsp;
+
+## Conclusion
+
+Après toutes ces étapes, j&amp;rsquo;ai un système opérationnel. Il manque pas mal d&amp;rsquo;outils ( ex. maven, npm, intellij,&amp;#8230;). Ces outils tiennent plus du poste de développement.
+
+&amp;nbsp;
+
+&amp;nbsp;
+
+&amp;nbsp;
+&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="debian" /><summary type="html">Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .</summary></entry></feed>

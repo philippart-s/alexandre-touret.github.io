@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/tourainetech.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/tourainetech.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Objectif Top Architecte !</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/01/14/objectif-top-architecte/" rel="alternate" type="text/html" title="Objectif Top Architecte !" /><published>2019-01-14T09:26:03+00:00</published><updated>2019-01-14T09:26:03+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/01/14/objectif-top-architecte</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/01/14/objectif-top-architecte/">&lt;p&gt;Voila la description de la conférence/ hands que j’animerai &lt;a href=&quot;https://touraine.tech/&quot;&gt;au Touraine Tech&lt;/a&gt; est en ligne 🙂&lt;br /&gt;
+Vous trouverez le descriptif sur &lt;a href=&quot;https://touraine.tech/talk/S9ZLyJUENzGxFWPwUEfz&quot;&gt;cette page.&lt;/a&gt;&lt;br /&gt;
+&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-123 aligncenter&quot; src=&quot;/assets/images/2018/12/touraine_tech.png?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;300&quot; srcset=&quot;/assets/images/2018/12/touraine_tech.png 400w, /assets/images/2018/12/touraine_tech-300x300.png 300w, /assets/images/2018/12/touraine_tech-150x150.png 150w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt; Bon maintenant, je n’ai plus qu’à préparer mes slides …. 🙂&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="tourainetech" /><summary type="html">Voila la description de la conférence/ hands que j’animerai au Touraine Tech est en ligne 🙂 Vous trouverez le descriptif sur cette page. Bon maintenant, je n’ai plus qu’à préparer mes slides …. 🙂</summary></entry><entry><title type="html">Touraine Tech 2019</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/12/25/touraine-tech-2019/" rel="alternate" type="text/html" title="Touraine Tech 2019" /><published>2018-12-25T16:24:29+00:00</published><updated>2018-12-25T16:24:29+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/12/25/touraine-tech-2019</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/12/25/touraine-tech-2019/">&lt;p&gt;Mon sujet de talk « Objectif Top Architecte » a été retenu pour l’édition 2019 de &lt;a href=&quot;https://touraine.tech/&quot;&gt;Touraine Tech&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p style=&quot;text-align:center;&quot;&gt;
+  &lt;strong&gt;Réservez le 1 février 2019 dans votre agenda !&lt;/strong&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-123 aligncenter&quot; src=&quot;/assets/images/2018/12/touraine_tech.png?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;300&quot; srcset=&quot;/assets/images/2018/12/touraine_tech.png 400w, /assets/images/2018/12/touraine_tech-300x300.png 300w, /assets/images/2018/12/touraine_tech-150x150.png 150w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tout d’abord merci aux organisateurs pour leur confiance. Je suis vraiment  honoré d’être sélectionné une deuxième année consécutive.&lt;/p&gt;
+
+&lt;p&gt;Cette année, j’animerai un hands on sur l’architecture. Je vais tâcher de vulgariser quelques principes qui me paraissent importants et animer un « coding dojo de l’architecture ».&lt;/p&gt;
+
+&lt;p&gt;Pas besoin d’être architecte ou (&lt;em&gt;vraiment, … mais vraiment pas besoin&lt;/em&gt;) d’avoir une certification TOGAF pour y participer 🙂&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="architecture" /><category term="conférence" /><category term="tourainetech" /><summary type="html">Mon sujet de talk « Objectif Top Architecte » a été retenu pour l’édition 2019 de Touraine Tech.</summary></entry><entry><title type="html">Ma présentation au Touraine Tech</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/02/26/ma-presentation-au-touraine-tech/" rel="alternate" type="text/html" title="Ma présentation au Touraine Tech" /><published>2018-02-26T13:32:31+00:00</published><updated>2018-02-26T13:32:31+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/02/26/ma-presentation-au-touraine-tech</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/02/26/ma-presentation-au-touraine-tech/">&lt;p&gt;J’ai eu la chance d’être sélectionné pour la première édition de la conférence &lt;a href=&quot;https://touraine.tech/&quot;&gt;TouraineTech&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;  wp-image-65 alignright&quot; src=&quot;/assets/images/2018/02/logotnt_final.jpg&quot; alt=&quot;logotnt_final&quot; width=&quot;296&quot; height=&quot;213&quot; srcset=&quot;/assets/images/2018/02/logotnt_final.jpg 500w, /assets/images/2018/02/logotnt_final-300x216.jpg 300w&quot; sizes=&quot;(max-width: 296px) 100vw, 296px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tout d’abord, je tiens à remercier toute l’équipe du Touraine Tech pour l’accueil et l’organisation de cette conférence.&lt;/p&gt;
+
+&lt;p&gt;Ma présentation s’intitulait: &lt;a href=&quot;https://touraine.tech/agenda.html#2506&quot;&gt;Jenkins2 le retour (d’expérience)&lt;/a&gt;. Je faisais un retour d’expérience sur la mise en œuvre de Jenkins 2 et des pipelines. Elle était au format quickie  (15mn).&lt;/p&gt;
+
+&lt;p&gt;Vous trouverez ci-dessous les slides :&lt;/p&gt;
+
+&lt;p&gt;[slideshare id=88734810&amp;amp;doc=jenkins2tourainetech-180223162223]&lt;/p&gt;
+
+&lt;p&gt;J’ai pas mal préparé la présentation car c’était ma première dans ce domaine. Je trouve que ça s’est pas trop mal passé. J’ai fait quelques erreurs dans mes slides ou tout du moins je trouve que je n’ai pas eu l’effet escompté. Quoi qu’il en soit, je suis plutôt content du résultat.&lt;/p&gt;
+
+&lt;p&gt;Les retours ont été assez satisfaisants. Voici le retour des participants :&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-64&quot; src=&quot;/assets/images/2018/02/img_0161.jpg&quot; alt=&quot;IMG_0161&quot; width=&quot;4032&quot; height=&quot;3024&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pour ceux qui regrettaient de ne pas avoir de démos, j’en suis désolé, mais le format de 15mn ne s’y prêtait pas trop . Si j’avais eu plus de temps, j’aurai fait des démonstrations qui auraient beaucoup mieux illustré mon propos.&lt;/p&gt;
+
+&lt;p&gt;Pour conclure, je pense rééditer cette expérience. Ça m’a vraiment plu. Je n’ai plus qu’à trouver un sujet pour l’édition 2019 de Touraine Tech 🙂&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="tourainetech" /><summary type="html">J’ai eu la chance d’être sélectionné pour la première édition de la conférence TouraineTech.</summary></entry></feed>

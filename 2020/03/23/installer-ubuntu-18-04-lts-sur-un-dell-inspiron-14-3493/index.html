@@ -1,0 +1,729 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493 - blog.touret.info</title>
+<meta name="description" content="Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).  N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un Dell Inspiron 14-3493.">
+
+
+  <meta name="author" content="Alexandre Touret">
+  
+  <meta property="article:author" content="Alexandre Touret">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr">
+<meta property="og:site_name" content="blog.touret.info">
+<meta property="og:title" content="Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493">
+<meta property="og:url" content="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/">
+
+
+  <meta property="og:description" content="Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).  N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un Dell Inspiron 14-3493.">
+
+
+
+  <meta property="og:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/2020/03/dell-inspiron-14-3493.jpg">
+
+
+
+  <meta name="twitter:site" content="@touret_alex">
+  <meta name="twitter:title" content="Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493">
+  <meta name="twitter:description" content="Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).  N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un Dell Inspiron 14-3493.">
+  <meta name="twitter:url" content="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://blog.touret.info/pages/alexandre-touret/assets/images/2020/03/dell-inspiron-14-3493.jpg">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2020-03-23T10:06:09+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://blog.touret.info/pages/alexandre-touret/",
+      "sameAs": ["https://twitter.com/touret_alex","https://www.linkedin.com/in/atouret"]
+    
+  }
+</script>
+
+
+
+  <meta name="msvalidate.01" content="F9655A4C8648E42154ECB4B4D6CF60A2">
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/pages/alexandre-touret/feed.xml" type="application/atom+xml" rel="alternate" title="blog.touret.info Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/pages/alexandre-touret/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/pages/alexandre-touret/">
+          blog.touret.info
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/talks/">Talks</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/a-propos/">A propos</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pages/alexandre-touret/contact/">Contact</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://blog.touret.info/pages/alexandre-touret/">
+        <img src="/pages/alexandre-touret/assets/images/bouletmaton1.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://blog.touret.info/pages/alexandre-touret/" itemprop="url">Alexandre Touret</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Architecte logiciel, développeur, bidouilleur (dans le désordre)</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Contact</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493">
+    <meta itemprop="description" content="Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un Dell Inspiron 14-3493.">
+    <meta itemprop="datePublished" content="2020-03-23T10:06:09+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/" class="u-url" itemprop="url">Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2020-03-23T10:06:09+00:00">23/03/2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).</p>
+
+<p>N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un <a href="https://www.dell.com/gh/business/p/inspiron-14-3493-laptop/pd">Dell Inspiron 14-3493</a>.</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2020/03/dell-inspiron-14-3493.jpg?w=510" alt="" class="wp-image-279" width="576" height="401" srcset="/assets/images/2020/03/dell-inspiron-14-3493.jpg 510w, /assets/images/2020/03/dell-inspiron-14-3493-300x209.jpg 300w" sizes="(max-width: 576px) 100vw, 576px" /></figure>
+</div>
+
+<p>Je n’ai pas pris trop de risques. Bien que livré avec Windows 10, ce modèle est <a href="https://certification.ubuntu.com/hardware/201907-27239">déjà certifié compatible Ubuntu</a>.<br />
+L’installation d’<a href="https://doc.ubuntu-fr.org/Accueil">Ubuntu</a> se passe très bien. C’est plié en moins de 30mn. Du coup, je ne la détaillerai pas dans cet article – si vous êtes intéressé, vous pouvez consulter <a href="https://doc.ubuntu-fr.org/installation">cet article</a>. Pour les pré-requis, c’est une autre paire de manches …</p>
+
+<p>Voilà les différentes actions que j’ai réalisé au préalable</p>
+
+<h2 id="redémarrer-lordinateur-et-accéder-au-bios">Redémarrer l’ordinateur et accéder au BIOS</h2>
+
+<p>Là, j’ai un peu galéré pour accéder au <a href="https://fr.wikipedia.org/wiki/BIOS_(informatique)">BIOS</a>. La seule manipulation que j’ai trouvé et de lancer le menu « Démarrage avancé » puis sélectionner « Utiliser un périphérique ».</p>
+
+<p>Vous pouvez donc sélectionner le disque dur. Au boot en appuyant sur la touche F12 et/ou F2, vous pouvez accéder au BIOS.</p>
+
+<h2 id="configuration-du-bios">Configuration du BIOS</h2>
+
+<p>Voila les paramètres que j’ai appliqué:</p>
+
+<p class="has-text-align-left">
+  Dans le menu <code>"SATA Operation"</code>: vous devez sélectionner AHCI au lieu de RAID.<br />Dans le menu <code>"Change boot mode settings &gt;UEFI Boot Mode"</code> , vous devez désactiver le <code>Secure Boot</code>.<br /><br />Une fois réalisé, vous pouvez redémarrer en appuyant sur la touche F2 et/ou F12. Si vous n&rsquo;arrivez pas à revenir sur le BIOS pour indiquer de booter sur votre clé USB, vous obtiendrez un écran d&rsquo;erreur Windows dû à la configuration AHCI. Personnellement, en redémarrant une ou deux fois, j&rsquo;ai obtenu un écran de démarrage avancé qui m&rsquo;a permis de sélectionner le périphérique (ma clé USB) sur lequel démarrer.<br /><br />Maintenant vous pouvez accéder à l&rsquo;installeur Ubuntu et profiter 🙂
+</p>
+
+<h2 id="après-linstallation">Après l’installation</h2>
+
+<p>Je n’ai rien fait de particulier si ce n’est configurer le trackpad. Pour cela, j’ai <a href="https://www.omgubuntu.co.uk/2018/04/things-to-do-after-installing-ubuntu-18-04">installé gnome-tweaks</a>. Mis à part ça, tout fonctionne très bien!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags : </strong>
+    <span itemprop="keywords">
+    
+      <a href="/pages/alexandre-touret/tags/#planetlibre" class="page__taxonomy-item p-category" rel="tag">planetlibre</a><span class="sep">, </span>
+    
+      <a href="/pages/alexandre-touret/tags/#ubuntu" class="page__taxonomy-item p-category" rel="tag">ubuntu</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Mis à jour :</strong> <time class="dt-published" datetime="2020-03-23T10:06:09+00:00">23/03/2020</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Partager sur</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=touret_alex&text=Installer+Ubuntu+18.04+LTS+sur+un+Dell+Inspiron+14-3493%20https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F03%2F23%2Finstaller-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F03%2F23%2Finstaller-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblog.touret.info%2Fpages%2Falexandre-touret%2F2020%2F03%2F23%2Finstaller-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/pages/alexandre-touret/2020/02/03/passer-votre-application-java8-en-java11/" class="pagination--pager" title="Passer votre application Java8 en Java11
+">Précédent</a>
+    
+    
+      <a href="/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/" class="pagination--pager" title="Erreur 139 à l’exécution d’un container docker
+">Suivant</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">Vous pourriez aimer aussi</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="permalink">Migrer son blog Wordpress vers GitHub
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-06T10:00:00+00:00">06/12/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/07/rest-book-architecture.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="permalink">Observabilité et Circuit Breaker avec Spring
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-26T09:53:49+00:00">26/07/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/06/pexels-photo-257736.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="permalink">Ajouter un mode « maintenance » à votre API grâce à Spring boot
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-06-10T15:01:20+00:00">10/06/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/pages/alexandre-touret/assets/images/2021/05/pexels-photo-261621.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/" rel="permalink">Utiliser GPG dans WSL2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-05-03T18:47:11+00:00">03/05/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Entrez votre recherche..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Contact</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> Licence du contenu de ce site</a></li>
+        
+      
+    
+
+    
+      <li><a href="/pages/alexandre-touret/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Flux</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 blog.touret.info. Propulsé par <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/pages/alexandre-touret/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr.min.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-store.js"></script>
+<script src="/pages/alexandre-touret/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id= UA-31817514-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', ' UA-31817514-1', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

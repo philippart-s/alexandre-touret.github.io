@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/kubernetes.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/kubernetes.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">K8S, HELM et Cie: au delà de la hype</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/" rel="alternate" type="text/html" title="K8S, HELM et Cie: au delà de la hype" /><published>2020-10-08T08:09:59+00:00</published><updated>2020-10-08T08:09:59+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/">&lt;p&gt;Depuis quelques années, &lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt; (K8S) et &lt;a href=&quot;https://www.cncf.io/&quot;&gt;son écosystème&lt;/a&gt; deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme.&lt;br /&gt;
+Vous l’aurez compris, cette technologie n’échappe pas &lt;a href=&quot;https://fr.wikipedia.org/wiki/Cycle_du_hype&quot;&gt;au cycle du hype&lt;/a&gt; et à la fameuse courbe du Gartner.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;320&quot; height=&quot;208&quot; src=&quot;/assets/images/2020/10/gartner_hype_cycle.svg_.png?w=320&quot; alt=&quot;&quot; class=&quot;wp-image-445&quot; srcset=&quot;/assets/images/2020/10/gartner_hype_cycle.svg_.png 320w, /assets/images/2020/10/gartner_hype_cycle.svg_-300x195.png 300w&quot; sizes=&quot;(max-width: 320px) 100vw, 320px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Après quelques expériences sur cette plateforme ( et beaucoup sur d’autres 😀 ) je vais essayer de peser le pour et le contre qui m’apparaissent importants.&lt;br /&gt;
+Bien évidemment, ce n’est que mon avis, j’ai sans doute omis certaines informations qui pourraient être indispensables pour d’ autres.&lt;/p&gt;
+
+&lt;h2 id=&quot;pourquoi-et-dans-quelles-conditions-il-ne-faut-pas-utiliser-k8s-&quot;&gt;Pourquoi et dans quelles conditions il ne faut pas utiliser K8S ?&lt;/h2&gt;
+
+&lt;p&gt;Avant de présenter les avantages des applications cloud, je vais essayer de réaliser l’anti thèse de mon propos.&lt;/p&gt;
+
+&lt;h3 id=&quot;en-avez-vous-vraiment-besoin-&quot;&gt;En avez vous (vraiment) besoin ?&lt;/h3&gt;
+
+&lt;p&gt;Vaste sujet et question délicate pour la population informaticienne qui a tendance à suivre les tendances du marché.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash.png?w=986&quot; alt=&quot;&quot; class=&quot;wp-image-464&quot; width=&quot;611&quot; height=&quot;404&quot; srcset=&quot;/assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash.png 986w, /assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash-300x199.png 300w, /assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash-768x509.png 768w&quot; sizes=&quot;(max-width: 611px) 100vw, 611px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Avant de foncer tête baissée dans cette technologie qui est très intéressante au demeurant, il est important de se poser ces quelques questions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Est-ce que mes &lt;a href=&quot;https://fr.wikipedia.org/wiki/Service-level_objectives&quot;&gt;SLO&lt;/a&gt; sont contraignantes?&lt;/li&gt;
+  &lt;li&gt;Quel le cycle de déploiement de mes applications?&lt;/li&gt;
+  &lt;li&gt;Qui gère les environnements ?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bref, il faut savoir si le jeu en vaut la chandelle. Si vous avez une application qui doit scaler dynamiquement, encaisser les pics, et avoir du &lt;a href=&quot;https://dzone.com/articles/zero-downtime-deployment&quot;&gt;zero downtime durant les mises à jour&lt;/a&gt;, Kubernetes est fait pour vous. Si vous avez une application de gestion qui n’a pas d’exigences fortes si ce n’est de répondre aux besoins fonctionnels, l’utilisation de Kubernetes est discutable.&lt;/p&gt;
+
+&lt;h3 id=&quot;êtes-vous-taillé-pour-&quot;&gt;Êtes vous taillé pour ?&lt;/h3&gt;
+
+&lt;p&gt;Kubernetes et son écosystème peuvent s’avérer complexes à appréhender. Si votre entreprise opte pour une utilisation « &lt;a href=&quot;https://en.wikipedia.org/wiki/On-premises_software&quot;&gt;on premise&lt;/a&gt;« , c’est pire. Vous devrez avoir une équipe dédiée qui gérera cette plateforme et offrir une expertise aux équipes de développement.&lt;br /&gt;
+Ne vous trompez pas. Si votre rôle est de développer des applications métier, il vous sera très difficile d’avoir également une expertise sur l’administration de cette plateforme. Vous pourrez l’utiliser et être à l’aise, mais l’administration d’une telle technologie est très compliquée.&lt;/p&gt;
+
+&lt;p&gt;Le seul conseil que je pourrais vous donner, c’est de ne partir sur Kubernetes que si vous avez une &lt;strong&gt;équipe support à disposition&lt;/strong&gt;. C’est vrai si vous utilisez des services du Cloud tels que Google Cloud ou AWS. Ça l’est encore plus si vous utilisez des services « on premise » tels qu’ Openshift.&lt;/p&gt;
+
+&lt;h3 id=&quot;est-ce-que-vos-développements-sont-cloud-native-&quot;&gt;Est-ce que vos développements sont &lt;a href=&quot;https://www.redhat.com/fr/topics/cloud-native-apps&quot;&gt;« cloud native »&lt;/a&gt; ?&lt;/h3&gt;
+
+&lt;p&gt;Au delà de la plateforme, vous devrez monter en compétence sur le développement et la conception de vos applications.&lt;/p&gt;
+
+&lt;p&gt;Il vous faudra prendre en considération &lt;a href=&quot;https://en.wikipedia.org/wiki/Twelve-Factor_App_methodology&quot;&gt;les 12 facteurs clés&lt;/a&gt; dans vos applications. Il n’est pas forcément la peine de passer sur des microservices. Il est également possible de faire des monolithes modulaires qui peuvent être légers et stateless. Beaucoup de ces facteurs sont communément admis comme des bonnes pratiques de développement logiciel (ex. Il faut une intégration continue).&lt;/p&gt;
+
+&lt;p&gt;Aussi, cela va sans dire, il faut également monter (réellement) en compétence sur les conteneurs et leurs contraintes. Si vous n’avez pas l’habitude de travailler avec des conteneurs ( construction, déploiement, disponibilité d’une &lt;a href=&quot;https://docs.docker.com/registry/&quot;&gt;registry&lt;/a&gt;). Il est préférable de définir une trajectoire avec des étapes intermédiaires.&lt;/p&gt;
+
+&lt;p&gt;Bref, tous ces sujets doivent être adressés et compris pour toutes les parties prenantes de vos équipes que ça soit les développeurs, les chefs de projet et les équipes métiers à une moindre mesure. Cette technologie représente réellement un grand pas à franchir. Si vous ne vous sentez pas de le faire, ou si vous devez gagner en maturité sur ces sujets, attendez avant de vous lancer sur Kubernetes.&lt;/p&gt;
+
+&lt;p&gt;On ne pourra jamais vous reprocher de ne pas opter sur Kubernetes si vous ne remplissez pas tous les pré-requis. Pour ce qui est du contraire…&lt;/p&gt;
+
+&lt;h3 id=&quot;avez-vous-des-interactions-avec-des-services-tiers-qui-sont-compatible-avec-kubernetes-&quot;&gt;Avez vous des interactions avec des services tiers qui sont compatible avec Kubernetes ?&lt;/h3&gt;
+
+&lt;p&gt;Quand vous restez dans votre cluster Kubernetes, généralement, tout va bien. Dès que vous avez des interactions avec des services tiers, ça peut se compliquer.&lt;br /&gt;
+En effet, généralement vous devrez vous connecter à des services tiers qui ne sont pas orienté cloud : &lt;a href=&quot;https://en.wikipedia.org/wiki/Hardware_security_module&quot;&gt;des boitiers crypto&lt;/a&gt;, des passerelles de transfert, …&lt;br /&gt;
+Il se peut que certains protocoles soient également incompatibles avec Kubernetes. Il vous faudra vous assurer que tout la galaxie de logiciels et systèmes gravitant autour de votre application sera compatible avec une telle architecture. Ceci n’est pas une mince affaire. L’aide d’une équipe support (voir ci-dessus) vous sera d’une grande utilité.&lt;/p&gt;
+
+&lt;h2 id=&quot;pourquoi-sauter-le-pas-&quot;&gt;Pourquoi sauter le pas ?&lt;/h2&gt;
+
+&lt;h3 id=&quot;la-scalabilité-et-la-résistance-à-la-panne&quot;&gt;La scalabilité et la résistance à la panne&lt;/h3&gt;
+
+&lt;p&gt;Personnellement, la première fonctionnalité qui m’a intéressé c’est la gestion de la scalabilité. Si vous avez des objectifs de 99.9% de disponibilité. Kubernetes sera une plus value indéniable dans votre architecture. Après quelques &lt;s&gt;jours&lt;/s&gt; heures à batailler avec les fichiers YAML, vous pourrez gérer automatiquement la scalabilité en fonction de plusieurs indicateurs qu’ils soient techniques (ce sont les plus faciles à gérer) ou un peu plus métier &lt;a href=&quot;https://www.metricfire.com/blog/prometheus-metrics-based-autoscaling-in-kubernetes/&quot;&gt;en utilisant Prometheus&lt;/a&gt; – et oui encore une technologie supplémentaire à connaître.&lt;/p&gt;
+
+&lt;p&gt;En effet, au lieu de vous en soucier une fois arrivé en production, vous aurez lors du développement l’obligation de prendre en considération l’observabilité de votre application. Par exemple, vous aurez à renseigner &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;si votre application est prête et/ou disponible pour traiter les requêtes&lt;/a&gt;. Ces indicateurs vous permettront de scaler &lt;strong&gt;automatiquement&lt;/strong&gt; et de re-créer si nécessaire un &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/&quot;&gt;POD&lt;/a&gt; en cas de panne.&lt;/p&gt;
+
+&lt;p&gt;J’ai trouvé que cette pratique était vertueuse. Bien évidemment, pas besoin d’être sur Kubernetes pour avoir de l’observabilité dans des applications. Par contre, ici, c’est obligatoire et implémenté dès le développement.&lt;/p&gt;
+
+&lt;p&gt;La scalabilité automatique est aussi très intéressante. On a souvent vu des serveurs en production qui n’étaient pas suffisamment utilisés. Ici vous n’aurez que les instances nécessaires pour votre cas d’utilisation.&lt;br /&gt;
+La contrainte que l’on peut voir à cette fonctionnalité et qu’on ne maitrise pas complètement le nombre d’instances disponibles. C’est Kubernetes qui s’en charge en prenant en compte le paramétrage que vous aurez renseigné dans vos &lt;a href=&quot;https://helm.sh/docs/chart_best_practices/templates/&quot;&gt;templates HELM&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;le-déploiement&quot;&gt;Le déploiement&lt;/h3&gt;
+
+&lt;p&gt;Avant de déployer (dans la vraie vie), vous aurez à mettre en place un pipeline CI/CD qui orchestre les différents déploiements sur tous vos environnements. Attention, ce n’est pas une mince affaire 🙂 !&lt;/p&gt;
+
+&lt;p&gt;Une fois réalisé, vous verrez automatiquement le gain. Vos déploiements seront réellement fluides. Bon OK, on peut le faire sur des &lt;a href=&quot;https://en.wikipedia.org/wiki/Virtual_machine&quot;&gt;VMS&lt;/a&gt; standards. Mais on peut améliorer la procédure de déploiement pour mettre en place du &lt;a href=&quot;https://dzone.com/articles/zero-downtime-deployment&quot;&gt;zero downtime&lt;/a&gt; pour ne pas interrompre le service lors d’un déploiement.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;RollingUpdate&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;rollingUpdate&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;maxSurge&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;maxUnavailable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;linfrastructure-as-code&quot;&gt;L’Infrastructure As Code&lt;/h3&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash.png?w=683&quot; alt=&quot;&quot; class=&quot;wp-image-462&quot; width=&quot;452&quot; height=&quot;678&quot; srcset=&quot;/assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash.png 719w, /assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash-200x300.png 200w, /assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash-683x1024.png 683w&quot; sizes=&quot;(max-width: 452px) 100vw, 452px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Quand on pense à Kubernetes, et au cloud, on ne pense pas trop à l’&lt;a href=&quot;https://en.wikipedia.org/wiki/Infrastructure_as_code&quot;&gt;Infrastructure As Code&lt;/a&gt; au début. Cependant, cette pratique est pour moi l’une des plus utiles.&lt;/p&gt;
+
+&lt;p&gt;En effet, avoir votre système décrit dans des fichiers, versionnés vous permet de le tester dès le développement. Ça évite ( dans la majorité des cas ) les erreurs lors des installations d’environnement. La mise à jour des logiciels est largement accélérée.&lt;/p&gt;
+
+&lt;p&gt;Bien évidemment, il existe &lt;a href=&quot;https://www.terraform.io/&quot;&gt;Terraform&lt;/a&gt; et &lt;a href=&quot;https://www.ansible.com/&quot;&gt;Ansible&lt;/a&gt; pour le provisionning des environnements. Ici je trouve qu’on pousse le concept encore plus loin. L’automatisation est à mon avis poussé à paroxysme.&lt;br /&gt;
+Prenons par exemple la gestion des systèmes d’exploitation. La mise à jour sur des serveurs physiques ou virtuels peut prendre énormément de temps et générer des erreurs. Avec de l’infra as code, ceci est testé et validé automatiquement via des tests unitaires dès l’environnement de développement.&lt;br /&gt;
+On peut suivre la gestion des environnements via un gestionnaire de sources et la promotion vers les autres environnements (recette[1-n], pré-production, production) est grandement accélérée.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Bon, vous l’aurez peut être compris, cette galaxie de technologies est intéressante et peut vous aider dans vos projets. Avant d’arriver à l’utiliser sereinement, il vous faudra sans doute définir une trajectoire et appréhender plusieurs sujets avant d’arriver à déployer vos applications sur un cloud interne ou externe.&lt;br /&gt;
+J’espère que cet article vous aura permis de mettre en évidence les pour et contre d’une telle technologie et le cas échéant vous donnera envie de franchir le pas.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="helm" /><category term="hype" /><category term="k8s" /><category term="kubernetes" /><summary type="html">Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.</summary></entry><entry><title type="html">Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/" rel="alternate" type="text/html" title="Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine" /><published>2020-05-10T06:22:00+00:00</published><updated>2020-05-10T06:22:00+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/">&lt;p class=&quot;has-drop-cap&quot;&gt;
+  A mes heures perdues, je travaille sur un « &lt;em&gt;POC/side project qui n&amp;rsquo;aboutira pas et je m&amp;rsquo;en fiche&lt;/em&gt; » basé sur Quarkus. J&amp;rsquo; ai choisi d&amp;rsquo;utiliser les langages et composants suivants :
+&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://kotlinlang.org/&quot;&gt;Kotlin&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gradle.org/&quot;&gt;Gradle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt; pour le déploiement&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Oui, tant qu’à faire, autant aller dans la hype …&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-group&quot;&gt;
+  &lt;div class=&quot;wp-block-group__inner-container&quot;&gt;
+    &lt;div class=&quot;wp-block-image&quot;&gt;
+      &lt;figure class=&quot;aligncenter size-medium&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;696&quot; height=&quot;549&quot; src=&quot;/assets/images/2020/05/article_github_actions_k8s-1.png?w=300&quot; alt=&quot;&quot; class=&quot;wp-image-412&quot; srcset=&quot;/assets/images/2020/05/article_github_actions_k8s-1.png 696w, /assets/images/2020/05/article_github_actions_k8s-1-300x237.png 300w&quot; sizes=&quot;(max-width: 696px) 100vw, 696px&quot; /&gt;&lt;/figure&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/alexandre-touret/music-quote&quot;&gt;Mon projet est sur GITHUB&lt;/a&gt;. Pour automatiser certaines actions et, disons-le, par fierté personnelle, j’ai choisi d’automatiser certaines actions par la mise en œuvre de pipelines CI/CD.&lt;br /&gt;
+Depuis peu, GITHUB a intégré un mécanisme de pipeline : &lt;a href=&quot;https://github.com/features/actions&quot;&gt;GITHUB Actions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ça permet, entre autres, de lancer des processus automatisé sur un push ou sur une action pour un commit GIT.&lt;/p&gt;
+
+&lt;p&gt;La force de l’outil est, selon moi, de facilement s’intégrer avec beaucoup de services du cloud ( sonarcloud, google cloud, heroku,…). On aime ou on n’aime pas, mais chez Microsoft, l’intégration ils savent faire.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, si on veut lancer une compilation lors d’un push, on peut placer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows/build.xml&lt;/code&gt; avec le contenu :&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CI&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;build:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JDK&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Gradle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;without&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testing&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Coté GITHUB, vous verrez l’exécution sur un écran dédié&lt;figure class=&quot;wp-block-image size-large is-resized&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-376&quot; width=&quot;768&quot; height=&quot;305&quot; srcset=&quot;/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png 1025w, /assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote-300x119.png 300w, /assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote-768x306.png 768w&quot; sizes=&quot;(max-width: 768px) 100vw, 768px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Vous pouvez créer autant de workflows que vous souhaitez (si votre projet est en libre accès).&lt;br /&gt;
+Pour chaque workflow, on peut définir et utiliser des jobs. Les logs d’exécution sont disponibles dans ce même écran:&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png?w=936&quot; alt=&quot;&quot; class=&quot;wp-image-399&quot; width=&quot;702&quot; height=&quot;275&quot; srcset=&quot;/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png 936w, /assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote-300x117.png 300w, /assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote-768x300.png 768w&quot; sizes=&quot;(max-width: 702px) 100vw, 702px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;worflows-implémentés&quot;&gt;Worflows implémentés&lt;/h2&gt;
+
+&lt;p&gt;J’ai choisi d’implémenter les workflows suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;CI&lt;/strong&gt;: Build sur la feature branch&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;CD&lt;/strong&gt;: Build sur master branch et déploiement&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;On obtient donc dans mon cas:&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/workflow.png?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-378&quot; width=&quot;512&quot; height=&quot;396&quot; srcset=&quot;/assets/images/2020/05/workflow.png 1056w, /assets/images/2020/05/workflow-300x232.png 300w, /assets/images/2020/05/workflow-1024x791.png 1024w, /assets/images/2020/05/workflow-768x593.png 768w&quot; sizes=&quot;(max-width: 512px) 100vw, 512px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ce n’est pas parfait. Loin de là. Dans la « vraie vie », pour une équipe de dev, je l’améliorerai sans doute par un build docker dans les features branches, une validation formelle et bloquante de l’analyse sonar, etc.&lt;br /&gt;
+Pour un dev perso ça suffit largement. Le contenu de la branche master est compilé et une image docker est crée pour être déployée automatiquement dans GKE.&lt;/p&gt;
+
+&lt;h2 id=&quot;analyse-sonar&quot;&gt;Analyse SONAR&lt;/h2&gt;
+
+&lt;p&gt;J’ai choisi d’utiliser &lt;a href=&quot;http://sonarcloud.io/&quot;&gt;sonarcloud&lt;/a&gt; pour analyser mon code. C’est gratuit pour les projets opensource. L’analyse se fait simplement:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;sonarCloudTrigger:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SonarCloud&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Trigger&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JDK&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SonarCloud&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Scan&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;GITHUB_TOKEN:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;SONAR_TOKEN:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacocoTestReport&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sonarqube&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dans ce job j’utilise deux &lt;a href=&quot;https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets&quot;&gt;secrets&lt;/a&gt;. Ce sont des tokens qui permettent de ne pas stocker en dur les données dans les repos GITHUB.&lt;/p&gt;
+
+&lt;h2 id=&quot;création-dune-image-docker-et-déploiement-dans-le-registry-github&quot;&gt;Création d’une image Docker et déploiement dans le registry GITHUB&lt;/h2&gt;
+
+&lt;p&gt;Ici aussi, ça se fait simplement. La preuve :&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;publish:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JDK&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JVM&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Gradle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;without&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testing&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;quarkusBuild&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Branch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;running&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;branch&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_REF&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;##&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*/}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Quarkus&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JVM&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Dockerfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;jvm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_REPOSITORY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;jvm:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Login&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;against&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repository&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;GITHUB_TOKEN:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_ACTOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_TOKEN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Publish&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Quarkus&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JVM&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_REPOSITORY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;jvm:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Création du binaire&lt;/li&gt;
+  &lt;li&gt;Création de l’image docker en utilisant la commande docker et le Dockerfile fourni par Quarkus&lt;/li&gt;
+  &lt;li&gt;Identification sur la registry Docker de GITHUB&lt;/li&gt;
+  &lt;li&gt;Déploiement de l’image&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Pour plus de détails sur la variable GITHUB_TOKEN, vous pouvez lire &lt;a href=&quot;https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token&quot;&gt;cet article de la documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;déploiement-dans-google-kubernetes-engine&quot;&gt;Déploiement dans Google Kubernetes Engine&lt;/h2&gt;
+
+&lt;p&gt;Mon application est pour l’instant architecturée comme suit (&lt;em&gt;attention c’est compliqué&lt;/em&gt;):&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-columns&quot;&gt;
+  &lt;div class=&quot;wp-block-column&quot; style=&quot;flex-basis:100%;&quot;&gt;
+    &lt;div class=&quot;wp-block-image is-style-default&quot;&gt;
+      &lt;figure class=&quot;aligncenter size-medium&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;359&quot; height=&quot;483&quot; src=&quot;/assets/images/2020/05/application-1.png?w=223&quot; alt=&quot;&quot; class=&quot;wp-image-391&quot; srcset=&quot;/assets/images/2020/05/application-1.png 359w, /assets/images/2020/05/application-1-223x300.png 223w&quot; sizes=&quot;(max-width: 359px) 100vw, 359px&quot; /&gt;&lt;/figure&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Pour la déployer dans Google Kubernetes Engine, j’ai besoin d’ implémenter cette « architecture » par les objets Kubernetes suivants:&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/application_gke.png?w=561&quot; alt=&quot;&quot; class=&quot;wp-image-392&quot; width=&quot;421&quot; height=&quot;443&quot; srcset=&quot;/assets/images/2020/05/application_gke.png 561w, /assets/images/2020/05/application_gke-285x300.png 285w&quot; sizes=&quot;(max-width: 421px) 100vw, 421px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;J’utilise les objets suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Des services pour exposer la base de données ainsi que l’application&lt;/li&gt;
+  &lt;li&gt;Un deployment pour l’application&lt;/li&gt;
+  &lt;li&gt;Des pods car à un moment, il en faut…&lt;/li&gt;
+  &lt;li&gt;Un statefulset pour la base de données&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Vous pourrez trouver la définition de tous ces objets au format yaml via &lt;a href=&quot;https://github.com/alexandre-touret/music-quote/tree/master/k8s&quot;&gt;ce lien&lt;/a&gt;. J’ai fait très simple. Logiquement j’aurai du créer un volume pour les bases de données ou utiliser une base de données en mode PAAS.&lt;/p&gt;
+
+&lt;p&gt;Pour lancer le déploiement, il faut au préalable créer un secret ( fait manuellement pour ne pas stocker d’objet yaml dans le repository GITHUB) pour se connecter au repo GITHUB via la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;kubectl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;PASSWORD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EMAIL&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;On peut faire pareil pour les connexions base de données. J’ai mis dans un configmap pour ne pas trop me prendre la tête…&lt;/p&gt;
+
+&lt;p&gt;Après le déploiement via le pipeline se fait assez simplement:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[...]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GoogleCloudPlatform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gcloud&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;286.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;service_account_email:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;service_account_key:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;project_id:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+      &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Get&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GKE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;so&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;we&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;can&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deploy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|-&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;gcloud&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zone&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
+      &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Deploy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GKE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Deploy&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|-&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;kubectl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apply&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k8s&lt;/span&gt;     
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’utilise &lt;a href=&quot;https://github.com/GoogleCloudPlatform/github-actions&quot;&gt;les « actions » fournies par Google&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Pour que ça marche il y a pas mal d’étapes préalables ( des tokens à générer, un utilisateur technique, …).&lt;br /&gt;
+J’ai essayé de les référencer dans &lt;a href=&quot;https://github.com/alexandre-touret/music-quote&quot;&gt;le README du projet&lt;/a&gt;.&lt;br /&gt;
+Si vous voulez tester l’intégration Kubernetes dans le cloud google, sachez que vous pouvez disposer d’un crédit de 300€ valable un an. Attention, avec ce genre d’architecture, ça part vite…&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="gradle" /><category term="kubernetes" /><summary type="html">A mes heures perdues, je travaille sur un « POC/side project qui n&amp;rsquo;aboutira pas et je m&amp;rsquo;en fiche » basé sur Quarkus. J&amp;rsquo; ai choisi d&amp;rsquo;utiliser les langages et composants suivants :</summary></entry></feed>

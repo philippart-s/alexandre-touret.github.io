@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/pulseaudio.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/pulseaudio.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Activer l’ equalizer sur Debian 9</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/03/25/activer-l-equalizer-sur-debian-9/" rel="alternate" type="text/html" title="Activer l’ equalizer sur Debian 9" /><published>2018-03-25T11:38:27+00:00</published><updated>2018-03-25T11:38:27+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/03/25/activer-l-equalizer-sur-debian-9</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/03/25/activer-l-equalizer-sur-debian-9/">&lt;p&gt;Et oui, il y a un equalizer dans debian….&lt;a href=&quot;https://www.freedesktop.org/wiki/Software/PulseAudio/&quot;&gt;Pulse Audio dispose d’un equalizer&lt;/a&gt;. Bon ce n’est encore très user friendly, mais ça fonctionne!&lt;/p&gt;
+
+&lt;h2 id=&quot;installation-de-lequalizer&quot;&gt;Installation de l’equalizer&lt;/h2&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+#apt-get install pulseaudio-equalizer&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;activation&quot;&gt;Activation&lt;/h2&gt;
+
+&lt;p&gt;Ajouter les lignes suivantes dans le fichier /etc/pulse/default.pa&lt;/p&gt;
+
+&lt;p&gt;[code language= »text »]&lt;br /&gt;
+load-module module-equalizer-sink&lt;br /&gt;
+load-module module-dbus-protocol&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;Relancer le démon pulseaudio&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+# pulseaudio -k &amp;amp;&amp;amp; pulseaudio -D&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;A ce stade, vous devriez avoir dans le panneau de configuration la référence à l’equalizer&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-74&quot; src=&quot;/assets/images/2018/03/sc3a9lection_001.png&quot; alt=&quot;Sélection_001&quot; width=&quot;431&quot; height=&quot;177&quot; srcset=&quot;/assets/images/2018/03/sc3a9lection_001.png 431w, /assets/images/2018/03/sc3a9lection_001-300x123.png 300w&quot; sizes=&quot;(max-width: 431px) 100vw, 431px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;lancement&quot;&gt;Lancement&lt;/h2&gt;
+
+&lt;p&gt;En ligne de commande ( je vous disais que ce n’était pas trop user-friendly), lancer la commande&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+$ qpaeq &amp;amp;&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;On obtient cette interface:&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-75&quot; src=&quot;/assets/images/2018/03/qpaeq_002.png&quot; alt=&quot;qpaeq_002&quot; width=&quot;1382&quot; height=&quot;368&quot; srcset=&quot;/assets/images/2018/03/qpaeq_002.png 1382w, /assets/images/2018/03/qpaeq_002-300x80.png 300w, /assets/images/2018/03/qpaeq_002-1024x273.png 1024w, /assets/images/2018/03/qpaeq_002-768x205.png 768w&quot; sizes=&quot;(max-width: 1382px) 100vw, 1382px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Arrivé à ce niveau, je suis quand même un peu déçu/ Il n’y a pas une vrai intégration dans debian ( pas de lanceur pour l’equalizer ) et il n’y a pas de presets configurés ( #souvienstoiwinamp)&lt;/p&gt;
+
+&lt;p&gt;J’ai essayé de poster mon soucis sur IRC, mais je n’ai pas encore eu de réponse. Je pense soumettre un bug dans les prochains jours.&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><category term="pulseaudio" /><summary type="html">Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne!</summary></entry></feed>

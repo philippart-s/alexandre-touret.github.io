@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/ubuntu.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/ubuntu.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Installer Ubuntu 20.04 LTS sur un DELL Inspiron 13 5000</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000/" rel="alternate" type="text/html" title="Installer Ubuntu 20.04 LTS sur un DELL Inspiron 13 5000" /><published>2021-04-02T19:45:43+00:00</published><updated>2021-04-02T19:45:43+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000/">&lt;p class=&quot;has-drop-cap&quot;&gt;
+  &lt;a href=&quot;https://blog.touret.info/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/&quot;&gt;Les confinements se suivent et se ressemblent&lt;/a&gt;. Me voilà à installer Ubuntu sur un nouvel ordinateur.&lt;br /&gt;A l&amp;rsquo;instar de l&amp;rsquo;ancien laptop que j&amp;rsquo;ai acheté pour mon aînée, j&amp;rsquo;ai acheté un DELL pour ma deuxième fille.&lt;br /&gt;J&amp;rsquo;ai opté pour un DELL Inspiron 5301.
+&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/04/dell-inspiron-13-5301-argent-01.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-499&quot; width=&quot;511&quot; height=&quot;383&quot; srcset=&quot;/assets/images/2021/04/dell-inspiron-13-5301-argent-01.jpg 2000w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-300x225.jpg 300w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-1024x768.jpg 1024w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-768x576.jpg 768w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-1536x1152.jpg 1536w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-1568x1176.jpg 1568w&quot; sizes=&quot;(max-width: 511px) 100vw, 511px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;A l’instar de mon autre laptop, je j’ai pas pris de risques. J’ai opté pour un DELL qui est pleinement compatible avec Ubuntu. Oui j’aurai pu installer un ordinateur avec Ubuntu pré-installé, mais je n’ai pas eu le temps de faire un choix « serein ».&lt;/p&gt;
+
+&lt;p class=&quot;has-text-align-center&quot;&gt;
+  &lt;br /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-du-bios&quot;&gt;Configuration du BIOS&lt;/h2&gt;
+
+&lt;p&gt;Voila les paramètres que j’ai appliqué:&lt;/p&gt;
+
+&lt;p&gt;Dans le menu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;Storage&quot;&lt;/code&gt; puis &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;SATA Operation&quot;&lt;/code&gt;: vous devez sélectionner AHCI au lieu de RAID.&lt;br /&gt;
+Dans le menu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;Change boot mode settings &amp;gt;UEFI Boot Mode&quot;&lt;/code&gt; , vous devez désactiver le &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Secure Boot&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Une fois réalisé, vous pouvez redémarrer en appuyant sur la touche F12. Si vous n’arrivez pas à revenir sur le BIOS pour indiquer de booter sur votre clé USB, vous obtiendrez un écran d’erreur Windows dû à la configuration AHCI. Personnellement, en redémarrant une ou deux fois, j’ai obtenu un écran de démarrage avancé qui m’a permis de sélectionner le périphérique (ma clé USB) sur lequel démarrer.&lt;/p&gt;
+
+&lt;p&gt;Maintenant vous pouvez accéder à l’installeur Ubuntu et profiter.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;J’ai eu plusieurs fois des popup « erreur rencontré ». Ce n’était pas bloquant. J’ai continué.&lt;/p&gt;
+
+&lt;p&gt;Tout s’est déroulé sans encombre. &lt;a href=&quot;https://certification.ubuntu.com/hardware/202007-28039&quot;&gt;Le matériel est très bien reconnu&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Les seuls logiciels que j’ai installé sont pour l’instant : VLC, Minecraft ( obligatoire dans la famille ) et Chromium.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="dell" /><category term="planetlibre" /><category term="ubuntu" /><summary type="html">Les confinements se suivent et se ressemblent. Me voilà à installer Ubuntu sur un nouvel ordinateur.A l&amp;rsquo;instar de l&amp;rsquo;ancien laptop que j&amp;rsquo;ai acheté pour mon aînée, j&amp;rsquo;ai acheté un DELL pour ma deuxième fille.J&amp;rsquo;ai opté pour un DELL Inspiron 5301.</summary></entry><entry><title type="html">Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/" rel="alternate" type="text/html" title="Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493" /><published>2020-03-23T10:06:09+00:00</published><updated>2020-03-23T10:06:09+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/">&lt;p&gt;Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).&lt;/p&gt;
+
+&lt;p&gt;N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un &lt;a href=&quot;https://www.dell.com/gh/business/p/inspiron-14-3493-laptop/pd&quot;&gt;Dell Inspiron 14-3493&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/03/dell-inspiron-14-3493.jpg?w=510&quot; alt=&quot;&quot; class=&quot;wp-image-279&quot; width=&quot;576&quot; height=&quot;401&quot; srcset=&quot;/assets/images/2020/03/dell-inspiron-14-3493.jpg 510w, /assets/images/2020/03/dell-inspiron-14-3493-300x209.jpg 300w&quot; sizes=&quot;(max-width: 576px) 100vw, 576px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Je n’ai pas pris trop de risques. Bien que livré avec Windows 10, ce modèle est &lt;a href=&quot;https://certification.ubuntu.com/hardware/201907-27239&quot;&gt;déjà certifié compatible Ubuntu&lt;/a&gt;.&lt;br /&gt;
+L’installation d’&lt;a href=&quot;https://doc.ubuntu-fr.org/Accueil&quot;&gt;Ubuntu&lt;/a&gt; se passe très bien. C’est plié en moins de 30mn. Du coup, je ne la détaillerai pas dans cet article – si vous êtes intéressé, vous pouvez consulter &lt;a href=&quot;https://doc.ubuntu-fr.org/installation&quot;&gt;cet article&lt;/a&gt;. Pour les pré-requis, c’est une autre paire de manches …&lt;/p&gt;
+
+&lt;p&gt;Voilà les différentes actions que j’ai réalisé au préalable&lt;/p&gt;
+
+&lt;h2 id=&quot;redémarrer-lordinateur-et-accéder-au-bios&quot;&gt;Redémarrer l’ordinateur et accéder au BIOS&lt;/h2&gt;
+
+&lt;p&gt;Là, j’ai un peu galéré pour accéder au &lt;a href=&quot;https://fr.wikipedia.org/wiki/BIOS_(informatique)&quot;&gt;BIOS&lt;/a&gt;. La seule manipulation que j’ai trouvé et de lancer le menu « Démarrage avancé » puis sélectionner « Utiliser un périphérique ».&lt;/p&gt;
+
+&lt;p&gt;Vous pouvez donc sélectionner le disque dur. Au boot en appuyant sur la touche F12 et/ou F2, vous pouvez accéder au BIOS.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-du-bios&quot;&gt;Configuration du BIOS&lt;/h2&gt;
+
+&lt;p&gt;Voila les paramètres que j’ai appliqué:&lt;/p&gt;
+
+&lt;p class=&quot;has-text-align-left&quot;&gt;
+  Dans le menu &lt;code&gt;&quot;SATA Operation&quot;&lt;/code&gt;: vous devez sélectionner AHCI au lieu de RAID.&lt;br /&gt;Dans le menu &lt;code&gt;&quot;Change boot mode settings &amp;gt;UEFI Boot Mode&quot;&lt;/code&gt; , vous devez désactiver le &lt;code&gt;Secure Boot&lt;/code&gt;.&lt;br /&gt;&lt;br /&gt;Une fois réalisé, vous pouvez redémarrer en appuyant sur la touche F2 et/ou F12. Si vous n&amp;rsquo;arrivez pas à revenir sur le BIOS pour indiquer de booter sur votre clé USB, vous obtiendrez un écran d&amp;rsquo;erreur Windows dû à la configuration AHCI. Personnellement, en redémarrant une ou deux fois, j&amp;rsquo;ai obtenu un écran de démarrage avancé qui m&amp;rsquo;a permis de sélectionner le périphérique (ma clé USB) sur lequel démarrer.&lt;br /&gt;&lt;br /&gt;Maintenant vous pouvez accéder à l&amp;rsquo;installeur Ubuntu et profiter 🙂
+&lt;/p&gt;
+
+&lt;h2 id=&quot;après-linstallation&quot;&gt;Après l’installation&lt;/h2&gt;
+
+&lt;p&gt;Je n’ai rien fait de particulier si ce n’est configurer le trackpad. Pour cela, j’ai &lt;a href=&quot;https://www.omgubuntu.co.uk/2018/04/things-to-do-after-installing-ubuntu-18-04&quot;&gt;installé gnome-tweaks&lt;/a&gt;. Mis à part ça, tout fonctionne très bien!&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="ubuntu" /><summary type="html">Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :). N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un Dell Inspiron 14-3493.</summary></entry></feed>

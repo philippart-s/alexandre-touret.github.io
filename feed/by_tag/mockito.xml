@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/mockito.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/mockito.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mocker des méthodes « final » avec Mockito</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/08/16/mocker-des-methodes-final-avec-mockito/" rel="alternate" type="text/html" title="Mocker des méthodes « final » avec Mockito" /><published>2019-08-16T06:26:57+00:00</published><updated>2019-08-16T06:26:57+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/08/16/mocker-des-methodes-final-avec-mockito</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/08/16/mocker-des-methodes-final-avec-mockito/">&lt;p&gt;Auparavant, dans nos tests, quand on voulait &lt;a href=&quot;https://fr.wikipedia.org/wiki/Mock_(programmation_orient%C3%A9e_objet)&quot;&gt;mocker&lt;/a&gt; des &lt;a href=&quot;https://fr.wikipedia.org/wiki/Final_(Java)&quot;&gt;méthodes « final »&lt;/a&gt; ou &lt;a href=&quot;https://stackoverflow.com/questions/2671496/java-when-to-use-static-methods&quot;&gt;statiques&lt;/a&gt;, on devait passer par &lt;a href=&quot;https://github.com/powermock/powermock&quot;&gt;PowerMock&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter size-medium wp-image-203&quot; src=&quot;/assets/images/2019/08/logo-mockito.png?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;150&quot; srcset=&quot;/assets/images/2019/08/logo-mockito.png 400w, /assets/images/2019/08/logo-mockito-300x150.png 300w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Depuis peu, si on utilise Mockito ( &amp;gt;2.1) , on n’a plus besoin d’ajouter PowerMock pour mocker des méthodes « final ».&lt;/p&gt;
+
+&lt;p&gt;Bon il reste toujours la gestion des méthodes statiques à gérer autrement qu’avec &lt;a href=&quot;https://github.com/mockito/mockito&quot;&gt;Mockito&lt;/a&gt;, mais cela va dans le bon sens.&lt;/p&gt;
+
+&lt;p&gt;Voici comment activer en quelques commandes le mocking des méthodes « final ».&lt;/p&gt;
+
+&lt;p&gt;Dans le répertoire src/test/resources, il faut créer un répertoire mockito-extensions avec un fichier nommé org.mockito.plugins.MockMaker.&lt;/p&gt;
+
+&lt;pre&gt;src/test/resources
+└── mockito-extensions
+└── org.mockito.plugins.MockMaker
+```
+
+
+A l&amp;rsquo;intérieur de ce fichier, vous devrez ajouter le contenu suivant :
+
+&lt;pre&gt;mock-maker-inline
+```
+
+
+Avec cette configuration, vous pourrez dorénavant mocker des méthodes « final » 🙂
+
+Enjoy
+&lt;/pre&gt;&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="java" /><category term="mockito" /><category term="planetlibre" /><category term="tests-unitaires" /><summary type="html">Auparavant, dans nos tests, quand on voulait mocker des méthodes « final » ou statiques, on devait passer par PowerMock.</summary></entry></feed>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/wordpress.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/wordpress.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Migrer son blog Wordpress vers GitHub</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="alternate" type="text/html" title="Migrer son blog Wordpress vers GitHub" /><published>2021-12-06T10:00:00+00:00</published><updated>2021-12-06T10:00:00+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/">&lt;p&gt;L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La date de renouvellement de ma souscription Wordpress arrivant à terme, je me suis décidé à franchir le pas.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg&quot; alt=&quot;migration&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;l-hébergement-de-sites-web-sur-github&quot;&gt;L’ hébergement de sites web sur Github&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll&quot;&gt;Github permet via son service Github Pages d’héberger des sites statiques&lt;/a&gt; (c.-à-d. pas de base de données derrière) en permettant d’associer son nom de domaine. 
+Le certificat est automatiquement généré.&lt;/p&gt;
+
+&lt;p&gt;Pour avoir un look un peu sympa, j’ai donc mis en oeuvre les outils suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/docs/continuous-integration/github-actions/&quot;&gt;Github Actions pour construire le site&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.markdownguide.org/&quot;&gt;Markdown&lt;/a&gt; pour écrire les différents articles&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;démarrer-avec-minimal-mistakes&quot;&gt;Démarrer avec Minimal Mistakes&lt;/h2&gt;
+
+&lt;p&gt;Je vous conseille d’aller sur &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;ce site&lt;/a&gt;.
+Tout est bien détaillé est c’est réalisable en quelques minutes seulement.&lt;/p&gt;
+
+&lt;h2 id=&quot;migration-des-données&quot;&gt;Migration des données&lt;/h2&gt;
+
+&lt;p&gt;Sans surprise, c’est la partie la moins drôle. Il faut en résumé:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Exporter les données si vous êtes hébergé sur wordpress.com&lt;/li&gt;
+  &lt;li&gt;Les ré-importer dans une instance locale&lt;/li&gt;
+  &lt;li&gt;Les exporter au format Jekyll&lt;/li&gt;
+  &lt;li&gt;Copier le contenu généré dans un nouveau site&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;exporter-les-données&quot;&gt;Exporter les données&lt;/h3&gt;
+
+&lt;p&gt;Afin d’exporter les données et de les transformer, il faut d’abord exporter les données (articles + médias) de votre site Wordpress&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/12/Screenshot_2021-12-03_12-01-31.png&quot; alt=&quot;wordpress_export&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Vous obtiendrez deux archives: la première pour les articles, la deuxième pour les médias.&lt;/p&gt;
+
+&lt;p&gt;Création d’une instance Wordpress pour convertir les données au format Jekyll&lt;/p&gt;
+
+&lt;h3 id=&quot;importer-les-données&quot;&gt;Importer les données&lt;/h3&gt;
+
+&lt;p&gt;Pour faire simple, j’utilise &lt;a href=&quot;https://docs.docker.com/samples/wordpress/&quot;&gt;Docker pour monter une architecture Wordpress sur mon poste&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Il faut pour ça créer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt; et insérer le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.9&quot;&lt;/span&gt;
+    
+&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql:5.7&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;db_data:/var/lib/mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;somewordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_DATABASE&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_USER&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+    
+  &lt;span class=&quot;na&quot;&gt;wordpress&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;db&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress:latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress_data:/var/www/html&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;8000:80&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_HOST&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;db:3306&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_USER&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_NAME&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;db_data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;wordpress_data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous aurez à lancer la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-compose up
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une fois lancé, vous aurez à une instance Wordpress via cette URL : http://localhost:8000&lt;/p&gt;
+
+&lt;p&gt;Ensuite, il faut installer l’extension &lt;a href=&quot;https://wordpress.org/plugins/jekyll-exporter/&quot;&gt;jekyll-exporter&lt;/a&gt;.
+La procédure peut prendre un peu de temps.&lt;/p&gt;
+
+&lt;p&gt;Une fois effectuée, vous aurez une archive ZIP contenant un site Jekyll avec les images et articles associés.&lt;/p&gt;
+
+&lt;h2 id=&quot;création-du-site&quot;&gt;Création du site&lt;/h2&gt;
+
+&lt;p&gt;En attendant que ça se termine, j’ai crée &lt;a href=&quot;https://github.com/mmistakes/mm-github-pages-starter/generate&quot;&gt;un site jekyll avec le starter du thème minimal mistakes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;J’ai ensuite copié les articles (répertoire &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_posts&lt;/code&gt;) et images (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/assets/img&lt;/code&gt;).
+Au premier lancement des commandes suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle &lt;span class=&quot;nb&quot;&gt;install
+&lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai eu quelques erreurs. J’ai donc eu à nettoyer les fichiers via des recherche/remplace dans un éditeur&lt;/p&gt;
+
+&lt;p&gt;Par exemple, j’ai supprimé les références &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;author&lt;/code&gt; et &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;layout&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;admin&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai également ajouté pour certains articles une image pour le teaser&lt;/p&gt;
+
+&lt;p&gt;Exemple:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;teaser&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/assets/images/2021/07/rest-book-architecture.png&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;url-des-pages-et-compatibilité-wordpress--jekyll&quot;&gt;URL des pages et compatibilité Wordpress &amp;lt;&amp;gt; Jekyll&lt;/h3&gt;
+
+&lt;p&gt;Pour me faciliter la vie dans les URLS et liens en tout genre, j’ai gardé le format des URLS de Wordpress.
+Pour que ça soit le format par défaut de Jekyll, il faut modifier le paramètre &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;permalink&lt;/code&gt; dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;permalink&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/:year/:month/:day/:title/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;flux-rss-pour-un-tag-donné&quot;&gt;Flux RSS pour un tag donné&lt;/h3&gt;
+
+&lt;p&gt;J’utilisais une petite spécificité de Wordpress: la création d’un flux RSS pour un tag donné. 
+Pour le mettre en place dans Jekyll, il faut configurer le plugin &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-feed&lt;/code&gt; avec les propriété suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;feed&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;et-maintenant-&quot;&gt;Et maintenant ?&lt;/h2&gt;
+
+&lt;p&gt;J’ai sans doute oublié quelques renommages/suppressions réalisés ici et là.
+Néanmoins, le principal est évoqué dans cet article.&lt;/p&gt;
+
+&lt;p&gt;Il ne vous reste plus qu’à éplucher la documentation du thème et de jekyll pour finaliser l’ installation de votre nouveau site.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="wordpress" /><category term="planetlibre" /><summary type="html">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github. La date de renouvellement de ma souscription Wordpress arrivant à terme, je me suis décidé à franchir le pas.</summary></entry></feed>

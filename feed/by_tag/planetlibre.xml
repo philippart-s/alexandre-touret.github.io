@@ -1,0 +1,1050 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/planetlibre.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/planetlibre.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Migrer son blog Wordpress vers GitHub</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="alternate" type="text/html" title="Migrer son blog Wordpress vers GitHub" /><published>2021-12-06T10:00:00+00:00</published><updated>2021-12-06T10:00:00+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/12/06/migrer-un-blog-wordpress-vers-github-io/">&lt;p&gt;L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La date de renouvellement de ma souscription Wordpress arrivant à terme, je me suis décidé à franchir le pas.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg&quot; alt=&quot;migration&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;l-hébergement-de-sites-web-sur-github&quot;&gt;L’ hébergement de sites web sur Github&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll&quot;&gt;Github permet via son service Github Pages d’héberger des sites statiques&lt;/a&gt; (c.-à-d. pas de base de données derrière) en permettant d’associer son nom de domaine. 
+Le certificat est automatiquement généré.&lt;/p&gt;
+
+&lt;p&gt;Pour avoir un look un peu sympa, j’ai donc mis en oeuvre les outils suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/docs/continuous-integration/github-actions/&quot;&gt;Github Actions pour construire le site&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.markdownguide.org/&quot;&gt;Markdown&lt;/a&gt; pour écrire les différents articles&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;démarrer-avec-minimal-mistakes&quot;&gt;Démarrer avec Minimal Mistakes&lt;/h2&gt;
+
+&lt;p&gt;Je vous conseille d’aller sur &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;ce site&lt;/a&gt;.
+Tout est bien détaillé est c’est réalisable en quelques minutes seulement.&lt;/p&gt;
+
+&lt;h2 id=&quot;migration-des-données&quot;&gt;Migration des données&lt;/h2&gt;
+
+&lt;p&gt;Sans surprise, c’est la partie la moins drôle. Il faut en résumé:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Exporter les données si vous êtes hébergé sur wordpress.com&lt;/li&gt;
+  &lt;li&gt;Les ré-importer dans une instance locale&lt;/li&gt;
+  &lt;li&gt;Les exporter au format Jekyll&lt;/li&gt;
+  &lt;li&gt;Copier le contenu généré dans un nouveau site&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;exporter-les-données&quot;&gt;Exporter les données&lt;/h3&gt;
+
+&lt;p&gt;Afin d’exporter les données et de les transformer, il faut d’abord exporter les données (articles + médias) de votre site Wordpress&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/12/Screenshot_2021-12-03_12-01-31.png&quot; alt=&quot;wordpress_export&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Vous obtiendrez deux archives: la première pour les articles, la deuxième pour les médias.&lt;/p&gt;
+
+&lt;p&gt;Création d’une instance Wordpress pour convertir les données au format Jekyll&lt;/p&gt;
+
+&lt;h3 id=&quot;importer-les-données&quot;&gt;Importer les données&lt;/h3&gt;
+
+&lt;p&gt;Pour faire simple, j’utilise &lt;a href=&quot;https://docs.docker.com/samples/wordpress/&quot;&gt;Docker pour monter une architecture Wordpress sur mon poste&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Il faut pour ça créer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt; et insérer le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.9&quot;&lt;/span&gt;
+    
+&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql:5.7&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;db_data:/var/lib/mysql&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;somewordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_DATABASE&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_USER&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;MYSQL_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+    
+  &lt;span class=&quot;na&quot;&gt;wordpress&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;depends_on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;db&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress:latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress_data:/var/www/html&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;8000:80&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_HOST&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;db:3306&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_USER&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_PASSWORD&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;WORDPRESS_DB_NAME&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wordpress&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;db_data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;wordpress_data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous aurez à lancer la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-compose up
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une fois lancé, vous aurez à une instance Wordpress via cette URL : http://localhost:8000&lt;/p&gt;
+
+&lt;p&gt;Ensuite, il faut installer l’extension &lt;a href=&quot;https://wordpress.org/plugins/jekyll-exporter/&quot;&gt;jekyll-exporter&lt;/a&gt;.
+La procédure peut prendre un peu de temps.&lt;/p&gt;
+
+&lt;p&gt;Une fois effectuée, vous aurez une archive ZIP contenant un site Jekyll avec les images et articles associés.&lt;/p&gt;
+
+&lt;h2 id=&quot;création-du-site&quot;&gt;Création du site&lt;/h2&gt;
+
+&lt;p&gt;En attendant que ça se termine, j’ai crée &lt;a href=&quot;https://github.com/mmistakes/mm-github-pages-starter/generate&quot;&gt;un site jekyll avec le starter du thème minimal mistakes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;J’ai ensuite copié les articles (répertoire &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_posts&lt;/code&gt;) et images (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/assets/img&lt;/code&gt;).
+Au premier lancement des commandes suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle &lt;span class=&quot;nb&quot;&gt;install
+&lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai eu quelques erreurs. J’ai donc eu à nettoyer les fichiers via des recherche/remplace dans un éditeur&lt;/p&gt;
+
+&lt;p&gt;Par exemple, j’ai supprimé les références &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;author&lt;/code&gt; et &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;layout&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;admin&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai également ajouté pour certains articles une image pour le teaser&lt;/p&gt;
+
+&lt;p&gt;Exemple:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;teaser&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/assets/images/2021/07/rest-book-architecture.png&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;url-des-pages-et-compatibilité-wordpress--jekyll&quot;&gt;URL des pages et compatibilité Wordpress &amp;lt;&amp;gt; Jekyll&lt;/h3&gt;
+
+&lt;p&gt;Pour me faciliter la vie dans les URLS et liens en tout genre, j’ai gardé le format des URLS de Wordpress.
+Pour que ça soit le format par défaut de Jekyll, il faut modifier le paramètre &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;permalink&lt;/code&gt; dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;permalink&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/:year/:month/:day/:title/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;flux-rss-pour-un-tag-donné&quot;&gt;Flux RSS pour un tag donné&lt;/h3&gt;
+
+&lt;p&gt;J’utilisais une petite spécificité de Wordpress: la création d’un flux RSS pour un tag donné. 
+Pour le mettre en place dans Jekyll, il faut configurer le plugin &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-feed&lt;/code&gt; avec les propriété suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;feed&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;et-maintenant-&quot;&gt;Et maintenant ?&lt;/h2&gt;
+
+&lt;p&gt;J’ai sans doute oublié quelques renommages/suppressions réalisés ici et là.
+Néanmoins, le principal est évoqué dans cet article.&lt;/p&gt;
+
+&lt;p&gt;Il ne vous reste plus qu’à éplucher la documentation du thème et de jekyll pour finaliser l’ installation de votre nouveau site.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="wordpress" /><category term="planetlibre" /><summary type="html">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github. La date de renouvellement de ma souscription Wordpress arrivant à terme, je me suis décidé à franchir le pas.</summary></entry><entry><title type="html">Observabilité et Circuit Breaker avec Spring</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="alternate" type="text/html" title="Observabilité et Circuit Breaker avec Spring" /><published>2021-07-26T09:53:49+00:00</published><updated>2021-07-26T09:53:49+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/07/26/observabilite-et-circuit-breaker-avec-spring/">&lt;p&gt;Il y a quelques mois déjà, je discutais avec &lt;a href=&quot;https://jefrajames.fr/&quot;&gt;un collègue&lt;/a&gt; d’ observabilité, &lt;a href=&quot;https://github.com/opentracing-contrib/java-spring-cloud&quot;&gt;opentracing&lt;/a&gt;, … avec &lt;a href=&quot;http://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt;. On est tombé sur &lt;a href=&quot;https://github.com/agoncal/agoncal-fascicle-quarkus-pract&quot;&gt;un super exemple réalisé par Antonio Concalves&lt;/a&gt;. Ce projet démontre les capacités de Quarkus sur les sujets suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Circuit Breaker&lt;/li&gt;
+  &lt;li&gt;Observabilité&lt;/li&gt;
+  &lt;li&gt;OpenTracing&lt;/li&gt;
+  &lt;li&gt;Tests&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Et la on peut se demander quid de &lt;a href=&quot;http://spring.io/&quot;&gt;Spring&lt;/a&gt;? Je me doutais que ces fonctionnalités étaient soient disponibles par défaut soient facilement intégrables vu la richesse de l’écosystème.&lt;/p&gt;
+
+&lt;p&gt;J’ai donc réalisé un clone de &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring&quot;&gt;ce projet basé sur Spring Boot/Cloud&lt;/a&gt;. Je ne vais pas détailler plus que ça les différentes fonctionnalités, vous pouvez vous référer au fichier &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring#readme&quot;&gt;README&lt;/a&gt;. Il est suffisamment détaillé pour que vous puissiez exécuter et les mettre en œuvre.&lt;/p&gt;
+
+&lt;h2 id=&quot;architecture-de-lapplication&quot;&gt;Architecture de l’application&lt;/h2&gt;
+
+&lt;p&gt;Vous trouverez ci-dessous un schéma d’architecture de l’application &lt;a href=&quot;https://c4model.com/&quot;&gt;au format C4&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;825&quot; height=&quot;668&quot; src=&quot;/assets/images/2021/07/rest-book-architecture.png?w=825&quot; alt=&quot;&quot; class=&quot;wp-image-580&quot; srcset=&quot;/assets/images/2021/07/rest-book-architecture.png 825w, /assets/images/2021/07/rest-book-architecture-300x243.png 300w, /assets/images/2021/07/rest-book-architecture-768x622.png 768w&quot; sizes=&quot;(max-width: 825px) 100vw, 825px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;circuit-breaker&quot;&gt;Circuit Breaker&lt;/h2&gt;
+
+&lt;p&gt;Lors des appels entre le &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/main/java/info/touret/bookstore/spring/book/service/BookService.java&quot;&gt;bookstore&lt;/a&gt; et le &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-number/src/main/java/info/touret/bookstore/spring/number/controller/BookNumbersController.java&quot;&gt;booknumberservice&lt;/a&gt;, il peut être intéressant d’ implémenter un &lt;a href=&quot;https://martinfowler.com/bliki/CircuitBreaker.html&quot;&gt;circuit breaker&lt;/a&gt; pour pallier aux indisponibilités de ce dernier.&lt;br /&gt;
+Avec Spring, on peut utiliser &lt;a href=&quot;https://github.com/resilience4j/resilience4j&quot;&gt;Resilience4J&lt;/a&gt; au travers de &lt;a href=&quot;https://spring.io/projects/spring-cloud&quot;&gt;Spring Cloud&lt;/a&gt;. Tout ceci se fait de manière programmatique&lt;/p&gt;
+
+&lt;p&gt;Il faut tout d’abord &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/main/java/info/touret/bookstore/spring/book/BookConfiguration.java&quot;&gt;configurer les circuit breakers au travers d’une classe Configuration&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Resilience4JCircuitBreakerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createDefaultCustomizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configureDefault&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Resilience4JConfigBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TimeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;custom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeoutDuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofSeconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeoutInSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;circuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CircuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofDefaults&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Creates a circuit breaker customizer applying a timeout specified by the &amp;lt;code&amp;gt;booknumbers.api.timeout_sec&amp;lt;/code&amp;gt; property.
+     * This customizer could be reached using this id: &amp;lt;code&amp;gt;slowNumbers&amp;lt;/code&amp;gt;
+     * @return the circuit breaker customizer to apply when calling to numbers api
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Resilience4JCircuitBreakerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createSlowNumbersAPICallCustomizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;circuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CircuitBreakerConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofDefaults&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TimeLimiterConfig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;custom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timeoutDuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ofSeconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeoutInSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;slowNumbers&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Grâce à ces instanciations, on référence les différents &lt;a href=&quot;https://martinfowler.com/bliki/CircuitBreaker.html&quot;&gt;circuit breakers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Maintenant, on peut les utiliser dans le code de la manière suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Book&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;registerBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@Valid&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Book&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;circuitBreakerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;slowNumbers&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;persistBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;throwable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fallbackPersistBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bookRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant, il ne reste plus qu’à créer &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/main/java/info/touret/bookstore/spring/book/service/BookService.java&quot;&gt;une méthode de « fallback » utilisée si un service est indisponible&lt;/a&gt;. Cette dernière nous permettra, par exemple, de mettre le payload dans un fichier pour futur traitement batch.&lt;/p&gt;
+
+&lt;h2 id=&quot;observabilité&quot;&gt;Observabilité&lt;/h2&gt;
+
+&lt;p&gt;L’observabilité est sans contexte la pierre angulaire (oui, rien que ça…) de toute application cloud native. Sans ça, pas de scalabilité, de redémarrage automatique,etc.&lt;br /&gt;
+Les architectures de ce type d’applications sont &lt;a href=&quot;https://en.wikipedia.org/wiki/Idempotence&quot;&gt;idempotentes&lt;/a&gt;. On a donc besoin d’avoir toutes les informations à notre disposition. Heureusement, &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator&quot;&gt;Spring fournit par le biais d’ Actuator&lt;/a&gt; toutes les informations nécessaires. Ces dernières pourront soit être utilisées par &lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt; (ex. le &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;livenessProbe&lt;/a&gt;) ou agrégées dans une base de données &lt;a href=&quot;https://prometheus.io/docs/prometheus/latest/storage/&quot;&gt;Prometheus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour activer certaines métriques d’&lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html&quot;&gt;actuator&lt;/a&gt;, il suffit de :&lt;/p&gt;
+
+&lt;p&gt;Ajouter la/les dépendance(s)&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[...]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;implementation&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;springframework&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;starter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actuator&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;implementation&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;micrometer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;micrometer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prometheus&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;[...]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Spécifier la configuration adéquate:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;management:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;endpoints:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;web:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;exposure:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;include:&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'*'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;jmx:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;exposure:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;include:&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'*'&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;endpoint:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;health:&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;details:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;always&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;probes:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;shutdown:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;prometheus:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;metrics:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;health:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;livenessstate:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;readinessstate:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;datasource:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;metrics:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;web:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;client:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;request:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;autotime:&lt;/span&gt;
+            &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;opentracing&quot;&gt;OpenTracing&lt;/h2&gt;
+
+&lt;p&gt;Sur les applications distribuées, il peut s’avérer compliqué de concentrer les logs et de les corréler. Certes, avec un ID de corrélation, on peut avoir certaines informations. Cependant, il faut que les logs soient bien positionnées dans le code. On peut également passer à travers de certaines informations (ex. connexion aux bases de données, temps d’exécution des APIS,…). Je ne vous parle pas des soucis de volumétrie engendrées par des index Elasticsearch/Splunk sur des applications à forte volumétrie.&lt;/p&gt;
+
+&lt;p&gt;Depuis quelques temps, le &lt;a href=&quot;https://www.cncf.io/&quot;&gt;CNCF&lt;/a&gt; propose un projet (encore en incubation) : &lt;a href=&quot;https://opentracing.io/&quot;&gt;OpenTracing&lt;/a&gt;. Ce dernier fait désormais partie d’&lt;a href=&quot;https://opentelemetry.io/&quot;&gt;OpenTelemetry&lt;/a&gt;.&lt;br /&gt;
+Grâce à cet librairie, nous allons pouvoir tracer toutes les transactions de notre application microservices et pouvoir réaliser une corrélation « out of the box » grâce à l’intégration avec &lt;a href=&quot;https://www.jaegertracing.io/&quot;&gt;Jaeger&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour activer la fonctionnalité il suffit d’ajouter la dépendance au classpath:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;implementation&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;opentracing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contrib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opentracing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jaeger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;starter:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;et de configurer l’URL de Jaeger dans l’application&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Default&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;opentracing:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;jaeger:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;udp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;sender:&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;host:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;port:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6831&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;enabled:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une fois l’application reconstruite et redémarrée, vous pourrez visualiser les transactions dans JAEGER:&lt;figure class=&quot;wp-block-gallery columns-2 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/07/screenshot-2021-07-26-at-11-38-31-jaeger-ui-1568x532.png&quot; alt=&quot;jaeger1&quot; /&gt;
+&lt;img src=&quot;/assets/images/2021/07/screenshot-2021-07-26-at-11-38-15-jaeger-ui-1568x759.png&quot; alt=&quot;jaeger2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Je ne vais pas exposer l’implémentation des tests unitaires et d’intégration. Si vous voulez voir comment j’ai réussi à mocker simplement les appels REST à une API distante, vous pouvez regarder &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring/blob/main/rest-book/src/test/java/info/touret/bookstore/spring/book/controller/BookControllerIT.java&quot;&gt;cette classe&lt;/a&gt; pour voir une utilisation du &lt;a href=&quot;https://www.baeldung.com/mockserver&quot;&gt;MockServer&lt;/a&gt;.&lt;br /&gt;
+Aussi, n’hésitez pas à cloner, tester ce projet et me donner votre retour. J’essaierai de le mettre à jour au fur et à mesure de mes découvertes (par ex. OpenTelemetry).&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="java" /><category term="observability" /><category term="planetlibre" /><category term="spring" /><summary type="html">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio Concalves. Ce projet démontre les capacités de Quarkus sur les sujets suivants:</summary></entry><entry><title type="html">Ajouter un mode « maintenance » à votre API grâce à Spring boot</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="alternate" type="text/html" title="Ajouter un mode « maintenance » à votre API grâce à Spring boot" /><published>2021-06-10T15:01:20+00:00</published><updated>2021-06-10T15:01:20+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/">&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/06/pexels-photo-257736.jpeg&quot; alt=&quot;&quot; class=&quot;wp-image-543&quot; width=&quot;697&quot; height=&quot;463&quot; srcset=&quot;/assets/images/2021/06/pexels-photo-257736.jpeg 1880w, /assets/images/2021/06/pexels-photo-257736-300x200.jpeg 300w, /assets/images/2021/06/pexels-photo-257736-1024x681.jpeg 1024w, /assets/images/2021/06/pexels-photo-257736-768x511.jpeg 768w, /assets/images/2021/06/pexels-photo-257736-1536x1022.jpeg 1536w, /assets/images/2021/06/pexels-photo-257736-1568x1043.jpeg 1568w&quot; sizes=&quot;(max-width: 697px) 100vw, 697px&quot; /&gt;&lt;figcaption&gt;Photo by Pixabay on &lt;a href=&quot;https://www.pexels.com/photo/close-up-of-telephone-booth-257736/&quot; rel=&quot;nofollow&quot;&gt;Pexels.com&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p class=&quot;has-drop-cap&quot;&gt;
+  Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l&amp;rsquo;application en mode « maintenance ».&lt;br /&gt;Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex. (&lt;a href=&quot;https://httpd.apache.org/&quot;&gt;Apache HTTPD&lt;/a&gt;, &lt;a href=&quot;https://fr.wikipedia.org/wiki/Web_application_firewall&quot;&gt;WAF&lt;/a&gt;,&amp;#8230;)
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;Kubernetes a introduit ( ou popularisé ) les notions de « probes »&lt;/a&gt; et plus particulièrement les &lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;livenessProbes&lt;/a&gt; et &lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;readinessProbes&lt;/a&gt;.&lt;br /&gt;
+Le premier nous indique si l’application est en état de fonctionnement, le second nous permet de savoir si cette dernière est apte à recevoir des requêtes (ex. lors d’un démarrage).&lt;/p&gt;
+
+&lt;p&gt;Je vais exposer dans cet article comment utiliser au mieux ces probes et &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/&quot;&gt;les APIs SPRING&lt;/a&gt; pour intégrer dans une API un mode « maintenance »&lt;/p&gt;
+
+&lt;h2 id=&quot;stack-utilisée&quot;&gt;Stack utilisée&lt;/h2&gt;
+
+&lt;p&gt;Dans l’exemple que j’ai développé, j’ai pu utiliser les briques suivantes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OpenJDK 11.0.10&lt;/li&gt;
+  &lt;li&gt;Spring Boot 2.5.0 (web, actuator)&lt;/li&gt;
+  &lt;li&gt;Maven 3.8.1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bref, rien de neuf à l’horizon 🙂&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-de-spring-actuator&quot;&gt;Configuration de Spring Actuator&lt;/h2&gt;
+
+&lt;p&gt;Pour activer les différents probes, vous devez activer &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.4.0/actuator-api/&quot;&gt;Actuator&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dans le fichier pom.xml, vous devez ajouter le starter correspondant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;springframework&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;starter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actuator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis vous devez déclarer ces differentes &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/resources/application.properties&quot;&gt;propriétés&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;livenessstate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;readinessstate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;details&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;always&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;probes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Après avoir redémarré votre application, vous pourrez connaître son statut grâce à un appel HTTP&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;curl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;http:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//localhost:8080/actuator/health/readiness &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;comment-récupérer-le-statut-des-probes&quot;&gt;Comment récupérer le statut des probes?&lt;/h2&gt;
+
+&lt;p&gt;Avec Spring, vous pouvez modifier les différents statuts avec les classes &lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html&quot;&gt;ApplicationEventPublisher&lt;/a&gt; et &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.4.4/api/org/springframework/boot/availability/ApplicationAvailability.html&quot;&gt;ApplicationAvailability&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, pour connaître le statut &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.5.0-SNAPSHOT/api/org/springframework/boot/availability/ReadinessState.html&quot;&amp;gt;&quot;Readiness&quot;&amp;lt;/a&amp;gt;&lt;/code&gt; vous pouvez exécuter le code suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiResponses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ApiResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;responseCode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;200&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Checks if the application in under maitenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)})&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MaintenanceDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;retreiveInMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastChangeEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;availability&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLastChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ok&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MaintenanceDTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REFUSING_TRAFFIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTimestamp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Et la modification ?&lt;/p&gt;
+
+&lt;p&gt;Grâce à la même API, on peut également modifier ce statut dans via du code:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiResponses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ApiResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;responseCode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;204&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Put the app under maitenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)})&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@PutMapping&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initInMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@NotNull&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;@RequestBody&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;AvailabilityChangeEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eventPublisher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;valueOf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inMaintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REFUSING_TRAFFIC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ACCEPTING_TRAFFIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ResponseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;noContent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;filtre-les-appels-et-indiquer-que-lapplication-est-en-maintenance&quot;&gt;Filtre les appels et indiquer que l’application est en maintenance&lt;/h2&gt;
+
+&lt;p&gt;Maintenant qu’on a codé les mécanismes de récupération du statut de l’application et de la mise en maintenance, on peut ajouter le mécanisme permettant de traiter ou non les appels entrants.&lt;br /&gt;
+Pour ça on va utiliser un &lt;a href=&quot;http://blog.paumard.org/cours/servlet/chap04-filtre-mise-en-place.html&quot;&gt;bon vieux filtre servlet&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ce dernier aura la tâche de laisser passer les requêtes entrantes si l’application n’est pas en maintenance et de déclencher une &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/java/info/touret/spring/maintenancemode/exception/MaintenanceException.java&quot;&gt;MaintenanceException&lt;/a&gt; le cas échéant qui sera traité par &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/java/info/touret/spring/maintenancemode/GlobalExceptionHandler.java&quot;&gt;la gestion d’erreur globale de l’application&lt;/a&gt; ( traité via un &lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RestControllerAdvice.html&quot;&gt;@RestControllerAdvice&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Pour que l’exception soit bien traitée par ce mécanisme, il faut le déclencher via le &lt;a href=&quot;https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/HandlerExceptionResolver.html&quot;&gt;HandlerExceptionResolver&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Component&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CheckMaintenanceFilter&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Logger&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LoggerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CheckMaintenanceFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationAvailability&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;availability&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Qualifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;handlerExceptionResolver&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HandlerExceptionResolver&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Checks if the application is under maintenance. If it is and if the requested URI is not '/api/maintenance', it throws a &amp;lt;code&amp;gt;MaintenanceException&amp;lt;/code&amp;gt;
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     * @throws info.touret.spring.maintenancemode.exception.MaintenanceException the application is under maintenance
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ServletRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ServletResponse&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterChain&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IOException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ServletException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;availability&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ReadinessState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REFUSING_TRAFFIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;!((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRequestURI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;API_MAINTENANCE_URI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;LOGGER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;warn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Message handled during maintenance [{}]&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getRequestURI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;exceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;resolveException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpServletResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MaintenanceException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Service currently in maintenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;chain&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Enfin, voici la gestion des erreurs de l’API:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@RestControllerAdvice&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GlobalExceptionHandler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Indicates that the application is on maintenance
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ResponseStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;I_AM_A_TEAPOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ExceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MaintenanceException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;APIError&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;maintenance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;APIError&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;I_AM_A_TEAPOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Service currently in maintenance&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * Any other exception
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ResponseStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INTERNAL_SERVER_ERROR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@ExceptionHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;APIError&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;anyException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;APIError&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INTERNAL_SERVER_ERROR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;An unexpected server error occured&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;On a pu voir comment intéragir simplement avec les APIS SPRING pour gérer le statut de l’application pour répondre à cette question :Est-elle disponible ou non?&lt;br /&gt;
+Bien évidemment, selon le contexte, il conviendra d’ajouter un peu de sécurité pour que cette API ne soit pas disponible à tout le monde 🙂&lt;/p&gt;
+
+&lt;p&gt;Le code exposé ici est disponible sur &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/&quot;&gt;Github&lt;/a&gt;. Le &lt;a href=&quot;https://github.com/alexandre-touret/maintenance-mode/blob/main/README.md&quot;&gt;Readme&lt;/a&gt; est suffisamment détaillé pour que vous puissiez tester et réutiliser le code.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="actuator" /><category term="observability" /><category term="planetlibre" /><category term="spring" /><category term="springboot" /><summary type="html">Photo by Pixabay on Pexels.com</summary></entry><entry><title type="html">Utiliser GPG dans WSL2</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/" rel="alternate" type="text/html" title="Utiliser GPG dans WSL2" /><published>2021-05-03T18:47:11+00:00</published><updated>2021-05-03T18:47:11+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/">&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/05/pexels-photo-261621.jpeg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-511&quot; width=&quot;641&quot; height=&quot;480&quot; srcset=&quot;/assets/images/2021/05/pexels-photo-261621.jpeg 1733w, /assets/images/2021/05/pexels-photo-261621-300x225.jpeg 300w, /assets/images/2021/05/pexels-photo-261621-1024x768.jpeg 1024w, /assets/images/2021/05/pexels-photo-261621-768x576.jpeg 768w, /assets/images/2021/05/pexels-photo-261621-1536x1152.jpeg 1536w, /assets/images/2021/05/pexels-photo-261621-1568x1176.jpeg 1568w&quot; sizes=&quot;(max-width: 641px) 100vw, 641px&quot; /&gt;&lt;figcaption&gt;Photo by Pixabay on &lt;a href=&quot;https://www.pexels.com/photo/agreement-blur-business-close-up-261621/&quot; rel=&quot;nofollow&quot;&gt;Pexels.com&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p class=&quot;has-drop-cap&quot;&gt;
+  Pourquoi utiliser &lt;a href=&quot;https://fr.wikipedia.org/wiki/GNU_Privacy_Guard&quot;&gt;GPG&lt;/a&gt; ? Par exemple &lt;a href=&quot;https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/&quot;&gt;pour signer les commits GIT&lt;/a&gt;. Maintenant comment faire quand on est sous Windows 10 et qu&amp;rsquo;on souhaite utiliser &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/wsl/install-win10&quot;&gt;le sous système Linux (WSL2)&lt;/a&gt;?
+&lt;/p&gt;
+
+&lt;p&gt;Sous GNU/Linux, l’installation et l’utilisation avec git est très simple. Avec &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/wsl/install-win10&quot;&gt;WSL2&lt;/a&gt;,… il faut un peu d’huile de coude 🙂&lt;/p&gt;
+
+&lt;p&gt;Je vais tâcher de décrire dans cet article les différentes manipulations nécessaires pour:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Importer une clé GPG existante&lt;/li&gt;
+  &lt;li&gt;Utiliser GPG pour signer mes commits dans WSL2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;importer-une-clé-gpg-existante&quot;&gt;Importer une clé GPG existante&lt;/h2&gt;
+
+&lt;h3 id=&quot;export-de-la-clé-gpg&quot;&gt;Export de la clé GPG&lt;/h3&gt;
+
+&lt;h4 id=&quot;identifier-l-id-de-la-clé&quot;&gt;Identifier l’ ID de la clé&lt;/h4&gt;
+
+&lt;p&gt;Lancez la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;import&quot;&gt;Import&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;public.key&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;private.key&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;vérification&quot;&gt;Vérification&lt;/h3&gt;
+
+&lt;p&gt;Pour vérifier que la clé est bien configurée, vous pouvez lancer la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keyid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LONG&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;....&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sec&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;rsa4096&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CLE_ID&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2019&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;********************&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt;                &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ultime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Alexandre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;....&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ssb&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;rsa4096&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SUB&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2019&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si la clé n’est pas reconnue comme ultime ou comme de confiance, il faudra l’éditer:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CLE_ID&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Please&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decide&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;far&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correctly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verify&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;looking&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passports&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;checking&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fingerprints&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;different&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.)&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;don&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;know&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;won&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;say&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marginally&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fully&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ultimately&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;back&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;menu&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Your&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decision&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si vous ne voulez pas trop vous compliquer, je vous conseille de répondre &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-gpg-pour-wsl2&quot;&gt;Configuration GPG pour WSL2&lt;/h2&gt;
+
+&lt;p&gt;Avant de configurer l’agent GPG, vous pouvez vous référer &lt;a href=&quot;https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/&quot;&gt;à cet article&lt;/a&gt; pour configurer GIT et GPG. La configuration est équivalente.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, créez le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.gnupg/gpg.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Uncomment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;within&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tells&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CLE_ID&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis créez le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.gnupg/gpg-agent.conf&lt;/code&gt; avec le contenu ci-dessous:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ttl&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34560000&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ttl&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34560000&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;program&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curses&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Le cache ici est défini en secondes. Il est mis ici à 400 jours.&lt;/p&gt;
+
+&lt;p&gt;Ce dernier fichier fait référence au programme &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pinentry&lt;/code&gt;. Vous pouvez vérifier sa présence grâce à la commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curses&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si vous ne l’avez pas, vous pouvez l’installer grâce à la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curses&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant, on peut configurer l’environnement BASH en modifiant le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enable&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GPG&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signing&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GPG_TTY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~/.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gnupg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daemon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~/.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gnupg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GPG_AGENT_INFO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}/.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gnupg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;agent:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Redémarrez ensuite WSL2 pour que ça soit pris en compte.&lt;/p&gt;
+
+&lt;p&gt;A la première utilisation de GPG ( par ex. lors d’un commit, vous aurez une interface &lt;a href=&quot;https://fr.wikipedia.org/wiki/Ncurses&quot;&gt;Ncurses&lt;/a&gt; qui apparaîtra dans votre prompt WSL2. Vous aurez à renseigner le mot de passe de votre clé.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="gpg" /><category term="planetlibre" /><category term="wsl2" /><summary type="html">Photo by Pixabay on Pexels.com</summary></entry><entry><title type="html">Installer Ubuntu 20.04 LTS sur un DELL Inspiron 13 5000</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000/" rel="alternate" type="text/html" title="Installer Ubuntu 20.04 LTS sur un DELL Inspiron 13 5000" /><published>2021-04-02T19:45:43+00:00</published><updated>2021-04-02T19:45:43+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000/">&lt;p class=&quot;has-drop-cap&quot;&gt;
+  &lt;a href=&quot;https://blog.touret.info/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/&quot;&gt;Les confinements se suivent et se ressemblent&lt;/a&gt;. Me voilà à installer Ubuntu sur un nouvel ordinateur.&lt;br /&gt;A l&amp;rsquo;instar de l&amp;rsquo;ancien laptop que j&amp;rsquo;ai acheté pour mon aînée, j&amp;rsquo;ai acheté un DELL pour ma deuxième fille.&lt;br /&gt;J&amp;rsquo;ai opté pour un DELL Inspiron 5301.
+&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/04/dell-inspiron-13-5301-argent-01.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-499&quot; width=&quot;511&quot; height=&quot;383&quot; srcset=&quot;/assets/images/2021/04/dell-inspiron-13-5301-argent-01.jpg 2000w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-300x225.jpg 300w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-1024x768.jpg 1024w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-768x576.jpg 768w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-1536x1152.jpg 1536w, /assets/images/2021/04/dell-inspiron-13-5301-argent-01-1568x1176.jpg 1568w&quot; sizes=&quot;(max-width: 511px) 100vw, 511px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;A l’instar de mon autre laptop, je j’ai pas pris de risques. J’ai opté pour un DELL qui est pleinement compatible avec Ubuntu. Oui j’aurai pu installer un ordinateur avec Ubuntu pré-installé, mais je n’ai pas eu le temps de faire un choix « serein ».&lt;/p&gt;
+
+&lt;p class=&quot;has-text-align-center&quot;&gt;
+  &lt;br /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-du-bios&quot;&gt;Configuration du BIOS&lt;/h2&gt;
+
+&lt;p&gt;Voila les paramètres que j’ai appliqué:&lt;/p&gt;
+
+&lt;p&gt;Dans le menu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;Storage&quot;&lt;/code&gt; puis &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;SATA Operation&quot;&lt;/code&gt;: vous devez sélectionner AHCI au lieu de RAID.&lt;br /&gt;
+Dans le menu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;Change boot mode settings &amp;gt;UEFI Boot Mode&quot;&lt;/code&gt; , vous devez désactiver le &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Secure Boot&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Une fois réalisé, vous pouvez redémarrer en appuyant sur la touche F12. Si vous n’arrivez pas à revenir sur le BIOS pour indiquer de booter sur votre clé USB, vous obtiendrez un écran d’erreur Windows dû à la configuration AHCI. Personnellement, en redémarrant une ou deux fois, j’ai obtenu un écran de démarrage avancé qui m’a permis de sélectionner le périphérique (ma clé USB) sur lequel démarrer.&lt;/p&gt;
+
+&lt;p&gt;Maintenant vous pouvez accéder à l’installeur Ubuntu et profiter.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;J’ai eu plusieurs fois des popup « erreur rencontré ». Ce n’était pas bloquant. J’ai continué.&lt;/p&gt;
+
+&lt;p&gt;Tout s’est déroulé sans encombre. &lt;a href=&quot;https://certification.ubuntu.com/hardware/202007-28039&quot;&gt;Le matériel est très bien reconnu&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Les seuls logiciels que j’ai installé sont pour l’instant : VLC, Minecraft ( obligatoire dans la famille ) et Chromium.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="dell" /><category term="planetlibre" /><category term="ubuntu" /><summary type="html">Les confinements se suivent et se ressemblent. Me voilà à installer Ubuntu sur un nouvel ordinateur.A l&amp;rsquo;instar de l&amp;rsquo;ancien laptop que j&amp;rsquo;ai acheté pour mon aînée, j&amp;rsquo;ai acheté un DELL pour ma deuxième fille.J&amp;rsquo;ai opté pour un DELL Inspiron 5301.</summary></entry><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/08/24/music-scores-as-code/">&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-428&quot; /&gt;&lt;/figure&gt;
+
+&lt;p&gt;Derrière ce nom pompeux qui peut effrayer, je vais essayer d’expliquer dans cet article comment on peut versionner facilement ses partitions et les publier sur le web.&lt;/p&gt;
+
+&lt;p&gt;En cherchant comment mettre de la documentation technique avec des diagrammes &lt;a href=&quot;https://plantuml.com/&quot;&gt;PlantUml&lt;/a&gt; dans des repos &lt;a href=&quot;https://about.gitlab.com/&quot;&gt;GITLAB&lt;/a&gt; et générés avec des pipelines, je me suis mis dans la tête de faire la même chose avec des partitions 🙂&lt;/p&gt;
+
+&lt;p&gt;Depuis plusieurs années, j’utilise &lt;a href=&quot;https://lilypond.org/&quot;&gt;lilypond&lt;/a&gt; pour créer mes partitions. C’est un peu difficile de s’y mettre, mais une fois la syntaxe assimilée, la saisie d’une partition est beaucoup plus efficace. Le rendu des partitions est vraiment optimisé.&lt;br /&gt;
+Si vous voulez plus de détails sur le pourquoi du comment je vous conseille &lt;a href=&quot;https://lilypond.org/doc/v2.19/Documentation/essay-big-page&quot;&gt;cette page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vous trouverez des exemples sur &lt;a href=&quot;https://lilypond.org/text-input.fr.html&quot;&gt;le site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;J’ai donc eu l’idée de:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Stocker ces partitions sur un repo github (&lt;em&gt;jusque là rien d’exceptionnel&lt;/em&gt;)&lt;/li&gt;
+  &lt;li&gt;Générer automatiquement les partitions au format PDF, PNG et MIDI via une &lt;a href=&quot;https://github.com/features/actions&quot;&gt;github action&lt;/a&gt; (&lt;em&gt;ça commence à devenir intéressant…&lt;/em&gt;)&lt;/li&gt;
+  &lt;li&gt;Les publier avec &lt;a href=&quot;https://pages.github.com/&quot;&gt;les github pages&lt;/a&gt; (&lt;em&gt;tant qu’à faire 🙂&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;stockage&quot;&gt;Stockage&lt;/h2&gt;
+
+&lt;p&gt;Pourquoi stocker dans un référentiel de sources tel que Github ? Pour les non informaticiens : les partitions sont stockées au format texte.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2.12.1&quot;&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Try a little tenderness&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;composer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Harry Woods, Jimmy Campbell &amp;amp; Reg Connely&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;subtitle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Commitments Version&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Poete&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;instrument&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Piano&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;editor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;L'éditeur&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Remarque sur le rhythme&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;style&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Soul&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Alexandre Touret&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;maintainerEmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;alexandre.touret@free.fr&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;maintainerWeb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://blog.touret.info&quot;&lt;/span&gt;     
+  &lt;span class=&quot;n&quot;&gt;lastupdated&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Music room&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;footer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Footer&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;copyright&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&quot;Delivered by A TOURET&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;upper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relative&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;treble&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tempo&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;176&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;major&lt;/span&gt;
+  
+  &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;d2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; 
+  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;||&quot;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://git-scm.com/&quot;&gt;GIT&lt;/a&gt; et &lt;a href=&quot;https://github.com&quot;&gt;GITHUB&lt;/a&gt; permettent de versionner facilement et pouvoir faire facilement un retour arrière en cas d’erreur.&lt;br /&gt;
+Aussi, GITHUB offre des &lt;a href=&quot;https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests&quot;&gt;fonctionnalités « sociales » et collaboratives qui facilitent la revue des modifications&lt;/a&gt; ( en cas de travail à plusieurs ).&lt;br /&gt;
+Bref, ça offre la sécurité d’une sauvegarde et la possibilité d’un retour arrière en cas d’erreur.&lt;/p&gt;
+
+&lt;h2 id=&quot;générer-les-partitions-avec-une-github-action&quot;&gt;Générer les partitions avec une github action&lt;/h2&gt;
+
+&lt;p&gt;Les &lt;a href=&quot;https://github.com/features/actions&quot;&gt;github actions&lt;/a&gt; sont des outils permettant:&lt;/p&gt;
+
+&lt;blockquote class=&quot;wp-block-quote&quot;&gt;
+  &lt;p&gt;
+    GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want.
+  &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;J’ai donc décidé de créer un workflow qui permet de générer les partitions au format lilypond.&lt;/p&gt;
+
+&lt;p&gt;J’ai mis à disposition &lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action&quot;&gt;le code sur github&lt;/a&gt; sous &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;licence GNU GPLv3&lt;/a&gt;. Elle est utilisable telle quelle.&lt;/p&gt;
+
+&lt;p&gt;Pour créer l’action, il faut créer un fichier action.yml à la racine du repo. Voici le contenu&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Lilypond&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Generator&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;description:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lilypond&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;music&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sheets&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;author:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@alexandre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touret&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;inputs:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;description:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lilyponid&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;required:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;runs:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;using:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;image:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Dockerfile&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+
+&lt;span class=&quot;nl&quot;&gt;branding:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;icon:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;underline&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;color:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Vous aurez compris que ce fichier fait référence à une &lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action/blob/master/Dockerfile&quot;&gt;image Docker&lt;/a&gt;. Cette dernière n’est ni plus ni moins qu’une Debian avec lilypond d’installé.&lt;/p&gt;
+
+&lt;p&gt;Pour l’utiliser dans un repo github, on peut créer une action qui l’utilise. Voici un exemple:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;build_sheets:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;LILYPOND_FILES:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;*.ly&quot;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Checkout&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Source&lt;/span&gt; 
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Get&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;changed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;id:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getfile&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;::set-output name=files::$(find $ -name &quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; -printf &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; | xargs)&quot;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LILYPOND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;considered&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Generate&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PDF&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;music&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sheets&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lilypond&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+            &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A la dernière ligne on peut passer &lt;a href=&quot;http://lilypond.org/doc/v2.18/Documentation/usage/command_002dline-usage&quot;&gt;les arguments nécessaires à lilypond&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;publication&quot;&gt;Publication&lt;/h2&gt;
+
+&lt;p&gt;La c’est l’étape la plus facile :). Il suffit d’activer &lt;a href=&quot;https://pages.github.com/&quot;&gt;les github pages&lt;/a&gt; et de commiter et pusher les partitions générées&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Push&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Local&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Changes&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Add changes&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;changes&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;github_token:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Il suffit de créer une page index.md à la racine et d’ajouter des liens vers les partitions générées ( dans mon cas, ça se passe dans le répertoire /docs ).&lt;br /&gt;
+Vous pouvez trouver un exemple &lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;ici&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Voila comment on peut générer un site avec des partitions crées avec Lilypond.&lt;br /&gt;
+Vous trouverez les différents liens ci-dessous. Peut être que je publierai cette action sur le marketplace une fois que j’aurai publié une documentation digne de ce nom :).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alexandre-touret/piano-sheets-as-code&quot;&gt;Exemple d’utilisation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;Exemple de site généré&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Alexandre Touret</name></author><category term="docker" /><category term="github" /><category term="lilypond" /><category term="planetlibre" /><summary type="html"></summary></entry><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
+
+&lt;figure class=&quot;wp-block-image size-large&quot;&gt;
+&lt;img loading=&quot;lazy&quot; width=&quot;819&quot; height=&quot;45&quot; src=&quot;/assets/images/2020/04/boot_time.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-346&quot; srcset=&quot;/assets/images/2020/04/boot_time.png 819w, /assets/images/2020/04/boot_time-300x16.png 300w, /assets/images/2020/04/boot_time-768x42.png 768w&quot; sizes=&quot;(max-width: 819px) 100vw, 819px&quot; /&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;Tout d’abord, vous devez analyser les services qui prennent du temps au démarrage. Vous pouvez le faire avec cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemd-analyze plot &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; plot.svg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai obtenu le graphique suivant:&lt;figure class=&quot;wp-block-gallery aligncenter columns-1 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;a href=&quot;/assets/images/2020/04/boot_avant.png&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;6066&quot; height=&quot;4013&quot; src=&quot;/assets/images/2020/04/boot_avant.png&quot; alt=&quot;&quot; data-id=&quot;350&quot; class=&quot;wp-image-350&quot; srcset=&quot;/assets/images/2020/04/boot_avant.png 6066w, /assets/images/2020/04/boot_avant-300x198.png 300w, /assets/images/2020/04/boot_avant-1024x677.png 1024w, /assets/images/2020/04/boot_avant-768x508.png 768w, /assets/images/2020/04/boot_avant-1536x1016.png 1536w, /assets/images/2020/04/boot_avant-2048x1355.png 2048w, /assets/images/2020/04/boot_avant-1568x1037.png 1568w&quot; sizes=&quot;(max-width: 6066px) 100vw, 6066px&quot; /&gt;&lt;/a&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;figcaption class=&quot;blocks-gallery-caption&quot;&gt;Avant&lt;/figcaption&gt;
+&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-grub&quot;&gt;Configuration GRUB&lt;/h2&gt;
+
+&lt;p&gt;La première manipulation à réaliser est de désactiver le timeout de &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt;. Pour celà, vous pouvez modifier la variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRUB_TIMEOUT&lt;/code&gt; dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;GRUB_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous devez mettre à jour la configuration &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt; en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grub2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Au prochain reboot, vous ne verrez plus le menu &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-networkmanager&quot;&gt;Configuration NetworkManager&lt;/h2&gt;
+
+&lt;p&gt;Dans mon cas, le service &lt;a href=&quot;https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NetworkManager-wait-online.service&lt;/code&gt; prenait près de 9 secondes&lt;/a&gt;. Après avoir lu &lt;a href=&quot;https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do&quot;&gt;plusieurs billets&lt;/a&gt; et rapports de bug, je me suis aperçu que je pouvais le désactiver au boot. Vous pouvez le faire en lançant la commande suivante&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disable&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NetworkManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;online&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;configuration-apt&quot;&gt;Configuration Apt&lt;/h2&gt;
+
+&lt;p&gt;Un autre service qui prenait pas mal de temps était &lt;a href=&quot;https://askubuntu.com/questions/1038923/do-i-really-need-apt-daily-service-and-apt-daily-upgrade-service&quot;&gt;apt-daily.timer qui vérifiait au boot&lt;/a&gt; qu’il y avait des mises à jour de l’OS. Après quelques recherches, j’ ai vu qu’on pouvait soit le désactiver ( ce qui n’est pas recommandé pour les mises à jour de sécurité ) soit décaler la recherche. J’ai choisi cette solution. Vous devez donc exécuter la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timer&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Et renseigner le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Timer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;OnBootSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;OnUnitActiveSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;AccuracySec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ce service sera donc lancé 15 minutes après le boot. Ce qui est largement suffisant.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[EDIT]&lt;/strong&gt; Vous pouvez appliquer la même configuration pour le service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt-daily-upgrade&lt;/code&gt; en exécutant la commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timer&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous pouvez recharger la configuration en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daemon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reload&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;résultats&quot;&gt;Résultats&lt;/h2&gt;
+
+&lt;p&gt;Après ces quelques manipulations qui peuvent prendre 5 minutes grand maximum, j’ai réussi à optimiser le boot en réduisant le démarrage à &lt;strong&gt;5 secondes!&lt;/strong&gt;&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;783&quot; height=&quot;55&quot; src=&quot;/assets/images/2020/04/boot_apres_header.png?w=783&quot; alt=&quot;&quot; class=&quot;wp-image-360&quot; srcset=&quot;/assets/images/2020/04/boot_apres_header.png 783w, /assets/images/2020/04/boot_apres_header-300x21.png 300w, /assets/images/2020/04/boot_apres_header-768x54.png 768w&quot; sizes=&quot;(max-width: 783px) 100vw, 783px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Vous pourrez trouver le détail ci-dessous:&lt;figure class=&quot;wp-block-gallery aligncenter columns-1 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;a href=&quot;/assets/images/2020/04/boot_apres-2.png?w=287&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;1102&quot; height=&quot;3930&quot; src=&quot;/assets/images/2020/04/boot_apres-2.png?w=287&quot; alt=&quot;&quot; data-id=&quot;362&quot; data-link=&quot;https://blog.touret.info/boot_apres-2/&quot; class=&quot;wp-image-362&quot; srcset=&quot;/assets/images/2020/04/boot_apres-2.png 1102w, /assets/images/2020/04/boot_apres-2-84x300.png 84w, /assets/images/2020/04/boot_apres-2-287x1024.png 287w, /assets/images/2020/04/boot_apres-2-768x2739.png 768w, /assets/images/2020/04/boot_apres-2-431x1536.png 431w, /assets/images/2020/04/boot_apres-2-574x2048.png 574w&quot; sizes=&quot;(max-width: 1102px) 100vw, 1102px&quot; /&gt;&lt;/a&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;figcaption class=&quot;blocks-gallery-caption&quot;&gt;Après&lt;/figcaption&gt;
+&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><summary type="html">Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.</summary></entry><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-303&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il y a plusieurs logiciels payants/propriétaires sur différentes plateformes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.bandinabox.com/bb.php?os=win&amp;amp;lang=fr&quot;&gt;Band in a box&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.apple.com/fr/mac/garageband/&quot;&gt;irealpro&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.apple.com/fr/mac/garageband/&quot;&gt;Garage band&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jjazzlab.com/en/&quot;&gt;Jjazzlabs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;J’ai découvert ce dernier récemment en naviguant sur le site &lt;a href=&quot;http://linuxmao.org/JJazzLab&quot;&gt;Linux Mao&lt;/a&gt;. Il a l’avantage d’être gratuit (&lt;a href=&quot;https://github.com/jjazzboss/JJazzLab-X&quot;&gt;le moteur est sous licence LGPL 3.0&lt;/a&gt;, pas le logiciel en tant que tel), de fonctionner sous GNU/LINUX, d’ offrir un son pas mal du tout et de permettre la configuration de la dynamique au fur et à mesure du morceau.&lt;/p&gt;
+
+&lt;p&gt;Je vais expliquer comment l’installer sur &lt;a href=&quot;https://www.debian.org/&quot;&gt;Debian&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-midi&quot;&gt;Configuration Midi&lt;/h2&gt;
+
+&lt;h3 id=&quot;activation-des-périphériques-virtuels-midi&quot;&gt;Activation des périphériques virtuels MIDI&lt;/h3&gt;
+
+&lt;p&gt;Créer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/modules.load.d/midi.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite créer le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/modprobe.d/midi.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Logiquement à ce stade, lors du prochain reboot, vous aurez un périphérique virtuel MIDI activé. En attendant vous pouvez lancer la commande suivante&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;modprobe&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;synthétiser-du-midi&quot;&gt;Synthétiser du MIDI&lt;/h3&gt;
+
+&lt;p&gt;Pour faire fonctionner ce logiciel, il faut installer une banque de son ( &lt;a href=&quot;https://fr.wikipedia.org/wiki/SoundFont&quot;&gt;au format SF2&lt;/a&gt;) et un logiciel permettant de l’utiliser pour synthétiser du MIDI.&lt;br /&gt;
+La banque de son recommandée est disponible via &lt;a href=&quot;https://musical-artifacts.com/artifacts/1036&quot;&gt;ce lien&lt;/a&gt;. Téléchargez là et copiez la dans un répertoire accessible.&lt;/p&gt;
+
+&lt;p&gt;Pour le second, il vous faudra installer &lt;a href=&quot;http://www.fluidsynth.org/&quot;&gt;fluidsynth&lt;/a&gt;. Voic les quelques commandes à lancer:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fluid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qsynth&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;petite-vérification&quot;&gt;Petite vérification…&lt;/h3&gt;
+
+&lt;p&gt;Avant d’ aller plus loin dans la configuration de fluidsynth, vous pouvez vous assurer que tout est OK &lt;a href=&quot;https://en.wikipedia.org/wiki/File:MIDI_sample.mid?qsrc=3044&quot;&gt;en récupérant un fichier MIDI&lt;/a&gt; et en lançant la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fluidsynth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pulseaudio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alsa_seq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Linux&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SoundFont&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sf2&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;MIDI_sample&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mid&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Normalement vous devriez avoir du son.&lt;/p&gt;
+
+&lt;h3 id=&quot;configurer-fluidsynth&quot;&gt;Configurer fluidsynth&lt;/h3&gt;
+
+&lt;p&gt;Lancez qsynth et cliquez sur le bouton « configuration »&lt;/p&gt;
+
+&lt;p&gt;Vous trouverez ci-dessous la configuration que j’ai appliqué. Elle diffère légèrement de &lt;a href=&quot;https://www.jjazzlab.com/en/doc/fluidsynth/&quot;&gt;celle présentée dans la documentation&lt;/a&gt;.&lt;figure class=&quot;wp-block-gallery columns-3 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png?w=656&quot; alt=&quot;&quot; data-id=&quot;307&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-04-39/&quot; class=&quot;wp-image-307&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png?w=656&quot; alt=&quot;&quot; data-id=&quot;308&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-05-02/&quot; class=&quot;wp-image-308&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
+    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png?w=656&quot; alt=&quot;&quot; data-id=&quot;309&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-05-13/&quot; class=&quot;wp-image-309&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Pensez à redémarrer fluidsynth après application de ces nouveaux paramètres.&lt;/p&gt;
+
+&lt;h3 id=&quot;configurer-aconnect&quot;&gt;Configurer aconnect&lt;/h3&gt;
+
+&lt;p&gt;Disclaimer: La c’est la partie la plus obscure…&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image is-style-default&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-312&quot; width=&quot;247&quot; height=&quot;302&quot; srcset=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png 819w, /assets/images/2020/04/pegi_18_annotated_2009-2010-246x300.png 246w, /assets/images/2020/04/pegi_18_annotated_2009-2010-768x938.png 768w&quot; sizes=&quot;(max-width: 247px) 100vw, 247px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il faut maintenant « brancher » la sortie du synthétiseur virtuel MIDI à fluidsynth pour que le son MIDI soit interprété par ce dernier à travers sa banque de son. Ce n’est pas intuitif, je vous avais prévenu …&lt;br /&gt;
+Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de console est plus parlante ( c’est pour dire ) .&lt;/p&gt;
+
+&lt;p&gt;Exécutez la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aconnect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lo&lt;/span&gt;                                            
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Virtual&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Raw&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;card&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;VirMIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;FLUID&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JJLAB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utilisateur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17838&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;JJLAB:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dans mon cas, je vais avoir à connecter le client 24:0 au synthétiseur 128:0 grâce à la commande :&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aconnect&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant, si on relance la commande &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aconnect -lo&lt;/code&gt; on obtient le résultat suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Virtual&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Raw&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;card&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;VirMIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+	&lt;span class=&quot;nc&quot;&gt;Connexion&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;À:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;FLUID&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JJLAB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utilisateur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17838&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;JJLAB:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+	&lt;span class=&quot;nc&quot;&gt;Connecté&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Depuis:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Attention, cette commande devra être lancée ( ainsi que fluidsynth) avant chaque démarrage de jjazzlab.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation-de-jjazzlab&quot;&gt;Installation de Jjazzlab&lt;/h2&gt;
+
+&lt;p&gt;Téléchargez les binaires sur &lt;a href=&quot;https://www.jjazzlab.com/en/download/&quot;&gt;ce site&lt;/a&gt;, puis décompressez l’archive dans le répertoire &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/opt&lt;/code&gt; par ex.&lt;/p&gt;
+
+&lt;p&gt;Vous devez également installer java&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;openjdk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jdk&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ensuite, vous devez créer le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.local/share/applications/jjazzlab.desktop&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Desktop&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Entry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;GenericName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Icon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/opt/JJazzLab-2.0-Linux/bin/jjazzlab&quot;&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Terminal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Categories&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Audio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;AudioVideo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant vous pouvez directement démarrer JJazzlab via le menu.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
+
+&lt;p&gt;Une fois jjazzlab démarré, vous devez aller dans le menu « Tools&amp;gt;Options » et sélectionnez les valeurs suivantes:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;750&quot; height=&quot;692&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png?w=750&quot; alt=&quot;&quot; class=&quot;wp-image-316&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png 750w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27-300x277.png 300w&quot; sizes=&quot;(max-width: 750px) 100vw, 750px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Ouvrez un fichier example (ex. sunny )&lt;/p&gt;
+
+&lt;p&gt;Cliquez sur le menu décrit par un clavier&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;341&quot; height=&quot;48&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png?w=341&quot; alt=&quot;&quot; class=&quot;wp-image-317&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png 341w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11-300x42.png 300w&quot; sizes=&quot;(max-width: 341px) 100vw, 341px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Puis configurez comme suit:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;828&quot; height=&quot;591&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png?w=828&quot; alt=&quot;&quot; class=&quot;wp-image-318&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png 828w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04-300x214.png 300w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04-768x548.png 768w&quot; sizes=&quot;(max-width: 828px) 100vw, 828px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Maintenant vous pouvez &lt;a href=&quot;https://www.jjazzlab.com/docs/JJazzLab-Realbook.zip&quot;&gt;télécharger les standards fournis sur le site&lt;/a&gt; et improviser dessus 🙂&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="musique" /><category term="planetlibre" /><summary type="html">Avec les contraintes liées au confinement, les répétitions se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.</summary></entry><entry><title type="html">Erreur 139 à l’exécution d’un container docker</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/" rel="alternate" type="text/html" title="Erreur 139 à l’exécution d’un container docker" /><published>2020-04-01T09:09:44+00:00</published><updated>2020-04-01T09:09:44+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/04/01/erreur-139-a-lexecution-dun-container-docker/">&lt;p&gt;Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une &lt;a href=&quot;https://medium.com/better-programming/understanding-docker-container-exit-codes-5ee79a1d58f6&quot;&gt;erreur SIGSEGV 139&lt;/a&gt;. Un crash avec aucune log.&lt;/p&gt;
+
+&lt;p&gt;Bref que du bonheur 🙂&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/man-person-street-shoes-2882.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-295&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Avant d’aller plus loin voici mon environnement:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.debian.org/&quot;&gt;Debian 10&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/debian/&quot;&gt;Docker CE&lt;/a&gt; 19.03.8&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Après quelques recherches, je me suis rendu compte qu’on pouvait reproduire ce comportement en exécutant cette commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;gcc:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une des raisons trouvées serait &lt;a href=&quot;https://github.com/moby/moby/issues/28705&quot;&gt;un problème de compatibilité avec le noyau 4.8.5&lt;/a&gt; (oui ça remonte…).&lt;br /&gt;
+Une solution est d’activer l’émulation &lt;a href=&quot;https://davisdoesdownunder.blogspot.com/2011/02/linux-syscall-vsyscall-and-vdso-oh-my.html&quot;&gt;vsyscall&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Voici la configuration à effectuer:&lt;br /&gt;
+Dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt;, ajouter la ligne suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;GRUB_CMDLINE_LINUX_DEFAULT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;quiet vsyscall=emulate&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis lancer les commandes suivantes:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grub&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reboot&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant le container devrait pouvoir s’exécuter correctement.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une erreur SIGSEGV 139. Un crash avec aucune log.</summary></entry><entry><title type="html">Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493</title><link href="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/" rel="alternate" type="text/html" title="Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493" /><published>2020-03-23T10:06:09+00:00</published><updated>2020-03-23T10:06:09+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/">&lt;p&gt;Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :).&lt;/p&gt;
+
+&lt;p&gt;N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un &lt;a href=&quot;https://www.dell.com/gh/business/p/inspiron-14-3493-laptop/pd&quot;&gt;Dell Inspiron 14-3493&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/03/dell-inspiron-14-3493.jpg?w=510&quot; alt=&quot;&quot; class=&quot;wp-image-279&quot; width=&quot;576&quot; height=&quot;401&quot; srcset=&quot;/assets/images/2020/03/dell-inspiron-14-3493.jpg 510w, /assets/images/2020/03/dell-inspiron-14-3493-300x209.jpg 300w&quot; sizes=&quot;(max-width: 576px) 100vw, 576px&quot; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Je n’ai pas pris trop de risques. Bien que livré avec Windows 10, ce modèle est &lt;a href=&quot;https://certification.ubuntu.com/hardware/201907-27239&quot;&gt;déjà certifié compatible Ubuntu&lt;/a&gt;.&lt;br /&gt;
+L’installation d’&lt;a href=&quot;https://doc.ubuntu-fr.org/Accueil&quot;&gt;Ubuntu&lt;/a&gt; se passe très bien. C’est plié en moins de 30mn. Du coup, je ne la détaillerai pas dans cet article – si vous êtes intéressé, vous pouvez consulter &lt;a href=&quot;https://doc.ubuntu-fr.org/installation&quot;&gt;cet article&lt;/a&gt;. Pour les pré-requis, c’est une autre paire de manches …&lt;/p&gt;
+
+&lt;p&gt;Voilà les différentes actions que j’ai réalisé au préalable&lt;/p&gt;
+
+&lt;h2 id=&quot;redémarrer-lordinateur-et-accéder-au-bios&quot;&gt;Redémarrer l’ordinateur et accéder au BIOS&lt;/h2&gt;
+
+&lt;p&gt;Là, j’ai un peu galéré pour accéder au &lt;a href=&quot;https://fr.wikipedia.org/wiki/BIOS_(informatique)&quot;&gt;BIOS&lt;/a&gt;. La seule manipulation que j’ai trouvé et de lancer le menu « Démarrage avancé » puis sélectionner « Utiliser un périphérique ».&lt;/p&gt;
+
+&lt;p&gt;Vous pouvez donc sélectionner le disque dur. Au boot en appuyant sur la touche F12 et/ou F2, vous pouvez accéder au BIOS.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-du-bios&quot;&gt;Configuration du BIOS&lt;/h2&gt;
+
+&lt;p&gt;Voila les paramètres que j’ai appliqué:&lt;/p&gt;
+
+&lt;p class=&quot;has-text-align-left&quot;&gt;
+  Dans le menu &lt;code&gt;&quot;SATA Operation&quot;&lt;/code&gt;: vous devez sélectionner AHCI au lieu de RAID.&lt;br /&gt;Dans le menu &lt;code&gt;&quot;Change boot mode settings &amp;gt;UEFI Boot Mode&quot;&lt;/code&gt; , vous devez désactiver le &lt;code&gt;Secure Boot&lt;/code&gt;.&lt;br /&gt;&lt;br /&gt;Une fois réalisé, vous pouvez redémarrer en appuyant sur la touche F2 et/ou F12. Si vous n&amp;rsquo;arrivez pas à revenir sur le BIOS pour indiquer de booter sur votre clé USB, vous obtiendrez un écran d&amp;rsquo;erreur Windows dû à la configuration AHCI. Personnellement, en redémarrant une ou deux fois, j&amp;rsquo;ai obtenu un écran de démarrage avancé qui m&amp;rsquo;a permis de sélectionner le périphérique (ma clé USB) sur lequel démarrer.&lt;br /&gt;&lt;br /&gt;Maintenant vous pouvez accéder à l&amp;rsquo;installeur Ubuntu et profiter 🙂
+&lt;/p&gt;
+
+&lt;h2 id=&quot;après-linstallation&quot;&gt;Après l’installation&lt;/h2&gt;
+
+&lt;p&gt;Je n’ai rien fait de particulier si ce n’est configurer le trackpad. Pour cela, j’ai &lt;a href=&quot;https://www.omgubuntu.co.uk/2018/04/things-to-do-after-installing-ubuntu-18-04&quot;&gt;installé gnome-tweaks&lt;/a&gt;. Mis à part ça, tout fonctionne très bien!&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="ubuntu" /><summary type="html">Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :). N’ayant pas trop de temps pour chercher la bonne affaire ( technologique et financière ), j’ ai acheté un Dell Inspiron 14-3493.</summary></entry></feed>

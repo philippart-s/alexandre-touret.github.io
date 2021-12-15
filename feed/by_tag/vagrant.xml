@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/vagrant.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/vagrant.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Installation de Vagrant</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/03/15/installation-de-vagrant/" rel="alternate" type="text/html" title="Installation de Vagrant" /><published>2018-03-15T11:05:55+00:00</published><updated>2018-03-15T11:05:55+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/03/15/installation-de-vagrant</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/03/15/installation-de-vagrant/">&lt;p&gt;&lt;a href=&quot;http://vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt; est un outil permettant de construire des environnements de travail virtualisés hébergés sur vmware, virtualbox ou encore docker. Il permet par exemple de construire et gérer une VM dans un seul et même workflow et d’éviter les exports et partages de machines virtuelles ( tout est déclaré dans un seul et même fichier ).&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;  wp-image-69 alignright&quot; src=&quot;/assets/images/2018/03/vagrant.png&quot; alt=&quot;Vagrant&quot; width=&quot;128&quot; height=&quot;156&quot; srcset=&quot;/assets/images/2018/03/vagrant.png 999w, /assets/images/2018/03/vagrant-246x300.png 246w, /assets/images/2018/03/vagrant-840x1024.png 840w, /assets/images/2018/03/vagrant-768x936.png 768w&quot; sizes=&quot;(max-width: 128px) 100vw, 128px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Voici comment je l’ai installé sur ma &lt;a href=&quot;http://blog.touret.info/2018/02/10/ma-configuration-debian-9/&quot;&gt;debian 9&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;Le paquet fourni dans la distribution n’est pas compatible avec la version de virtualbox fournie dans l&lt;a href=&quot;https://www.virtualbox.org/wiki/Linux_Downloads&quot;&gt;e repo virtualbox.org&lt;/a&gt;. j’ai donc installé la version disponible sur le site de &lt;a href=&quot;https://www.vagrantup.com/downloads.html&quot;&gt;vagrant&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+# dpkg -i vagrant_2.0.2_x86_64.deb&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;proxy&quot;&gt;Proxy&lt;/h3&gt;
+
+&lt;p&gt;Si vous avez un proxy, il faut effectuer le paramétrage suivant&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+$ export http_proxy= »http://user:password@host:port »&lt;br /&gt;
+$ export https_proxy= »http://user:password@host:port »&lt;br /&gt;
+$ vagrant plugin install vagrant-proxyconf&lt;br /&gt;
+$ export VAGRANT_HTTP_PROXY= »http://user:password@host:port »&lt;br /&gt;
+$ export VAGRANT_NO_PROXY= »127.0.0.1″&lt;br /&gt;
+[/code]&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+$vagrant box add \&lt;br /&gt;
+precise64 https://files.hashicorp.com/precise64.box&lt;br /&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ export VAGRANT_DEFAULT_PROVIDER&lt;/code&gt;=virtualbox [/code]&lt;/p&gt;
+
+&lt;h2 id=&quot;installation-dune-vm&quot;&gt;Installation d’une VM&lt;/h2&gt;
+
+&lt;p&gt;Voici un exemple pour une VM virtualbox basée sur ubuntu&lt;/p&gt;
+
+&lt;p&gt;[code language= »bash »]&lt;br /&gt;
+$ mkdir ~/vagrant&lt;br /&gt;
+$ cd ~/vagrant&lt;br /&gt;
+$ vagrant init pristine ubuntu-budgie-17-x64&lt;br /&gt;
+$ vagrant up [/code]&lt;/p&gt;
+
+&lt;p&gt;Avec ces quelques commandes j’obtiens un environnement ubuntu hébergé sur virtualbox sans avoir à installer et configurer la vm. Pour l’instant je ne rentre pas trop dans les détails de la construction des images. Peut-être que je m’y plongerai prochainement…&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="vagrant" /><summary type="html">Vagrant est un outil permettant de construire des environnements de travail virtualisés hébergés sur vmware, virtualbox ou encore docker. Il permet par exemple de construire et gérer une VM dans un seul et même workflow et d’éviter les exports et partages de machines virtuelles ( tout est déclaré dans un seul et même fichier ).</summary></entry></feed>

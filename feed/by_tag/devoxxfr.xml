@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/devoxxfr.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/devoxxfr.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Devoxx 2019</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/04/20/devoxx-2019/" rel="alternate" type="text/html" title="Devoxx 2019" /><published>2019-04-20T06:14:09+00:00</published><updated>2019-04-20T06:14:09+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/04/20/devoxx-2019</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/04/20/devoxx-2019/">&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-169 aligncenter&quot; src=&quot;/assets/images/2019/04/img_20190419_161746.jpg?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;224&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;En attendant de prendre mon train, j’essaye de me remettre de cette nouvelle édition. Cette année JAVA est revenu au premier plan. Que ça soit via la spécification &lt;a href=&quot;http://microprofile.io/&quot;&gt;microprofile&lt;/a&gt;, &lt;a href=&quot;https://quarkus.io/&quot;&gt;quarkus&lt;/a&gt; , &lt;a href=&quot;https://www.graalvm.org/&quot;&gt;graalvm&lt;/a&gt; ou encore par les problématiques de migration JDK 8 -&amp;gt; 11. On a pas mal vu des architectures micro services à base de &lt;a href=&quot;https://www.redhat.com/fr/topics/microservices/what-is-a-service-mesh&quot;&gt;service mesh&lt;/a&gt; (&lt;a href=&quot;https://istio.io/&quot;&gt;istio&lt;/a&gt;) et &lt;a href=&quot;https://kubernetes.io/fr/&quot;&gt;kubernetes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A coté des sujets techniques, un des sujets majeurs  était le bien être et la bienveillance au travail.&lt;/p&gt;
+
+&lt;p&gt;Les vidéos des conférences seront bientôt retransmises sur &lt;a href=&quot;https://www.youtube.com/channel/UCsVPQfo5RZErDL41LoWvk0A&quot;&gt;le channel Youtube de DevoxxFR&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;D’une manière générale, le niveau des conférences est toujours très bon.&lt;/p&gt;
+
+&lt;p&gt;J’ai particulièrement apprécié les confs suivantes. N’hésitez pas à les visionnez une fois qu’elles seront disponibles sur Youtube.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/HAT-9594/Cycle_de_vie_des_applications_dans_Kubernetes&quot;&gt;Cycle de vie des applications dans k8s&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/LGU-0798/Creer_facilement_des_microservices__(ou_cloud_native_java)_avec_Eclipse_MicroProfile&quot;&gt;Créer facilement des microservices avec Eclipse microprofile&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/LVJ-5031/Back_to_Basics_:_Ne_perdez_plus_votre_Temps_avec_les_Dates&quot;&gt;Back to Basics, ne perdez plus de temps avec les dates&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/GDA-0693/Hexagonal_at_Scale,_ou_l'art_de_decouper_et_organiser_ses_services&quot;&gt;Hexagonal at scale&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/PQL-0969/Comment_concevoir_une_API_RESTful_%3F&quot;&gt;Comment concevoir une API REST&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/SQO-0767/D%E2%80%99architecte_a_Metarchitecte_:_une_evolution_necessaire&quot;&gt;D’Architecte à MetaArchitecte: Une évolution nécessaire&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Il y a aussi certaines conférences ou j’ai eu un bon écho :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/YPH-1256/Oubliez_Java_EE,_voila_Jakarta_EE_!&quot;&gt;Oubliez JavaEE, voilà JakartaEE&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/LVJ-5031/Back_to_Basics_:_Ne_perdez_plus_votre_Temps_avec_les_Dates&quot;&gt;Back to Basics, ne perdez plus de temps avec les dates&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2019/talk/HGT-7027/Comprendre_les_GC_a_faible_latence&quot;&gt;Comprendre les GC à faible latence&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Je pense qu’il y a encore bien d’autres conférences qui ont été très intéressantes. J’ ai quelques heures de visionnage à prévoir dans mon agenda 🙂 . Quoi qu’il en soit, merci aux organisateurs pour cette édition. C’était top!&lt;/p&gt;
+
+&lt;p&gt;Rendez vous l’année prochaine !&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="conférence" /><category term="devoxx" /><category term="devoxxfr" /><category term="java" /><category term="planetlibre" /><summary type="html"></summary></entry><entry><title type="html">Devoxx 2018</title><link href="https://blog.touret.info/pages/alexandre-touret/2018/04/20/devoxx-2018/" rel="alternate" type="text/html" title="Devoxx 2018" /><published>2018-04-20T11:18:43+00:00</published><updated>2018-04-20T11:18:43+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2018/04/20/devoxx-2018</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2018/04/20/devoxx-2018/">&lt;p&gt;L’édition 2018 de &lt;a href=&quot;http://www.devoxx.fr/&quot;&gt;DEVOXX&lt;/a&gt; touche bientôt à sa fin. Pour ceux qui ne connaissent pas cette conférence, c’est &lt;strong&gt;LA&lt;/strong&gt; conférence sur le développement en France. A titre personnel, je peux plus apprendre en trois jours à cette conférence qu’en formation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-full wp-image-82&quot; src=&quot;/assets/images/2018/04/img_20180419_155256624099247.jpg&quot; alt=&quot;img_20180419_155256624099247.jpg&quot; width=&quot;2244&quot; height=&quot;3000&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tout d’abord un grand merci aux organisateurs. Ils assurent réellement. Bon, pour l’année prochaine, n’hésitez à retenir ma conférence 😉&lt;/p&gt;
+
+&lt;p&gt;Si vous n’avez pas eu la chance d’assister aux trois jours, il faut savoir que vous pourrez voir les rediff sur &lt;a href=&quot;https://www.youtube.com/channel/UCsVPQfo5RZErDL41LoWvk0A&quot;&gt;la chaine youtube&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;les-tendances&quot;&gt;Les tendances&lt;/h2&gt;
+
+&lt;p&gt;Voici les tendances que  j’ai retenu :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Spring, spring et encore spring&lt;/li&gt;
+  &lt;li&gt;Du réactif en veux tu en voila&lt;/li&gt;
+  &lt;li&gt;Du &lt;a href=&quot;https://blog.octo.com/domain-driven-design-des-armes-pour-affronter-la-complexite/&quot;&gt;DDD&lt;/a&gt; sinon rien&lt;/li&gt;
+  &lt;li&gt;Du devops&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;et le plus impressionnant pour moi était la conférence de &lt;a href=&quot;https://g.co/kgs/5RKDhS&quot;&gt;JOSHUA BLOCH(!!!) sur Effective Java.&lt;/a&gt; Pas tant dans le contenu, car il reprenait peu ou prou celui du livre, mais de voir une personne de ce calibre (dans le monde JAVA, c’est une rock star) en France, c’est assez impressionnant.&lt;/p&gt;
+
+&lt;p&gt;Les keynotes ( dont celle sur le smart building) étaient dans l’ensemble très intéressantes. Les conférences étaient également d’un très bon niveau. J’ai pu découvrir par exemple l’avance que peut avoir &lt;a href=&quot;https://e-resident.gov.ee/&quot;&gt;l’Estonie sur l’IT&lt;/a&gt; ( voir le projet &lt;a href=&quot;https://e-estonia.com/solutions/interoperability-services/x-road/&quot;&gt;x-road&lt;/a&gt; )  par rapport à la France qui lance le &lt;a href=&quot;http://www.french-road.fr/&quot;&gt;projet french road&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Voici quelques conférences qui m’ont plu et interpelé :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/UTJ-8549/Etre_architecte_logiciel_en_2018&quot;&gt;Être architecte en 2018&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/XDA-2796/Le_Smart_Building_:_par_ou_commencer_%3F&quot;&gt;Le smart building&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/IQJ-6767/Chaos_Engineering,_principes_et_mise_en_application&quot;&gt;Chaos Engineering&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/TXO-1273/Effective_Java,_Third_Edition:_Keepin'_it_Effective&quot;&gt;Effective java&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/PTA-9920/Pourquoi_vous_avez_besoin_d'une_Clean_Architecture&quot;&gt;Pourquoi vous avez besoin d’une clean architecture&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/DKA-0580/Securite_des_applications_Web_:_les_bons_reflexes_a_avoir&quot;&gt;Sécurité des web applications&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cfp.devoxx.fr/2018/talk/PCF-2127/Apres_Java_8,_Java_9_et_10&quot;&gt;Après java 8, java 9 et 10&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Je ne vais pas trop les décrire ( voire pas du tout ), elles seront disponibles prochainement sur &lt;a href=&quot;https://www.youtube.com/channel/UCsVPQfo5RZErDL41LoWvk0A&quot;&gt;la chaine youtube&lt;/a&gt; .&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="devoxx" /><category term="devoxxfr" /><category term="java" /><category term="planetlibre" /><summary type="html">L’édition 2018 de DEVOXX touche bientôt à sa fin. Pour ceux qui ne connaissent pas cette conférence, c’est LA conférence sur le développement en France. A titre personnel, je peux plus apprendre en trois jours à cette conférence qu’en formation.</summary></entry></feed>

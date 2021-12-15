@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/pages/alexandre-touret/feed/by_tag/gpg.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/pages/alexandre-touret/" rel="alternate" type="text/html" /><updated>2021-12-15T20:09:41+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/feed/by_tag/gpg.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Utiliser GPG dans WSL2</title><link href="https://blog.touret.info/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/" rel="alternate" type="text/html" title="Utiliser GPG dans WSL2" /><published>2021-05-03T18:47:11+00:00</published><updated>2021-05-03T18:47:11+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2021/05/03/utiliser-gpg-dans-wsl2/">&lt;div class=&quot;wp-block-image&quot;&gt;
+  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/05/pexels-photo-261621.jpeg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-511&quot; width=&quot;641&quot; height=&quot;480&quot; srcset=&quot;/assets/images/2021/05/pexels-photo-261621.jpeg 1733w, /assets/images/2021/05/pexels-photo-261621-300x225.jpeg 300w, /assets/images/2021/05/pexels-photo-261621-1024x768.jpeg 1024w, /assets/images/2021/05/pexels-photo-261621-768x576.jpeg 768w, /assets/images/2021/05/pexels-photo-261621-1536x1152.jpeg 1536w, /assets/images/2021/05/pexels-photo-261621-1568x1176.jpeg 1568w&quot; sizes=&quot;(max-width: 641px) 100vw, 641px&quot; /&gt;&lt;figcaption&gt;Photo by Pixabay on &lt;a href=&quot;https://www.pexels.com/photo/agreement-blur-business-close-up-261621/&quot; rel=&quot;nofollow&quot;&gt;Pexels.com&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p class=&quot;has-drop-cap&quot;&gt;
+  Pourquoi utiliser &lt;a href=&quot;https://fr.wikipedia.org/wiki/GNU_Privacy_Guard&quot;&gt;GPG&lt;/a&gt; ? Par exemple &lt;a href=&quot;https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/&quot;&gt;pour signer les commits GIT&lt;/a&gt;. Maintenant comment faire quand on est sous Windows 10 et qu&amp;rsquo;on souhaite utiliser &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/wsl/install-win10&quot;&gt;le sous système Linux (WSL2)&lt;/a&gt;?
+&lt;/p&gt;
+
+&lt;p&gt;Sous GNU/Linux, l’installation et l’utilisation avec git est très simple. Avec &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/wsl/install-win10&quot;&gt;WSL2&lt;/a&gt;,… il faut un peu d’huile de coude 🙂&lt;/p&gt;
+
+&lt;p&gt;Je vais tâcher de décrire dans cet article les différentes manipulations nécessaires pour:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Importer une clé GPG existante&lt;/li&gt;
+  &lt;li&gt;Utiliser GPG pour signer mes commits dans WSL2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;importer-une-clé-gpg-existante&quot;&gt;Importer une clé GPG existante&lt;/h2&gt;
+
+&lt;h3 id=&quot;export-de-la-clé-gpg&quot;&gt;Export de la clé GPG&lt;/h3&gt;
+
+&lt;h4 id=&quot;identifier-l-id-de-la-clé&quot;&gt;Identifier l’ ID de la clé&lt;/h4&gt;
+
+&lt;p&gt;Lancez la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;import&quot;&gt;Import&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;public.key&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;private.key&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;vérification&quot;&gt;Vérification&lt;/h3&gt;
+
+&lt;p&gt;Pour vérifier que la clé est bien configurée, vous pouvez lancer la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keyid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LONG&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;....&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sec&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;rsa4096&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CLE_ID&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2019&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;********************&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt;                &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ultime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Alexandre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;....&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ssb&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;rsa4096&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SUB&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2019&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si la clé n’est pas reconnue comme ultime ou comme de confiance, il faudra l’éditer:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CLE_ID&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Please&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decide&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;far&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correctly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verify&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;looking&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passports&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;checking&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fingerprints&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;different&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.)&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;don&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;know&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;won&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;say&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marginally&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fully&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trust&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ultimately&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;back&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;menu&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Your&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decision&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si vous ne voulez pas trop vous compliquer, je vous conseille de répondre &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-gpg-pour-wsl2&quot;&gt;Configuration GPG pour WSL2&lt;/h2&gt;
+
+&lt;p&gt;Avant de configurer l’agent GPG, vous pouvez vous référer &lt;a href=&quot;https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/&quot;&gt;à cet article&lt;/a&gt; pour configurer GIT et GPG. La configuration est équivalente.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, créez le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.gnupg/gpg.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Uncomment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;within&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tells&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CLE_ID&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Puis créez le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.gnupg/gpg-agent.conf&lt;/code&gt; avec le contenu ci-dessous:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ttl&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34560000&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ttl&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34560000&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;program&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curses&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Le cache ici est défini en secondes. Il est mis ici à 400 jours.&lt;/p&gt;
+
+&lt;p&gt;Ce dernier fichier fait référence au programme &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pinentry&lt;/code&gt;. Vous pouvez vérifier sa présence grâce à la commande:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curses&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Si vous ne l’avez pas, vous pouvez l’installer grâce à la commande suivante:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pinentry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curses&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Maintenant, on peut configurer l’environnement BASH en modifiant le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enable&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GPG&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signing&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GPG_TTY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~/.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gnupg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daemon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~/.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gnupg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GPG_AGENT_INFO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}/.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gnupg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gpg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;agent:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Redémarrez ensuite WSL2 pour que ça soit pris en compte.&lt;/p&gt;
+
+&lt;p&gt;A la première utilisation de GPG ( par ex. lors d’un commit, vous aurez une interface &lt;a href=&quot;https://fr.wikipedia.org/wiki/Ncurses&quot;&gt;Ncurses&lt;/a&gt; qui apparaîtra dans votre prompt WSL2. Vous aurez à renseigner le mot de passe de votre clé.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="gpg" /><category term="planetlibre" /><category term="wsl2" /><summary type="html">Photo by Pixabay on Pexels.com</summary></entry><entry><title type="html">Vérifier les commit GIT avec GPG</title><link href="https://blog.touret.info/pages/alexandre-touret/2019/08/09/verifier-les-commit-git-avec-gpg/" rel="alternate" type="text/html" title="Vérifier les commit GIT avec GPG" /><published>2019-08-09T14:13:21+00:00</published><updated>2019-08-09T14:13:21+00:00</updated><id>https://blog.touret.info/pages/alexandre-touret/2019/08/09/verifier-les-commit-git-avec-gpg</id><content type="html" xml:base="https://blog.touret.info/pages/alexandre-touret/2019/08/09/verifier-les-commit-git-avec-gpg/">&lt;p&gt;Juste pour un pense bête, voici comment paramétrer &lt;a href=&quot;https://git-scm.com/&quot;&gt;GIT&lt;/a&gt; et &lt;a href=&quot;https://github.com/&quot;&gt;GITHUB&lt;/a&gt;/&lt;a href=&quot;https://about.gitlab.com/&quot;&gt;GITLAB&lt;/a&gt; pour signer les commits avec &lt;a href=&quot;https://gnupg.org&quot;&gt;GPG&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-196 size-large&quot; src=&quot;/assets/images/2019/08/kelly-sikkema-c3rk5toz0qa-unsplash.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-gpg&quot;&gt;Configuration GPG&lt;/h2&gt;
+
+&lt;p&gt;Exécutez la commande suivante :&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint prettyprinted&quot;&gt;&lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;gpg --full-generate-key
+
+Sélectionnez une clé RSA (question 1) de 4096 bits (question 2).&lt;/span&gt;&lt;/span&gt;
+```
+
+
+&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
+  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;Une fois cette commande effectuée, vous pouvez récupérer votre clé GPG avec cette commande:&lt;/span&gt;&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
+  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;gpg &amp;#8211;list-secret-keys &amp;#8211;keyid-format LONG&lt;br /&gt; &lt;/span&gt;&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;pre&gt;gpg --list-secret-keys --keyid-format LONG alexandre@....
+/home/alexandre/.gnupg/pubring.kbx
+----------------------------------
+sec rsa4096/XXXXXXXXXX 2019-08-09 [SC]
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+uid [ ultime ] Alexandre Touret &amp;lt;mon.mail.github.ou.gitlab@monprovider.fr&amp;gt;
+ssb rsa4096/XXXXXXXXXX 2019-08-09 [E]
+```
+
+
+&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
+  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;Ensuite, il faut exécuter cette commande &lt;/span&gt;&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;pre&gt;gpg --armor --export XXXXXXXXXX
+```
+
+
+## Configuration GIT
+
+Indiquez la clé GPG à GIT
+
+&lt;pre&gt;git config --local user.signingkey 6F9D7D5FCE959337
+```
+
+
+Et indiquez que vous voulez signer tous vos commits
+
+&lt;pre&gt;&lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;git &lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;config &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;gpgsign &lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;true&lt;/span&gt;&lt;/span&gt;
+```
+
+
+Si vous ne faites pas cette dernière commande, vous devrez ajouter l&amp;rsquo;option -S à chaque exécution de la commande git commit.
+
+Exemple:
+
+&lt;pre&gt;git -a -S -m &quot;Ajout javadoc&quot;
+```
+
+
+## Configuration GITHUB
+
+Sur Github ( il y a la même chose sur gitlab), vous pouvez [dans vos paramètres](https://github.com/settings/keys) ajouter cette clé . De cette manière, vos prochains commits envoyés seront vérifiés.
+
+&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
+  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt; En espérant que ça serve à d&amp;rsquo;autres 🙂&lt;br /&gt; &lt;/span&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="github" /><category term="gitlab" /><category term="gpg" /><category term="planetlibre" /><summary type="html">Juste pour un pense bête, voici comment paramétrer GIT et GITHUB/GITLAB pour signer les commits avec GPG.</summary></entry></feed>
