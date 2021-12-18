@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/musique.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-18T15:24:32+00:00</updated><id>https://blog.touret.info/feed/by_tag/musique.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/musique.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-18T15:38:58+00:00</updated><id>https://blog.touret.info/feed/by_tag/musique.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
 
 &lt;div class=&quot;wp-block-image&quot;&gt;
   &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-303&quot; /&gt;&lt;/figure&gt;
@@ -59,20 +59,13 @@ La banque de son recommandée est disponible via &lt;a href=&quot;https://musica
 
 &lt;p&gt;Lancez qsynth et cliquez sur le bouton « configuration »&lt;/p&gt;
 
-&lt;p&gt;Vous trouverez ci-dessous la configuration que j’ai appliqué. Elle diffère légèrement de &lt;a href=&quot;https://www.jjazzlab.com/en/doc/fluidsynth/&quot;&gt;celle présentée dans la documentation&lt;/a&gt;.&lt;figure class=&quot;wp-block-gallery columns-3 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Vous trouverez ci-dessous la configuration que j’ai appliqué. Elle diffère légèrement de &lt;a href=&quot;https://www.jjazzlab.com/en/doc/fluidsynth/&quot;&gt;celle présentée dans la documentation&lt;/a&gt;.&lt;/p&gt;
 
-&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
-  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
-    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png?w=656&quot; alt=&quot;&quot; data-id=&quot;307&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-04-39/&quot; class=&quot;wp-image-307&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
-  &lt;/li&gt;
-  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
-    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png?w=656&quot; alt=&quot;&quot; data-id=&quot;308&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-05-02/&quot; class=&quot;wp-image-308&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
-  &lt;/li&gt;
-  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
-    &lt;figure&gt;&lt;img loading=&quot;lazy&quot; width=&quot;656&quot; height=&quot;442&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png?w=656&quot; alt=&quot;&quot; data-id=&quot;309&quot; data-link=&quot;https://blog.touret.info/capture-de28099c3a9cran-du-2020-04-12-15-05-13/&quot; class=&quot;wp-image-309&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png 656w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13-300x202.png 300w&quot; sizes=&quot;(max-width: 656px) 100vw, 656px&quot; /&gt;&lt;/figure&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png&quot; alt=&quot;fluidsynth1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02-300x202.png&quot; alt=&quot;fluidsynth2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png&quot; alt=&quot;fluidsynth3&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Pensez à redémarrer fluidsynth après application de ces nouveaux paramètres.&lt;/p&gt;
 
@@ -80,9 +73,7 @@ La banque de son recommandée est disponible via &lt;a href=&quot;https://musica
 
 &lt;p&gt;Disclaimer: La c’est la partie la plus obscure…&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-image is-style-default&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-312&quot; width=&quot;247&quot; height=&quot;302&quot; srcset=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png 819w, /assets/images/2020/04/pegi_18_annotated_2009-2010-246x300.png 246w, /assets/images/2020/04/pegi_18_annotated_2009-2010-768x938.png 768w&quot; sizes=&quot;(max-width: 247px) 100vw, 247px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png&quot; alt=&quot;aconnect&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Il faut maintenant « brancher » la sortie du synthétiseur virtuel MIDI à fluidsynth pour que le son MIDI soit interprété par ce dernier à travers sa banque de son. Ce n’est pas intuitif, je vous avais prévenu …&lt;br /&gt;
 Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de console est plus parlante ( c’est pour dire ) .&lt;/p&gt;
@@ -144,18 +135,16 @@ Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de c
 
 &lt;p&gt;Une fois jjazzlab démarré, vous devez aller dans le menu « Tools&amp;gt;Options » et sélectionnez les valeurs suivantes:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;750&quot; height=&quot;692&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png?w=750&quot; alt=&quot;&quot; class=&quot;wp-image-316&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png 750w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27-300x277.png 300w&quot; sizes=&quot;(max-width: 750px) 100vw, 750px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png&quot; alt=&quot;configuration&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Ouvrez un fichier example (ex. sunny )&lt;/p&gt;
 
 &lt;p&gt;Cliquez sur le menu décrit par un clavier&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;341&quot; height=&quot;48&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png?w=341&quot; alt=&quot;&quot; class=&quot;wp-image-317&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png 341w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11-300x42.png 300w&quot; sizes=&quot;(max-width: 341px) 100vw, 341px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png&quot; alt=&quot;configuration&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Puis configurez comme suit:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;828&quot; height=&quot;591&quot; src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png?w=828&quot; alt=&quot;&quot; class=&quot;wp-image-318&quot; srcset=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png 828w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04-300x214.png 300w, /assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04-768x548.png 768w&quot; sizes=&quot;(max-width: 828px) 100vw, 828px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png&quot; alt=&quot;configuration&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Maintenant vous pouvez &lt;a href=&quot;https://www.jjazzlab.com/docs/JJazzLab-Realbook.zip&quot;&gt;télécharger les standards fournis sur le site&lt;/a&gt; et improviser dessus 🙂&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="musique" /><category term="planetlibre" /><summary type="html">Avec les contraintes liées au confinement, les répétitions se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.</summary></entry></feed>
