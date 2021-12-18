@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Gérer « efficacement » les fichiers de configuration dans les charts HELM - blog.touret.info</title>
-<meta name="description" content="Dès qu&rsquo;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&rsquo;un environnement à l&rsquo;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
+<meta name="description" content="Dès qu&#39;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&#39;un environnement à l&#39;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
 
 
   <meta name="author" content="Alexandre Touret">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://blog.touret.info/2021/01/09/gerer-efficacement-les-fichiers-de-configuration-dans-les-charts-helm/">
 
 
-  <meta property="og:description" content="Dès qu&rsquo;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&rsquo;un environnement à l&rsquo;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
+  <meta property="og:description" content="Dès qu&#39;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&#39;un environnement à l&#39;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
 
 
 
@@ -36,7 +36,7 @@
 
   <meta name="twitter:site" content="@touret_alex">
   <meta name="twitter:title" content="Gérer « efficacement » les fichiers de configuration dans les charts HELM">
-  <meta name="twitter:description" content="Dès qu&rsquo;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&rsquo;un environnement à l&rsquo;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
+  <meta name="twitter:description" content="Dès qu&#39;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&#39;un environnement à l&#39;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
   <meta name="twitter:url" content="https://blog.touret.info/2021/01/09/gerer-efficacement-les-fichiers-de-configuration-dans-les-charts-helm/">
 
   
@@ -280,7 +280,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Gérer « efficacement » les fichiers de configuration dans les charts HELM">
-    <meta itemprop="description" content="  Dès qu&rsquo;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&rsquo;un environnement à l&rsquo;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
+    <meta itemprop="description" content="  Dès qu&#39;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&#39;un environnement à l&#39;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.">
     <meta itemprop="datePublished" content="2021-01-09T14:21:28+00:00">
     
 
@@ -325,7 +325,7 @@
       <section class="page__content e-content" itemprop="text">
         
         <p class="has-drop-cap">
-  Dès qu&rsquo;on veut déployer des environnements <a href="https://kubernetes.io/">Kubernetes</a>, <a href="https://helm.sh/">Helm </a>devient une des solutions à considérer.<br />Le déploiement des objets standards tels que <code>deployment</code>, <code>autoscaler </code>et autres se fait aisément car ces derniers ne changent pas d&rsquo;un environnement à l&rsquo;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.
+  Dès qu'on veut déployer des environnements <a href="https://kubernetes.io/">Kubernetes</a>, <a href="https://helm.sh/">Helm </a>devient une des solutions à considérer.<br />Le déploiement des objets standards tels que <code>deployment</code>, <code>autoscaler </code>et autres se fait aisément car ces derniers ne changent pas d'un environnement à l'autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.
 </p>
 
 <p>Bien évidemment on pourra limiter la taille des replicas sur l’environnement de développement par exemple mais au fond, le contenu des charts sera identique. Une des difficultés que l’on pourra rencontrer c’est dans la gestion des fichiers de configuration.</p>
@@ -368,7 +368,7 @@
 <span class="na">type</span><span class="pi">:</span> <span class="s">Opaque</span>
 <span class="c1"># Inclusion of binary configuration files</span>
 <span class="na">data</span><span class="pi">:</span>
-  <span class="na">my_keystore_jks</span><span class="pi">:</span> 
+  <span class="s">my_keystore_jks  .Files.Get "secrets/my_keystore.jks" | b64enc }}</span> 
 </code></pre></div></div>
 
 <p>Vous pouvez définir les fichiers directement dans vos configmaps. Cependant, si vos fichiers sont volumineux, vous aurez du mal à les maintenir. Personnellement, j’opte pour mettre les fichiers de configuration à coté et les charger dans le configmap.</p>
@@ -380,7 +380,7 @@
 <span class="pi">[</span><span class="nv">...</span><span class="pi">]</span>
 
 <span class="na">data</span><span class="pi">:</span>
-  <span class="na">my_conf</span><span class="pi">:</span> 
+  <span class="na">my_conf</span><span class="pi">:</span>   <span class="pi">{{</span><span class="nv">- (.Files.Glob "conf/*").AsConfig | nindent 2</span> <span class="pi">}}</span> 
 
 </code></pre></div></div>
 
@@ -398,13 +398,13 @@
   <span class="na">labels</span><span class="pi">:</span>
   <span class="pi">[</span><span class="nv">...</span><span class="pi">]</span>
 <span class="na">spec</span><span class="pi">:</span>
-  <span class="na">maxReplicas</span><span class="pi">:</span> 
-  <span class="na">minReplicas</span><span class="pi">:</span> 
+  <span class="na">maxReplicas</span><span class="pi">:</span>  <span class="pi">{{</span><span class="nv">.Values.myapp.maxReplicaCount</span> <span class="pi">}}</span>
+  <span class="na">minReplicas</span><span class="pi">:</span>  <span class="s">.Values.myapp.minReplicaCount }}</span>
   <span class="na">scaleTargetRef</span><span class="pi">:</span>
     <span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
     <span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
    <span class="pi">[</span><span class="nv">...</span><span class="pi">]</span>
-  <span class="na">targetCPUUtilizationPercentage</span><span class="pi">:</span> 
+  <span class="na">targetCPUUtilizationPercentage</span><span class="pi">:</span>  <span class="s">.Values.myapp.replicationThreesold }}</span>
 
 </code></pre></div></div>
 
@@ -428,7 +428,7 @@ Il est important de noter également que les données présentes dans les fichie
 <span class="na">data</span><span class="pi">:</span>
   <span class="s">application.properties</span><span class="pi">:</span> 
     <span class="pi">|-</span> 
-     
+    <span class="s">{{ tpl (.Files.Get "conf/application.properties") . | nindent 4}} </span>
 </code></pre></div></div>
 
 <h2 id="conclusion">Conclusion</h2>

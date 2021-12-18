@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/debian.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-16T08:51:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/debian.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/debian.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-18T15:24:32+00:00</updated><id>https://blog.touret.info/feed/by_tag/debian.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
 
 &lt;figure class=&quot;wp-block-image size-large&quot;&gt;
 &lt;img loading=&quot;lazy&quot; width=&quot;819&quot; height=&quot;45&quot; src=&quot;/assets/images/2020/04/boot_time.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-346&quot; srcset=&quot;/assets/images/2020/04/boot_time.png 819w, /assets/images/2020/04/boot_time-300x16.png 300w, /assets/images/2020/04/boot_time-768x42.png 768w&quot; sizes=&quot;(max-width: 819px) 100vw, 819px&quot; /&gt; 
@@ -291,11 +291,11 @@ Dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&
 
 &lt;p&gt;Dans le fichier Vagrantfile, on active le provisionning via Ansible:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config.vm.provision &quot;ansible_local&quot; 
-  do |ansible| ansible.playbook = &quot;site.yml&quot;
-  ansible.install_mode = &quot;pip&quot;
-  ansible.version = &quot;2.7.10&quot;
-end
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;config.vm.provision&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&quot;ansible_local&quot;&lt;/span&gt; 
+  &lt;span class=&quot;err&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;|ansible|&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;ansible.playbook&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;site.yml&quot;&lt;/span&gt;
+  &lt;span class=&quot;py&quot;&gt;ansible.install_mode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;pip&quot;&lt;/span&gt;
+  &lt;span class=&quot;py&quot;&gt;ansible.version&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2.7.10&quot;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Cette configuration fait référence à un fichier « playbook » site.yml. C’est la configuration qui sera appliqué lors du provisionning . Que ça soit à la création ou pour les mises à jour.&lt;/p&gt;
@@ -410,9 +410,7 @@ docker_compose_version: 1.22.0
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; vboxsf vagrant /vagrant
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p dir=&quot;auto&quot;&gt;
-  Puis, vous pouvez lancer les commandes suivantes dans la box:
-&lt;/p&gt;
+&lt;p&gt;Puis, vous pouvez lancer les commandes suivantes dans la box:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;su -
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /vagrant
@@ -668,7 +666,7 @@ libsane-hpaio xsane autofs vlc
 
 ## Configuration autofs
 
-Pour ceux qui ne connaissent pas , [autofs](https://wiki.debian.org/AutoFs) est un outil permettant de monter directement des partages [nfs](https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux) et cicfs à l&amp;rsquo;utilisation et non au démarrage de l&amp;rsquo;ordinateur.
+Pour ceux qui ne connaissent pas , [autofs](https://wiki.debian.org/AutoFs) est un outil permettant de monter directement des partages [nfs](https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux) et cicfs à l'utilisation et non au démarrage de l'ordinateur.
 
 Dans le fichier /etc/auto.master
 
@@ -704,9 +702,9 @@ REP2 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP2
 ```
 
 
-## Installation d&amp;rsquo;atom
+## Installation d'atom
 
-J&amp;rsquo;ai choisi d&amp;rsquo;installer [atom](https://atom.io/) via le package .deb fourni par [github](http://github.com/). Afin d&amp;rsquo;automatiser l&amp;rsquo;installation et la mise à jour, voici le script que j&amp;rsquo;ai réalisé :
+J'ai choisi d'installer [atom](https://atom.io/) via le package .deb fourni par [github](http://github.com/). Afin d'automatiser l'installation et la mise à jour, voici le script que j'ai réalisé :
 
 &lt;pre&gt;#!/bin/sh
 SETUP_ROOT=/tmp
@@ -725,7 +723,7 @@ Ce script est placé dans le répertoire /usr/local/sbin et lancé comme suit :
 
 ## Installation de Firefox
 
-Afin d&amp;rsquo;avoir la dernière version de firefox, voici le script que j&amp;rsquo;ai réalisé:
+Afin d'avoir la dernière version de firefox, voici le script que j'ai réalisé:
 
 &lt;pre&gt;#!/bin/sh
 SETUP_ROOT=/tmp
@@ -752,9 +750,9 @@ echo &quot;Fini :)&quot;
 
 ## Minecraft
 
-Voila l&amp;rsquo;étape la plus importante, du moins pour mes enfants &amp;#8230;
+Voila l'étape la plus importante, du moins pour mes enfants &amp;#8230;
 
-J&amp;rsquo;ai crée le script /usr/local/bin/minecraft.sh
+J'ai crée le script /usr/local/bin/minecraft.sh
 
 &lt;pre&gt;#!/bin/bash
 cd /usr/local/minecraft
@@ -762,9 +760,9 @@ java -Xmx1G -Xms512M -cp /usr/local/minecraft/Minecraft.jar net.minecraft.bootst
 ```
 
 
-J&amp;rsquo;ai placé le JAR en question dans le répertoire /usr/local/minecraft.
+J'ai placé le JAR en question dans le répertoire /usr/local/minecraft.
 
-Enfin, j&amp;rsquo;ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop
+Enfin, j'ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop
 
 &lt;pre&gt;[Desktop Entry] 
 Name=Minecraft
@@ -778,7 +776,7 @@ StartupNotify=true
 ```
 
 
-J&amp;rsquo;ai également mis une icone SVG dans le répertoire /usr/share/icons/
+J'ai également mis une icone SVG dans le répertoire /usr/share/icons/
 
 ## Optimisation du boot
 
@@ -833,9 +831,9 @@ Par exemple, si vous voulez désactiver le service virtualbox au démarrage
 
 et ainsi de suite pour tous les services inutiles au démarrage
 
-## Analyse du démarrage d&amp;rsquo;un service
+## Analyse du démarrage d'un service
 
-Pour analyser le démarrage d&amp;rsquo;un service, on peut utiliser la commande journalctl
+Pour analyser le démarrage d'un service, on peut utiliser la commande journalctl
 
 &lt;pre&gt;# journalctl -b -u NetworkManager-wait-online.service
 ```
@@ -845,7 +843,7 @@ Pour analyser le démarrage d&amp;rsquo;un service, on peut utiliser la commande
 
 ## Conclusion
 
-Après toutes ces étapes, j&amp;rsquo;ai un système opérationnel. Il manque pas mal d&amp;rsquo;outils ( ex. maven, npm, intellij,&amp;#8230;). Ces outils tiennent plus du poste de développement.
+Après toutes ces étapes, j'ai un système opérationnel. Il manque pas mal d'outils ( ex. maven, npm, intellij,&amp;#8230;). Ces outils tiennent plus du poste de développement.
 
 &amp;nbsp;
 

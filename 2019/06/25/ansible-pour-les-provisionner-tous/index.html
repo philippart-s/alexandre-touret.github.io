@@ -338,11 +338,11 @@
 
 <p>Dans le fichier Vagrantfile, on active le provisionning via Ansible:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.vm.provision "ansible_local" 
-  do |ansible| ansible.playbook = "site.yml"
-  ansible.install_mode = "pip"
-  ansible.version = "2.7.10"
-end
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">config.vm.provision</span> <span class="err">"ansible_local"</span> 
+  <span class="err">do</span> <span class="err">|ansible|</span> <span class="py">ansible.playbook</span> <span class="p">=</span> <span class="s">"site.yml"</span>
+  <span class="py">ansible.install_mode</span> <span class="p">=</span> <span class="s">"pip"</span>
+  <span class="py">ansible.version</span> <span class="p">=</span> <span class="s">"2.7.10"</span>
+<span class="err">end</span>
 </code></pre></div></div>
 
 <p>Cette configuration fait référence à un fichier « playbook » site.yml. C’est la configuration qui sera appliqué lors du provisionning . Que ça soit à la création ou pour les mises à jour.</p>
@@ -457,9 +457,7 @@ docker_compose_version: 1.22.0
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>mount <span class="nt">-t</span> vboxsf vagrant /vagrant
 </code></pre></div></div>
 
-<p dir="auto">
-  Puis, vous pouvez lancer les commandes suivantes dans la box:
-</p>
+<p>Puis, vous pouvez lancer les commandes suivantes dans la box:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>su -
 <span class="nb">cd</span> /vagrant

@@ -29,7 +29,7 @@ var store = [{
         "url": "/2018/03/15/installation-de-vagrant/",
         "teaser": null
       },{
-        "title": "Activer l&rsquo; equalizer sur Debian 9",
+        "title": "Activer l' equalizer sur Debian 9",
         "excerpt":"Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne! Installation de l’equalizer [code language= »bash »] #apt-get install pulseaudio-equalizer [/code] Activation Ajouter les lignes suivantes dans le fichier /etc/pulse/default.pa [code language= »text »] load-module module-equalizer-sink load-module module-dbus-protocol [/code] Relancer le...","categories": [],
         "tags": ["debian","planetlibre","pulseaudio"],
         "url": "/2018/03/25/activer-l-equalizer-sur-debian-9/",
@@ -65,7 +65,7 @@ var store = [{
         "url": "/2018/11/16/gerer-plusieurs-cles-et-plusieurs-repo-git/",
         "teaser": null
       },{
-        "title": "Tracer (facilement) les entrées sorties d&rsquo;une API REST",
+        "title": "Tracer (facilement) les entrées sorties d'une API REST",
         "excerpt":"Il y a quelques jours, je cherchais comment tracer rapidement et simplement les entrées sorties d’une API REST en appliquant quelques formatages, des filtres, et des insertions en base si besoin. Travaillant sur une stack SpringBoot, vous allez me dire : oui tu peux faire des filtres. Pour être franc,...","categories": [],
         "tags": ["logbook","planetlibre","spring","springboot"],
         "url": "/2018/12/01/tracer-facilement-les-entrees-sorties-dune-api-rest/",
@@ -173,7 +173,7 @@ var store = [{
         "url": "/2020/03/23/installer-ubuntu-18-04-lts-sur-un-dell-inspiron-14-3493/",
         "teaser": "/assets/images/2020/03/dell-inspiron-14-3493.jpg"
       },{
-        "title": "Erreur 139 à l&rsquo;exécution d&rsquo;un container docker",
+        "title": "Erreur 139 à l'exécution d'un container docker",
         "excerpt":"Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une erreur SIGSEGV 139. Un crash avec aucune log. Bref que du bonheur 🙂 Avant d’aller plus loin voici mon environnement: Debian 10 Docker CE 19.03.8 Après quelques recherches, je me suis rendu...","categories": [],
         "tags": ["debian","docker","planetlibre"],
         "url": "/2020/04/01/erreur-139-a-lexecution-dun-container-docker/",
@@ -192,7 +192,7 @@ var store = [{
         "teaser": "/assets/images/2020/04/boot_avant.png"
       },{
         "title": "Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine",
-        "excerpt":"A mes heures perdues, je travaille sur un « POC/side project qui n&rsquo;aboutira pas et je m&rsquo;en fiche » basé sur Quarkus. J&rsquo; ai choisi d&rsquo;utiliser les langages et composants suivants : Kotlin Quarkus Gradle Kubernetes pour le déploiement Oui, tant qu’à faire, autant aller dans la hype … Mon projet est...","categories": [],
+        "excerpt":"A mes heures perdues, je travaille sur un « POC/side project qui n'aboutira pas et je m'en fiche » basé sur Quarkus. J' ai choisi d'utiliser les langages et composants suivants : Kotlin Quarkus Gradle Kubernetes pour le déploiement Oui, tant qu’à faire, autant aller dans la hype … Mon projet est...","categories": [],
         "tags": ["github","gradle","kubernetes"],
         "url": "/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/",
         "teaser": "/assets/images/2020/05/article_github_actions_k8s-1.png"
@@ -210,25 +210,25 @@ var store = [{
         "teaser": "/assets/images/2020/10/gartner_hype_cycle.svg_.png"
       },{
         "title": "Gérer « efficacement » les fichiers de configuration dans les charts HELM",
-        "excerpt":"Dès qu&rsquo;on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer. Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d&rsquo;un environnement à l&rsquo;autre. Généralement on déploie la même infrastructure sur tous les environnements du développement...","categories": [],
+        "excerpt":"Dès qu'on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer. Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d'un environnement à l'autre. Généralement on déploie la même infrastructure sur tous les environnements du développement...","categories": [],
         "tags": [],
         "url": "/2021/01/09/gerer-efficacement-les-fichiers-de-configuration-dans-les-charts-helm/",
         "teaser": "/assets/images/2021/01/loik-marras-sq0l3spwlhi-unsplash.jpg"
       },{
         "title": "Installer Ubuntu 20.04 LTS sur un DELL Inspiron 13 5000",
-        "excerpt":"Les confinements se suivent et se ressemblent. Me voilà à installer Ubuntu sur un nouvel ordinateur. A l&rsquo;instar de l&rsquo;ancien laptop que j&rsquo;ai acheté pour mon aînée, j&rsquo;ai acheté un DELL pour ma deuxième fille. J&rsquo;ai opté pour un DELL Inspiron 5301. A l’instar de mon autre laptop, je j’ai...","categories": [],
+        "excerpt":"Les confinements se suivent et se ressemblent. Me voilà à installer Ubuntu sur un nouvel ordinateur. A l'instar de l'ancien laptop que j'ai acheté pour mon aînée, j'ai acheté un DELL pour ma deuxième fille. J'ai opté pour un DELL Inspiron 5301. A l’instar de mon autre laptop, je j’ai...","categories": [],
         "tags": ["dell","planetlibre","ubuntu"],
         "url": "/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000/",
         "teaser": "/assets/images/2021/04/dell-inspiron-13-5301-argent-01.jpg"
       },{
         "title": "Utiliser GPG dans WSL2",
-        "excerpt":"Photo by Pixabay on Pexels.com Pourquoi utiliser GPG ? Par exemple pour signer les commits GIT. Maintenant comment faire quand on est sous Windows 10 et qu&rsquo;on souhaite utiliser le sous système Linux (WSL2)? Sous GNU/Linux, l’installation et l’utilisation avec git est très simple. Avec WSL2,… il faut un peu...","categories": [],
+        "excerpt":"Photo by Pixabay on Pexels.com Pourquoi utiliser GPG ? Par exemple pour signer les commits GIT. Maintenant comment faire quand on est sous Windows 10 et qu'on souhaite utiliser le sous système Linux (WSL2)? Sous GNU/Linux, l’installation et l’utilisation avec git est très simple. Avec WSL2,… il faut un peu...","categories": [],
         "tags": ["git","gpg","planetlibre","wsl2"],
         "url": "/2021/05/03/utiliser-gpg-dans-wsl2/",
         "teaser": "/assets/images/2021/05/pexels-photo-261621.jpeg"
       },{
         "title": "Ajouter un mode « maintenance » à votre API grâce à Spring boot",
-        "excerpt":"Photo by Pixabay on Pexels.com Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l&rsquo;application en mode « maintenance ». Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité...","categories": [],
+        "excerpt":"Photo by Pixabay on Pexels.com Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l'application en mode « maintenance ». Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité...","categories": [],
         "tags": ["actuator","observability","planetlibre","spring","springboot"],
         "url": "/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/",
         "teaser": "/assets/images/2021/06/pexels-photo-257736.jpeg"

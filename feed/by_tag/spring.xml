@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/spring.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-16T08:51:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/spring.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Observabilité et Circuit Breaker avec Spring</title><link href="https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="alternate" type="text/html" title="Observabilité et Circuit Breaker avec Spring" /><published>2021-07-26T09:53:49+00:00</published><updated>2021-07-26T09:53:49+00:00</updated><id>https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring</id><content type="html" xml:base="https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring/">&lt;p&gt;Il y a quelques mois déjà, je discutais avec &lt;a href=&quot;https://jefrajames.fr/&quot;&gt;un collègue&lt;/a&gt; d’ observabilité, &lt;a href=&quot;https://github.com/opentracing-contrib/java-spring-cloud&quot;&gt;opentracing&lt;/a&gt;, … avec &lt;a href=&quot;http://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt;. On est tombé sur &lt;a href=&quot;https://github.com/agoncal/agoncal-fascicle-quarkus-pract&quot;&gt;un super exemple réalisé par Antonio Concalves&lt;/a&gt;. Ce projet démontre les capacités de Quarkus sur les sujets suivants:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/spring.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-18T15:24:32+00:00</updated><id>https://blog.touret.info/feed/by_tag/spring.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Observabilité et Circuit Breaker avec Spring</title><link href="https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="alternate" type="text/html" title="Observabilité et Circuit Breaker avec Spring" /><published>2021-07-26T09:53:49+00:00</published><updated>2021-07-26T09:53:49+00:00</updated><id>https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring</id><content type="html" xml:base="https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring/">&lt;p&gt;Il y a quelques mois déjà, je discutais avec &lt;a href=&quot;https://jefrajames.fr/&quot;&gt;un collègue&lt;/a&gt; d’ observabilité, &lt;a href=&quot;https://github.com/opentracing-contrib/java-spring-cloud&quot;&gt;opentracing&lt;/a&gt;, … avec &lt;a href=&quot;http://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt;. On est tombé sur &lt;a href=&quot;https://github.com/agoncal/agoncal-fascicle-quarkus-pract&quot;&gt;un super exemple réalisé par Antonio Concalves&lt;/a&gt;. Ce projet démontre les capacités de Quarkus sur les sujets suivants:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Circuit Breaker&lt;/li&gt;
@@ -154,7 +154,7 @@ Aussi, n’hésitez pas à cloner, tester ce projet et me donner votre retour. J
 &lt;/div&gt;
 
 &lt;p class=&quot;has-drop-cap&quot;&gt;
-  Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l&amp;rsquo;application en mode « maintenance ».&lt;br /&gt;Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex. (&lt;a href=&quot;https://httpd.apache.org/&quot;&gt;Apache HTTPD&lt;/a&gt;, &lt;a href=&quot;https://fr.wikipedia.org/wiki/Web_application_firewall&quot;&gt;WAF&lt;/a&gt;,&amp;#8230;)
+  Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l'application en mode « maintenance ».&lt;br /&gt;Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex. (&lt;a href=&quot;https://httpd.apache.org/&quot;&gt;Apache HTTPD&lt;/a&gt;, &lt;a href=&quot;https://fr.wikipedia.org/wiki/Web_application_firewall&quot;&gt;WAF&lt;/a&gt;,&amp;#8230;)
 &lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;Kubernetes a introduit ( ou popularisé ) les notions de « probes »&lt;/a&gt; et plus particulièrement les &lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;livenessProbes&lt;/a&gt; et &lt;a href=&quot;https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;readinessProbes&lt;/a&gt;.&lt;br /&gt;
@@ -395,11 +395,11 @@ Dans une de vos classes [Configuration](https://docs.spring.io/spring-framework/
 ```
 
 
-Dans mon cas j&amp;rsquo;ai fait un filtre en n&amp;rsquo;incluant que l&amp;rsquo; API /helloworld et j&amp;rsquo;ai formatté en JSON.  
-On peut également modifier le processus d&amp;rsquo;écriture pour ne pas écrire dans un fichier mais en base par ex.  
+Dans mon cas j'ai fait un filtre en n'incluant que l' API /helloworld et j'ai formatté en JSON.  
+On peut également modifier le processus d'écriture pour ne pas écrire dans un fichier mais en base par ex.  
 
 
-Ensuite, j&amp;rsquo;ai ajouté la configuration du logger dans le fichier application.properties
+Ensuite, j'ai ajouté la configuration du logger dans le fichier application.properties
 
 &lt;pre class=&quot;wp-block-preformatted&quot;&gt;logging.level.org.zalando.logbook:TRACE&lt;br /&gt;
 ```
@@ -407,7 +407,7 @@ Ensuite, j&amp;rsquo;ai ajouté la configuration du logger dans le fichier appli
 
 Et voila ! 
 
-Dans la console, lors d&amp;rsquo;un appel ou d&amp;rsquo;une réponse à mon API, j&amp;rsquo;ai le message suivant :
+Dans la console, lors d'un appel ou d'une réponse à mon API, j'ai le message suivant :
 
 
 
@@ -416,7 +416,7 @@ Dans la console, lors d&amp;rsquo;un appel ou d&amp;rsquo;une réponse à mon AP
 ```
 
 
-Vous remarquerez que les requêtes / réponses peuvent désormais être associés grâce à un identifiant de corrélation. On peut facilement déterminer le temps de traitement d&amp;rsquo;une requête ou encore faciliter les recherches.  
+Vous remarquerez que les requêtes / réponses peuvent désormais être associés grâce à un identifiant de corrélation. On peut facilement déterminer le temps de traitement d'une requête ou encore faciliter les recherches.  
 
 
 

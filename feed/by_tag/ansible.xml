@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/ansible.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-16T08:51:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/ansible.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Ansible pour les provisionner tous !</title><link href="https://blog.touret.info/2019/06/25/ansible-pour-les-provisionner-tous/" rel="alternate" type="text/html" title="Ansible pour les provisionner tous !" /><published>2019-06-25T09:34:51+00:00</published><updated>2019-06-25T09:34:51+00:00</updated><id>https://blog.touret.info/2019/06/25/ansible-pour-les-provisionner-tous</id><content type="html" xml:base="https://blog.touret.info/2019/06/25/ansible-pour-les-provisionner-tous/">&lt;p&gt;Si vous &lt;a href=&quot;http://blog.touret.info/2018/03/15/installation-de-vagrant/&quot;&gt;provisionnez vos VM VirtualBox avec Vagrant&lt;/a&gt;, vous avez sans doute eu l’idée d’automatiser le provisionning des machines virtuelles. Dans mon cas une VM GNU/Linux basée sur Debian 9.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/ansible.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2021-12-18T15:24:32+00:00</updated><id>https://blog.touret.info/feed/by_tag/ansible.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Ansible pour les provisionner tous !</title><link href="https://blog.touret.info/2019/06/25/ansible-pour-les-provisionner-tous/" rel="alternate" type="text/html" title="Ansible pour les provisionner tous !" /><published>2019-06-25T09:34:51+00:00</published><updated>2019-06-25T09:34:51+00:00</updated><id>https://blog.touret.info/2019/06/25/ansible-pour-les-provisionner-tous</id><content type="html" xml:base="https://blog.touret.info/2019/06/25/ansible-pour-les-provisionner-tous/">&lt;p&gt;Si vous &lt;a href=&quot;http://blog.touret.info/2018/03/15/installation-de-vagrant/&quot;&gt;provisionnez vos VM VirtualBox avec Vagrant&lt;/a&gt;, vous avez sans doute eu l’idée d’automatiser le provisionning des machines virtuelles. Dans mon cas une VM GNU/Linux basée sur Debian 9.&lt;/p&gt;
 
 &lt;p&gt;Pour cela, soit vous faite tout manuellement et après les mises à jour deviennent fastidieuses, soit vous appliquez un script shell au démarrage de vagrant, soit vous utilisez &lt;a href=&quot;https://www.ansible.com/&quot;&gt;Ansible.&lt;/a&gt;&lt;/p&gt;
 
@@ -12,11 +12,11 @@
 
 &lt;p&gt;Dans le fichier Vagrantfile, on active le provisionning via Ansible:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config.vm.provision &quot;ansible_local&quot; 
-  do |ansible| ansible.playbook = &quot;site.yml&quot;
-  ansible.install_mode = &quot;pip&quot;
-  ansible.version = &quot;2.7.10&quot;
-end
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;config.vm.provision&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&quot;ansible_local&quot;&lt;/span&gt; 
+  &lt;span class=&quot;err&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;|ansible|&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;ansible.playbook&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;site.yml&quot;&lt;/span&gt;
+  &lt;span class=&quot;py&quot;&gt;ansible.install_mode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;pip&quot;&lt;/span&gt;
+  &lt;span class=&quot;py&quot;&gt;ansible.version&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2.7.10&quot;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Cette configuration fait référence à un fichier « playbook » site.yml. C’est la configuration qui sera appliqué lors du provisionning . Que ça soit à la création ou pour les mises à jour.&lt;/p&gt;
@@ -131,9 +131,7 @@ docker_compose_version: 1.22.0
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; vboxsf vagrant /vagrant
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p dir=&quot;auto&quot;&gt;
-  Puis, vous pouvez lancer les commandes suivantes dans la box:
-&lt;/p&gt;
+&lt;p&gt;Puis, vous pouvez lancer les commandes suivantes dans la box:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;su -
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /vagrant
