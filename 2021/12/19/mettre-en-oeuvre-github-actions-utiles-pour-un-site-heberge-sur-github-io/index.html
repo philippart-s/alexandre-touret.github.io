@@ -1,0 +1,895 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Mettre en oeuvre Github Actions utiles pour un site hébergé sur Github pages - blog.touret.info</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Alexandre Touret">
+  
+  <meta property="article:author" content="Alexandre Touret">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr">
+<meta property="og:site_name" content="blog.touret.info">
+<meta property="og:title" content="Mettre en oeuvre Github Actions utiles pour un site hébergé sur Github pages">
+<meta property="og:url" content="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/">
+
+
+  <meta property="og:description" content="">
+
+
+
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2021/12/github-1.jpg">
+
+
+
+  <meta name="twitter:site" content="@touret_alex">
+  <meta name="twitter:title" content="Mettre en oeuvre Github Actions utiles pour un site hébergé sur Github pages">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:url" content="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2021/12/github-1.jpg">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2021-12-19T12:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://blog.touret.info/",
+      "sameAs": ["https://twitter.com/touret_alex","https://www.linkedin.com/in/atouret"]
+    
+  }
+</script>
+
+
+
+  <meta name="msvalidate.01" content="F9655A4C8648E42154ECB4B4D6CF60A2">
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="blog.touret.info Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          blog.touret.info
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/talks/">Talks</a>
+            </li><li class="masthead__menu-item">
+              <a href="/a-propos/">A propos</a>
+            </li><li class="masthead__menu-item">
+              <a href="/contact/">Contact</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://blog.touret.info/">
+        <img src="/assets/images/bouletmaton1.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://blog.touret.info/" itemprop="url">Alexandre Touret</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Architecte logiciel, développeur, bidouilleur (dans le désordre)</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Contact</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Mettre en oeuvre Github Actions utiles pour un site hébergé sur Github pages">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-12-19T12:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/" class="u-url" itemprop="url">Mettre en oeuvre Github Actions utiles pour un site hébergé sur Github pages
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-19T12:00:00+00:00">19/12/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p><img src="/assets/images/2021/12/github-1.jpg" alt="github" /></p>
+
+<h2 id="pourquoi-mettre-en-oeuvre-des-github-actions-">Pourquoi mettre en oeuvre des GITHUB ACTIONS ?</h2>
+
+<p>Comme j’ai pu l’expliquer dans <a href="https://blog.touret.info/2021/12/06/migrer-un-blog-wordpress-vers-github-io/">mon précédent article</a>, je suis passé de <a href="wordpress.com/">Wordpress</a> à <a href="https://pages.github.com/">GITHUB Pages</a>.</p>
+
+<p>Une fois le site déployé une première fois, on voit qu’on a perdu pas mal d’automatisations qui sont réalisées par défaut dans Wordpress. Par exemple, vous devez construire votre site, publier des nouveaux articles et vérifier que tout est OK.</p>
+
+<p>J’ai donc mis en oeuvre des GITHUB ACTIONS pour automatiser le plus d’actions possibles et me passer de tâches manuelles souvent rébarbatives.</p>
+
+<p>Si vous souhaitez découvrir les GITHUB ACTIONS, je vous conseille <a href="https://github.com/features/actions">ce site</a>.</p>
+
+<h2 id="construction-du-site-et-déploiement">Construction du site et déploiement</h2>
+
+<p>Dès qu’on touche à Jekyll et à l’hébergement sur Github Pages, on tombe sur certaines actions à réaliser telles que celle-ci:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll build 
+</code></pre></div></div>
+
+<p>J’ai donc réalisé les workflows suivants:</p>
+
+<h3 id="pour-une-feature-branch-dans-une-pull-request">Pour une feature branch (dans une Pull Request)</h3>
+<p>Je construis le site sans le déployer pour vérifier que la construction est correcte.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">name</span><span class="pi">:</span> <span class="s">Build Jekyll site</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches-ignore</span><span class="pi">:</span> <span class="s">(1)</span>
+      <span class="s">- main</span>
+      <span class="s">- gh-pages</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">jekyll</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span> <span class="c1"># can change this to ubuntu-latest if you prefer</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">📂 setup (2)</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+
+        <span class="c1"># include the lines below if you are using jekyll-last-modified-at</span>
+        <span class="c1"># or if you would otherwise need to fetch the full commit history</span>
+        <span class="c1"># however this may be very slow for large repositories!</span>
+        <span class="c1"># with:</span>
+        <span class="c1"># fetch-depth: '0'</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">💎 setup ruby  (3)</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">ruby/setup-ruby@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">ruby-version</span><span class="pi">:</span> <span class="m">2.6</span> <span class="c1"># can change this to 2.7 or whatever version you prefer</span>
+          <span class="na">bundler-cache</span><span class="pi">:</span> <span class="no">true</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🔨 install dependencies &amp; build site (4)</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">bundle exec jekyll build</span>
+</code></pre></div></div>
+
+<p>Voila ce que ce workflow réalise:</p>
+
+<ol>
+  <li>Il est exécuté à chaque push excepté sur les branches main et gh-pages. Ce sont les branches que j’utilise pour le déploiement du site après la validation d’une pull request.</li>
+  <li>Checkout du projet</li>
+  <li>Initialisation de Ruby et téléchargement des dépendances comme le ferait la commande <code class="language-plaintext highlighter-rouge">bundle install</code>.</li>
+  <li>Construction du site</li>
+</ol>
+
+<h3 id="pour-la-branche-main">Pour la branche main</h3>
+
+<p>Une fois que la pull request est validée, le code est poussé dans la branche main. On y exécute le code suivant:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Build and deploy Jekyll site to GitHub Pages</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">main</span>
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">jekyll</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span> <span class="c1"># can change this to ubuntu-latest if you prefer</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">📂 setup</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">💎 setup ruby</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">ruby/setup-ruby@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">ruby-version</span><span class="pi">:</span> <span class="m">2.6</span> <span class="c1"># can change this to 2.7 or whatever version you prefer</span>
+          <span class="na">bundler-cache</span><span class="pi">:</span> <span class="no">true</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🔨 install dependencies &amp; build site</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">bundle exec jekyll build</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🚀 deploy</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">peaceiris/actions-gh-pages@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">github_token</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">publish_dir</span><span class="pi">:</span> <span class="s">./_site</span>
+</code></pre></div></div>
+
+<p>Ce dernier reprend le code du workflow suivant ( oui, j’aurai pu faire des workflows réutilisables… ) et ajoute l’étape de déploiement.
+Le code généré sera copié dans la branche <code class="language-plaintext highlighter-rouge">gh-pages</code>.</p>
+
+<h2 id="publication-dun-article">Publication d’un article</h2>
+
+<p>Pour rédiger un article, j’utilise le mécanisme de feature branch et pull request. Pour automatiser la publication, le nommage des articles avec la date etc, j’ai mis en oeuvre le workflow suivant:</p>
+
+<p>Je rédige les articles (comme celui-ci) et les positionne dans le répertoire <code class="language-plaintext highlighter-rouge">_drafts</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">ls</span> <span class="nt">-R</span> _drafts                                                                                               
+quelques-github-actions-utiles-pour-un-site-jekyll-heberge-sur-github-io.md
+</code></pre></div></div>
+
+<p>J’associe un <a href="https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones">milestone</a> à la <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">pull request</a>.</p>
+
+<p>Dès que ces derniers sont terminés, le workflow décrit ci-dessous est exécuté. 
+Il permet, via un script python de:</p>
+<ol>
+  <li>Identifier les articles dans le répertoire <code class="language-plaintext highlighter-rouge">_drafts</code></li>
+  <li>Vérifier que la date de publication spéficié dans l’en-tête est antérieure à la date courante (<code class="language-plaintext highlighter-rouge">now()</code>)</li>
+  <li>Copier le fichier dans le répertoire <code class="language-plaintext highlighter-rouge">_posts</code> en le renommant avec la date en préfixe.</li>
+</ol>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Publish Drafts</span>
+<span class="na">on</span><span class="pi">:</span> <span class="s">(1)</span>
+  <span class="s">milestone</span><span class="pi">:</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">closed</span><span class="pi">]</span>
+<span class="err">  </span><span class="na">workflow_dispatch</span><span class="pi">:</span>
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">ref</span><span class="pi">:</span> <span class="s">main (2)</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">📂 setup python</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-python@v2</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">python-version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.7.7'</span> <span class="c1"># install the python version needed</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">💎 install python packages (3)</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">python -m pip install --upgrade pip </span>
+        <span class="no">  </span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🔨 execute py script  (4)</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="s">python publish_drafts.py</span>
+          
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🔨 commit files (5)</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">if git ls-files -o  --exclude-standard; then</span>
+          <span class="s">git config --local user.email "action@github.com"</span>
+          <span class="s">git config --local user.name "GitHub Action"</span>
+          <span class="s">git add -A</span>
+          <span class="s">git commit -m "publish drafts" -a</span>
+          <span class="s">git push origin main</span>
+        <span class="s">else</span>
+          <span class="s">echo "No file to publish"</span>
+        <span class="s">fi</span>
+        <span class="no">  </span>
+</code></pre></div></div>
+
+<p><strong>Explication:</strong></p>
+
+<ol>
+  <li>Déclenchement manuel ou à la clôture d’un milestone</li>
+  <li>Récupération de la branche <code class="language-plaintext highlighter-rouge">main</code></li>
+  <li>Installation de packages python</li>
+  <li>Exécution du <a href="https://github.com/alexandre-touret/alexandre-touret.github.io/blob/main/publish_drafts.py">script python réalisé pour l’occasion</a></li>
+  <li>Commit et push</li>
+</ol>
+
+<p>Une fois ce workflow réalisé, le workflow vu précédemment est automatiquement lancé et le site est généré une nouvelle fois. Bon ça fait deux constructions, mais au vu du temps pris, c’est négligeable.</p>
+
+<h2 id="uptime">Uptime</h2>
+
+<p>J’aurai pu utiliser un tiers service tel que <a href="https://uptimerobot.com/">uptime robot</a>. 
+Pour mon besoin, j’ai préféré opter pour un appel régulier du site et une vérification du code HTTP (<code class="language-plaintext highlighter-rouge">200</code>).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This is a basic workflow to help you get started with Actions</span>
+
+<span class="na">name</span><span class="pi">:</span> <span class="s">Uptime Monitoring</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">schedule</span><span class="pi">:</span> <span class="s">(1)</span>
+    <span class="s">- cron</span><span class="pi">:</span> <span class="s1">'</span><span class="s">*/60</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*'</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">ping_site</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Ping the site</span>
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Check the site</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">hello</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">srt32/uptime@master</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">url-to-hit</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://blog.touret.info/robots.txt"</span> <span class="s">(2)</span>
+        <span class="na">expected-statuses</span><span class="pi">:</span> <span class="s2">"</span><span class="s">200,301"</span>
+</code></pre></div></div>
+
+<p><strong>Explications</strong></p>
+
+<ol>
+  <li>Déclenchement toutes les heures de ce workflow</li>
+  <li>J’ai utilisé une GITHUB ACTION existante qui ping une URL et vérifie le code retour. Dans mon cas, j’ai utilisé l’URL du fichier <a href="https://developers.google.com/search/docs/advanced/robots/intro?hl=fr">robots.txt</a> et je vérifie le code retour.</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>J’ai réussi à plus ou moins automatiser tout le cycle de construction d’articles. 
+C’est encore perfectible et loin de certaines fonctionnalités de Wordpress, mais je n’en ai pas réellement besoin.</p>
+
+<p>Si vous souhaitez réutiliser ces workflows et les intégrer dans sites, vous pouvez les récupérer <a href="https://github.com/alexandre-touret/alexandre-touret.github.io">sur ce repo GITHUB</a>.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags : </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#github" class="page__taxonomy-item p-category" rel="tag">github</a><span class="sep">, </span>
+    
+      <a href="/tags/#github-actions" class="page__taxonomy-item p-category" rel="tag">github-actions</a><span class="sep">, </span>
+    
+      <a href="/tags/#jekyll" class="page__taxonomy-item p-category" rel="tag">jekyll</a><span class="sep">, </span>
+    
+      <a href="/tags/#planetlibre" class="page__taxonomy-item p-category" rel="tag">planetlibre</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Mis à jour :</strong> <time class="dt-published" datetime="2021-12-19T12:00:00+00:00">19/12/2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Partager sur</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?via=touret_alex&text=Mettre+en+oeuvre+Github+Actions+utiles+pour+un+site+h%C3%A9berg%C3%A9+sur+Github+pages%20https%3A%2F%2Fblog.touret.info%2F2021%2F12%2F19%2Fmettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.touret.info%2F2021%2F12%2F19%2Fmettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblog.touret.info%2F2021%2F12%2F19%2Fmettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Partager sur LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" class="pagination--pager" title="Migrer son blog Wordpress vers GitHub
+">Précédent</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Suivant</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">Vous pourriez aimer aussi</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2021/12/06/migrer-un-blog-wordpress-vers-github-io/" rel="permalink">Migrer son blog Wordpress vers GitHub
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-12-06T10:00:00+00:00">06/12/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">L’idée me trottait dans la tête depuis quelques mois environ: migrer mon blog de Wordpress vers un site basé sur Jekyll et hébergé directement sur Github.
+La...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2021/07/rest-book-architecture.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2021/07/26/observabilite-et-circuit-breaker-avec-spring/" rel="permalink">Observabilité et Circuit Breaker avec Spring
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-26T09:53:49+00:00">26/07/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Il y a quelques mois déjà, je discutais avec un collègue d’ observabilité, opentracing, … avec Quarkus. On est tombé sur un super exemple réalisé par Antonio...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2021/06/pexels-photo-257736.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/" rel="permalink">Ajouter un mode « maintenance » à votre API grâce à Spring boot
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-06-10T15:01:20+00:00">10/06/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2021/05/pexels-photo-261621.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2021/05/03/utiliser-gpg-dans-wsl2/" rel="permalink">Utiliser GPG dans WSL2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-05-03T18:47:11+00:00">03/05/2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute(s) de lecture
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  Photo by Pixabay on Pexels.com
+
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Entrez votre recherche..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Contact</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/touret_alex" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/alexandre-touret" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/atouret/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> Licence du contenu de ce site</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Flux</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 blog.touret.info. Propulsé par <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
