@@ -245,7 +245,7 @@ var store = [{
         "url": "/2021/12/06/migrer-un-blog-wordpress-vers-github-io/",
         "teaser": "/assets/images/2021/12/sebastien-goldberg-AW5MxlFDVzc-unsplash.jpg"
       },{
-        "title": "Mettre en oeuvre Github Actions utiles pour un site hébergé sur Github pages",
+        "title": "Mettre en oeuvre des Github Actions utiles pour un site hébergé sur Github pages",
         "excerpt":"Pourquoi mettre en oeuvre des GITHUB ACTIONS ? Comme j’ai pu l’expliquer dans mon précédent article, je suis passé de Wordpress à GITHUB Pages. Une fois le site déployé une première fois, on voit qu’on a perdu pas mal d’automatisations qui sont réalisées par défaut dans Wordpress. Par exemple, vous...","categories": [],
         "tags": ["github","jekyll","github-actions","planetlibre"],
         "url": "/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/",
