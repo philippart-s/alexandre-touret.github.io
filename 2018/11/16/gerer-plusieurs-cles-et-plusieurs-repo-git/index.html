@@ -330,11 +330,9 @@
 
 <p>Pour pouvoir gérer ceci de manière simple, j’ai fait la manipulation suivante :</p>
 
-<p>Dans le répertoire ~/.ssh. J’ai crée les différentes clés avec <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/">la doc fournie par GITHUB</a>. Puis, j’ai crée le fichier ~/.ssh/config avec le contenu suivant:</p>
+<p>Dans le répertoire <code class="language-plaintext highlighter-rouge">~/.ssh</code>, j’ai crée les différentes clés avec <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/">la doc fournie par GITHUB</a>. Puis, j’ai crée le fichier <code class="language-plaintext highlighter-rouge">~/.ssh/config</code> avec le contenu suivant:</p>
 
-<p> </p>
-
-<pre>Host monhost1.fr
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host monhost1.fr
 HostName monhost1.fr
 User git
 IdentityFile ~/.ssh/id_rsa
@@ -343,19 +341,13 @@ Host monhost2.fr
 HostName monhost2.fr
 User git
 IdentityFile ~/.ssh/nouvellecle_rsa
-```
+</code></pre></div></div>
 
+<p>Et voilà !</p>
 
-&nbsp;
+<p>Après avoir fait les différentes configurations coté serveur (c.-a-d. ajout des clés publiques), je peux interagir avec les différents serveurs (pull, push).</p>
 
-Et voila !
-
-Après avoir fait les différentes configurations coté serveur ( c.-a-d. ajout des clés publiques ), je peux interagir avec les différents serveurs ( pull, push ).
-
-En espérant que ça puisse servir à d'autres
-
-&nbsp;
-</pre>
+<p>En espérant que ça puisse servir à d’autres.</p>
 
         
       </section>

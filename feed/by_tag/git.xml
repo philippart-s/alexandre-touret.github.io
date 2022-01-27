@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/git.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-01-25T17:41:19+00:00</updated><id>https://blog.touret.info/feed/by_tag/git.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Utiliser GPG dans WSL2</title><link href="https://blog.touret.info/2021/05/03/utiliser-gpg-dans-wsl2/" rel="alternate" type="text/html" title="Utiliser GPG dans WSL2" /><published>2021-05-03T18:47:11+00:00</published><updated>2021-05-03T18:47:11+00:00</updated><id>https://blog.touret.info/2021/05/03/utiliser-gpg-dans-wsl2</id><content type="html" xml:base="https://blog.touret.info/2021/05/03/utiliser-gpg-dans-wsl2/">&lt;div class=&quot;wp-block-image&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/git.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-01-27T07:32:57+00:00</updated><id>https://blog.touret.info/feed/by_tag/git.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Utiliser GPG dans WSL2</title><link href="https://blog.touret.info/2021/05/03/utiliser-gpg-dans-wsl2/" rel="alternate" type="text/html" title="Utiliser GPG dans WSL2" /><published>2021-05-03T18:47:11+00:00</published><updated>2021-05-03T18:47:11+00:00</updated><id>https://blog.touret.info/2021/05/03/utiliser-gpg-dans-wsl2</id><content type="html" xml:base="https://blog.touret.info/2021/05/03/utiliser-gpg-dans-wsl2/">&lt;div class=&quot;wp-block-image&quot;&gt;
   &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2021/05/pexels-photo-261621.jpeg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-511&quot; width=&quot;641&quot; height=&quot;480&quot; srcset=&quot;/assets/images/2021/05/pexels-photo-261621.jpeg 1733w, /assets/images/2021/05/pexels-photo-261621-300x225.jpeg 300w, /assets/images/2021/05/pexels-photo-261621-1024x768.jpeg 1024w, /assets/images/2021/05/pexels-photo-261621-768x576.jpeg 768w, /assets/images/2021/05/pexels-photo-261621-1536x1152.jpeg 1536w, /assets/images/2021/05/pexels-photo-261621-1568x1176.jpeg 1568w&quot; sizes=&quot;(max-width: 641px) 100vw, 641px&quot; /&gt;&lt;figcaption&gt;Photo by Pixabay on &lt;a href=&quot;https://www.pexels.com/photo/agreement-blur-business-close-up-261621/&quot; rel=&quot;nofollow&quot;&gt;Pexels.com&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;/div&gt;
 
@@ -180,11 +180,9 @@ Sur Github ( il y a la même chose sur gitlab), vous pouvez [dans vos paramètre
 
 &lt;p&gt;Pour pouvoir gérer ceci de manière simple, j’ai fait la manipulation suivante :&lt;/p&gt;
 
-&lt;p&gt;Dans le répertoire ~/.ssh. J’ai crée les différentes clés avec &lt;a href=&quot;https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/&quot;&gt;la doc fournie par GITHUB&lt;/a&gt;. Puis, j’ai crée le fichier ~/.ssh/config avec le contenu suivant:&lt;/p&gt;
+&lt;p&gt;Dans le répertoire &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ssh&lt;/code&gt;, j’ai crée les différentes clés avec &lt;a href=&quot;https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/&quot;&gt;la doc fournie par GITHUB&lt;/a&gt;. Puis, j’ai crée le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ssh/config&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
 
-&lt;p&gt; &lt;/p&gt;
-
-&lt;pre&gt;Host monhost1.fr
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Host monhost1.fr
 HostName monhost1.fr
 User git
 IdentityFile ~/.ssh/id_rsa
@@ -193,19 +191,13 @@ Host monhost2.fr
 HostName monhost2.fr
 User git
 IdentityFile ~/.ssh/nouvellecle_rsa
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;Et voilà !&lt;/p&gt;
 
-&amp;nbsp;
+&lt;p&gt;Après avoir fait les différentes configurations coté serveur (c.-a-d. ajout des clés publiques), je peux interagir avec les différents serveurs (pull, push).&lt;/p&gt;
 
-Et voila !
-
-Après avoir fait les différentes configurations coté serveur ( c.-a-d. ajout des clés publiques ), je peux interagir avec les différents serveurs ( pull, push ).
-
-En espérant que ça puisse servir à d'autres
-
-&amp;nbsp;
-&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="planetlibre" /><summary type="html">En attendant d’avoir plus d’imagination, voici un rapide tuto pour gérer plusieurs référentiels GIT avec des clés SSH différentes.</summary></entry><entry><title type="html">Ma configuration CYGWIN</title><link href="https://blog.touret.info/2018/02/16/ma-configuration-cygwin/" rel="alternate" type="text/html" title="Ma configuration CYGWIN" /><published>2018-02-16T08:42:24+00:00</published><updated>2018-02-16T08:42:24+00:00</updated><id>https://blog.touret.info/2018/02/16/ma-configuration-cygwin</id><content type="html" xml:base="https://blog.touret.info/2018/02/16/ma-configuration-cygwin/">&lt;p&gt;Dans la série, &lt;a href=&quot;http://blog.touret.info/2018/02/10/ma-configuration-debian-9/&quot;&gt;j’essaye de sauvegarder toutes mes configurations&lt;/a&gt;, voici ce que j’ai fait pour configurer correctement &lt;a href=&quot;https://cygwin.com/&quot;&gt;cygwin&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;En espérant que ça puisse servir à d’autres.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="planetlibre" /><summary type="html">En attendant d’avoir plus d’imagination, voici un rapide tuto pour gérer plusieurs référentiels GIT avec des clés SSH différentes.</summary></entry><entry><title type="html">Ma configuration CYGWIN</title><link href="https://blog.touret.info/2018/02/16/ma-configuration-cygwin/" rel="alternate" type="text/html" title="Ma configuration CYGWIN" /><published>2018-02-16T08:42:24+00:00</published><updated>2018-02-16T08:42:24+00:00</updated><id>https://blog.touret.info/2018/02/16/ma-configuration-cygwin</id><content type="html" xml:base="https://blog.touret.info/2018/02/16/ma-configuration-cygwin/">&lt;p&gt;Dans la série, &lt;a href=&quot;http://blog.touret.info/2018/02/10/ma-configuration-debian-9/&quot;&gt;j’essaye de sauvegarder toutes mes configurations&lt;/a&gt;, voici ce que j’ai fait pour configurer correctement &lt;a href=&quot;https://cygwin.com/&quot;&gt;cygwin&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Pour ceux qui ne connaissent pas ou qui n’ont pas la chance d’utiliser windows au travail, &lt;a href=&quot;https://cygwin.com/&quot;&gt;cygwin&lt;/a&gt; est un shell avec tous les outils GNU.&lt;/p&gt;
 
