@@ -250,4 +250,10 @@ var store = [{
         "tags": ["github","jekyll","github-actions","planetlibre"],
         "url": "/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/",
         "teaser": "/assets/images/2021/12/github-1.jpg"
+      },{
+        "title": "Mieux analyser les risques pour simplifier les architectures (ou pas)",
+        "excerpt":"L’analyse des risques: kezako ? Souvent utilisée dans la prise de décision, l’analyse des risques a plusieurs objectifs : Permettre de pondérer des risques potentiels Faciliter la prise de décision sur les actions à réaliser pour les prévenir ou tout du moins les atténuer. Mais d’abord, revenons aux bases. Comment...","categories": [],
+        "tags": ["architecture"],
+        "url": "/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/",
+        "teaser": "/assets/images/2022/02/architecture.jpg"
       }]

@@ -1,4 +1,240 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/architecture.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-02-09T11:35:25+00:00</updated><id>https://blog.touret.info/feed/by_tag/architecture.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Touraine Tech 2019</title><link href="https://blog.touret.info/2019/02/02/touraine-tech-2019-2/" rel="alternate" type="text/html" title="Touraine Tech 2019" /><published>2019-02-02T08:59:35+00:00</published><updated>2019-02-02T08:59:35+00:00</updated><id>https://blog.touret.info/2019/02/02/touraine-tech-2019-2</id><content type="html" xml:base="https://blog.touret.info/2019/02/02/touraine-tech-2019-2/">&lt;p&gt;J’ai fini l’édition 2019 du Touraine Tech. Tout d’abord, merci aux organisateurs pour l’accueil et l’organisation. C’était vraiment top!&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/architecture.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-02-09T11:42:11+00:00</updated><id>https://blog.touret.info/feed/by_tag/architecture.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mieux analyser les risques pour simplifier les architectures (ou pas)</title><link href="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/" rel="alternate" type="text/html" title="Mieux analyser les risques pour simplifier les architectures (ou pas)" /><published>2022-02-09T08:00:00+00:00</published><updated>2022-02-09T08:00:00+00:00</updated><id>https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture</id><content type="html" xml:base="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/">&lt;p&gt;&lt;img src=&quot;/assets/images/2022/02/architecture.jpg&quot; alt=&quot;architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;lanalyse-des-risques-kezako-&quot;&gt;L’analyse des risques: kezako ?&lt;/h2&gt;
+
+&lt;p&gt;Souvent utilisée dans la prise de décision, l’analyse des risques a plusieurs objectifs :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Permettre de pondérer des risques potentiels&lt;/li&gt;
+  &lt;li&gt;Faciliter la prise de décision sur les actions à réaliser pour les prévenir ou tout du moins les atténuer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Mais d’abord, revenons aux bases. Comment identifier un risque ?&lt;/p&gt;
+
+&lt;p&gt;Selon &lt;a href=&quot;https://fr.wikipedia.org/wiki/Risque&quot;&gt;Wikipedia&lt;/a&gt;, voici la définition:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Le risque est la possibilité de survenue d’un événement indésirable, la probabilité d’occurrence d’un péril probable ou d’un aléa.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Bien évidemment, on a les risques inconnus et ceux qui sont connus. 
+Le préalable à toute gestion de risque (tout du moins pour la définition d’architecture) est de capitaliser les connaissances et retours d’expérience qui viennent du terrain.&lt;/p&gt;
+
+&lt;p&gt;On va donc oublier les risques inconnus dans cet article.&lt;/p&gt;
+
+&lt;h3 id=&quot;comment-les-définir-&quot;&gt;Comment les définir ?&lt;/h3&gt;
+
+&lt;p&gt;Tout d’abord, il faut connaître les &lt;a href=&quot;https://sre.google/workbook/implementing-slos/&quot;&gt;SLOs&lt;/a&gt; de la plateforme qu’on souhaite concevoir. Pourquoi ? Pour vérifier si les risques qu’on identifiera plus tard sont pertinents ou tout du moins impactants.&lt;/p&gt;
+
+&lt;p&gt;Par exemple: Une panne électrique sera faiblement impactante pour une application avec une disponibilité &amp;lt; 70%.&lt;/p&gt;
+
+&lt;p&gt;La réalisation des SLIs et SLOs est un préalable pour définir &lt;a href=&quot;https://cloud.google.com/blog/products/management-tools/sre-error-budgets-and-maintenance-windows&quot;&gt;le “budget d’erreur”&lt;/a&gt;. 
+Ce dernier nous permettra &lt;em&gt;in fine&lt;/em&gt; de quantifier les risques et de voir si il faut les atténuer.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, pour chaque risque qu’on identifiera (souvent à partir de notre expérience), on tâchera de définir les caractéristiques suivantes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cause&lt;/li&gt;
+  &lt;li&gt;Probabilité&lt;/li&gt;
+  &lt;li&gt;Conséquence (gravité)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;un-exemple&quot;&gt;Un exemple&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;La base de données est indisponible&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cause: Système de fichier plein&lt;/li&gt;
+  &lt;li&gt;Probabilité: faible&lt;/li&gt;
+  &lt;li&gt;Conséquence: forte (toute la plateforme est HS)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pour déterminer la cause, il y a plusieurs méthodes, l’une des plus célèbres est celle &lt;a href=&quot;https://fr.wikipedia.org/wiki/Cinq_pourquoi&quot;&gt;des cinq pourquoi&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Elle permet d’accéder à la cause du problème.&lt;/p&gt;
+
+&lt;p&gt;Pour établir la probabilité, les OPS seront vos meilleurs ami.e.s. 
+Vous remontrez dans le temps pour déterminer quels ont été les différents incidents.
+Pour chacun, vous devrez définir ces trois caractéristiques : cause, probabilité, conséquence.&lt;/p&gt;
+
+&lt;p&gt;A coté de ça, vous aurez à identifier si possible le temps d’indisponibilité du service.&lt;/p&gt;
+
+&lt;h3 id=&quot;synthèse&quot;&gt;Synthèse&lt;/h3&gt;
+
+&lt;p&gt;Une fois ce travail de fourmi réalisé, vous pourrez le synthétiser dans un premier temps avec ce formalisme souvent repris dans la gestion de projet:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/02/Risk-Based-Audit_technical.jpg&quot; alt=&quot;analyse de risques&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;En résumé, les actions qui sont oranges ou rouges doivent être traitées et avoir un plan d’action.&lt;/p&gt;
+
+&lt;p&gt;Prenons la définition d’une plateforme: 
+Si votre API doit traiter de manière régulière des PAYLOADs volumineux (bon déjà, la ce n’est pas top).
+Le temps de traitement peut être très long et bloquer certaines ressources (ex. des sous transactions).&lt;/p&gt;
+
+&lt;p&gt;Dans ce cas, la probabilité sera à probable et l’impact sera modéré ou majeur. Par conséquent, vous devrez le prendre en compte avec par exemple un &lt;a href=&quot;https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring/&quot;&gt;circuit breaker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour aller encore plus loin, vous pouvez également évaluer les risques en fonction de votre budget d’erreur: Est-ce que l’erreur peut rentrer dans mon budget ou pas? 
+Bref, est-ce acceptable?&lt;/p&gt;
+
+&lt;p&gt;Si vous allez plus loin, je vous conseille la formation &lt;a href=&quot;https://www.coursera.org/learn/site-reliability-engineering-slos&quot;&gt;Coursera Site Reliability Engineering: Measuring and Managing Reliability&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;ok-jai-identifié-les-risques-potentiels-quest-ce-que-jen-fait-maintenant&quot;&gt;OK, j’ai identifié les risques potentiels. Qu’est-ce que j’en fait maintenant?&lt;/h2&gt;
+
+&lt;p&gt;C’est là que démarre réellement le travail d’architecture: vous devrez évaluer chaque risque en fonction des exigences fonctionnelles et technique pour savoir si elles valent la peine d’être prises en considération. 
+Si vous avez des risques de faible impact, vous pourrez soit les “mettre sous contrôle” pour traiter d’autres problèmes, soit les traiter car ils sont “faciles” à traiter et vous permettront d’agrandir votre “budget d’erreur”. 
+Dans ce dernier cas, vous aurez la possibilité de laisser “de coté” d’autres erreurs plus compliquées à traiter car elles rentreront dans votre budget.&lt;/p&gt;
+
+&lt;p&gt;Bref, c’est un vrai travail de fourmi qui se base sur l’expérience du terrain.&lt;/p&gt;
+
+&lt;h2 id=&quot;quid-de-larchitecture&quot;&gt;&lt;em&gt;Quid&lt;/em&gt; de l’architecture?&lt;/h2&gt;
+
+&lt;p&gt;Si vous avez évalué les risques correctement, vous pourrez ne traiter que les risques qui en valent la peine et par conséquent n’ ajouter de la complexité que là ou ça en vaut la peine!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Oui, ce travail préalable permet de faire simple!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;un-exemple-concret&quot;&gt;Un exemple concret&lt;/h2&gt;
+
+&lt;p&gt;Si je reprends l’application &lt;a href=&quot;https://github.com/alexandre-touret/bookstore_spring&quot;&gt;bookstore&lt;/a&gt; que j’ai décrite dans &lt;a href=&quot;https://blog.touret.info/2021/07/26/observabilite-et-circuit-breaker-avec-spring/&quot;&gt;un précédent article&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2021/07/rest-book-architecture.png&quot; alt=&quot;bookstore architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;exigences-techniques&quot;&gt;Exigences techniques&lt;/h3&gt;
+
+&lt;h4 id=&quot;slos--slis&quot;&gt;SLOs / SLIs&lt;/h4&gt;
+
+&lt;p&gt;Pour cet exemple, je ne vais traiter que deux exigences techniques:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;SLO&lt;/th&gt;
+      &lt;th&gt;SLI&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;L’API Bookstore doit être disponible 99%&lt;/td&gt;
+      &lt;td&gt;Nombre de réponses HTTP = 2XX ou 4XX&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;L’API Bookstore doit répondre en moins de 1 sec&lt;/td&gt;
+      &lt;td&gt;Temps de réponse de l’API&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;volumétrie&quot;&gt;Volumétrie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;100 transactions par seconde (TPS)&lt;/li&gt;
+  &lt;li&gt;100 utilisateurs simultanés&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;risques-identifiés&quot;&gt;Risques identifiés&lt;/h3&gt;
+
+&lt;p&gt;Sans aller dans le détail, voici quelques risques que l’on peut identifier de prime abord dans cette architecture:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Indisponibilité du service bookstore&lt;/li&gt;
+  &lt;li&gt;Indisponibilité du service booknumber&lt;/li&gt;
+  &lt;li&gt;Indisponibilité de la base de données à cause d’une forte volumétrie&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;En vous basant sur l’expérience de vos OPS, vous pourrez également ajouter des risques liés à l’infrastructure (routeurs, DNS, …). 
+Je ne vais pas les aborder dans cet article.&lt;/p&gt;
+
+&lt;h3 id=&quot;qualification-des-risques&quot;&gt;Qualification des risques&lt;/h3&gt;
+
+&lt;p&gt;Voici une rapide qualification:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Risques&lt;/th&gt;
+      &lt;th&gt;Probabilité&lt;/th&gt;
+      &lt;th&gt;Impact&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Indisponibilité du service bookstore&lt;/td&gt;
+      &lt;td&gt;Probable&lt;/td&gt;
+      &lt;td&gt;Majeur&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Indisponibilité du service booknumber&lt;/td&gt;
+      &lt;td&gt;Probable&lt;/td&gt;
+      &lt;td&gt;Majeur&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Indisponibilité de la base de données&lt;/td&gt;
+      &lt;td&gt;Possible&lt;/td&gt;
+      &lt;td&gt;Catastrophique&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Si on se réfère au premier diagramme, il est obligatoire de les prendre en compte.&lt;/p&gt;
+
+&lt;h3 id=&quot;solutions-darchitecture-pour-leur-prise-en-compte&quot;&gt;Solutions d’architecture pour leur prise en compte&lt;/h3&gt;
+
+&lt;p&gt;Une fois les risques identifiés, on peut tout d’abord les confronter à notre budget d’erreur pour valider leur prise en compte dans notre conception.&lt;/p&gt;
+
+&lt;p&gt;Dans notre cas, on va prendre le postulat qu’il faut réellement les prendre en considération et trouver une solution adaptée.&lt;/p&gt;
+
+&lt;p&gt;Voici des exemples de solutions qui permettraient de faire descendre leur impact our leur probabilité.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Risques&lt;/th&gt;
+      &lt;th&gt;Probabilité&lt;/th&gt;
+      &lt;th&gt;Impact&lt;/th&gt;
+      &lt;th&gt;Action/Solutions possibles&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Indisponibilité du service bookstore&lt;/td&gt;
+      &lt;td&gt;Possible&lt;/td&gt;
+      &lt;td&gt;Majeur&lt;/td&gt;
+      &lt;td&gt;Load balancing avec deux instances, Utilisation Kubernetes,.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Indisponibilité du service booknumber&lt;/td&gt;
+      &lt;td&gt;Possible&lt;/td&gt;
+      &lt;td&gt;Majeur&lt;/td&gt;
+      &lt;td&gt;Sur le service book-number:&lt;br /&gt;Load balancing avec deux instances, Utilisation Kubernetes,..&lt;br /&gt;&lt;br /&gt;Sur le service bookstore:&lt;br /&gt;&lt;br /&gt;Mettre en place un circuit breaker basé sur le timeout d’appel &lt;br /&gt;vers le service book-number pour garantir la SLO&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Indisponibilité de la base de données&lt;/td&gt;
+      &lt;td&gt;Possible&lt;/td&gt;
+      &lt;td&gt;Catastrophique&lt;/td&gt;
+      &lt;td&gt;- Réalisation d’un benchmark pour s’assurer qu’une instance est suffisante.&lt;br /&gt;&lt;br /&gt;- Sinon mise en place mécanisme HA ou changement de technologie&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;L’analyse des risques n’est pas récente et n’a pas été inventée par le monde de l’informatique.
+Elle est d’abord apparue dans la gestion de projets et fait désormais partie prenante de la définition d’architectures (enfin ça commence…).
+Il ne faut pas la voir seulement pour un outil de “GO-NO GO” de réunion de cellule de crise mais comme une aide à la décision pour la conception des systèmes.&lt;/p&gt;
+
+&lt;p&gt;Il a toute sa place à coté des différentes caractéristiques que vous devrez prendre en compte ( sécurité, modularité, …).
+J’ai essayé de décrire comment les identifier et trouver une solution adaptée dans l’exemple.
+Bien évidemment, il n’est pas complet. 
+Je pense néanmoins qu’il permet d’avoir une idée sur le sujet.&lt;/p&gt;
+
+&lt;p&gt;Le principal avantage d’utiliser à la fois les SLOs/SLIs, le budget d’erreur et l’analyse des risques est de &lt;strong&gt;n’apporter de la complexité que là où c’est nécessaire&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour certains un benchmark sera souvent utile pour confirmer votre décision.&lt;/p&gt;
+
+&lt;p&gt;Si vous voulez aller plus loin, je vous conseille dans un premier temps de lire &lt;a href=&quot;https://fundamentalsofsoftwarearchitecture.com/&quot;&gt;“Fundamentals of Software Architecture”&lt;/a&gt;. 
+Ce sujet y est abordé.&lt;/p&gt;
+
+&lt;p&gt;Enfin,si ce sujet vous intéresse, vous pouvez vous projeter au délà de l’informatique en lisant les analyses de risques réalisées par &lt;a href=&quot;https://www.economie.gouv.fr/files/files/directions_services/tracfin/analyse-nationale-des-risques-lcb-ft-en-France-septembre-2019.pdf&quot;&gt;le Ministère des finances&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bonne lecture ;-)&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="architecture" /><summary type="html"></summary></entry><entry><title type="html">Touraine Tech 2019</title><link href="https://blog.touret.info/2019/02/02/touraine-tech-2019-2/" rel="alternate" type="text/html" title="Touraine Tech 2019" /><published>2019-02-02T08:59:35+00:00</published><updated>2019-02-02T08:59:35+00:00</updated><id>https://blog.touret.info/2019/02/02/touraine-tech-2019-2</id><content type="html" xml:base="https://blog.touret.info/2019/02/02/touraine-tech-2019-2/">&lt;p&gt;J’ai fini l’édition 2019 du Touraine Tech. Tout d’abord, merci aux organisateurs pour l’accueil et l’organisation. C’était vraiment top!&lt;/p&gt;
 
 &lt;p&gt;Cette année, je n’ai pas pu faire beaucoup de conférences. Mon Hands on m’ayant retenu une bonne partie de l’après midi, que ça soit durant le talk ou après pour décompresser 🙂&lt;/p&gt;
 
