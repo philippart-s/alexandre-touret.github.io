@@ -256,4 +256,10 @@ var store = [{
         "tags": ["architecture"],
         "url": "/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/",
         "teaser": "/assets/images/2022/02/architecture.jpg"
+      },{
+        "title": "Faire des batchs \"Cloud Native\" dans Kubernetes",
+        "excerpt":"Quand on parle du Cloud et de Kubernetes, généralement on pense aux APIs. Mais qu’en est-il des batchs? Oui, depuis plusieurs années, on pensait les éradiquer, mais ils sont encore là et on en a encore besoin pour quelques années encore. Ils ont même eu une deuxième jeunesse avec le...","categories": [],
+        "tags": ["cloud","kubernetes","batch"],
+        "url": "/2022/05/17/cloud-native-batchs/",
+        "teaser": "/assets/images/2022/02/architecture.jpg"
       }]

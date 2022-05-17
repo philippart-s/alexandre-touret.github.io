@@ -1,4 +1,242 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-05-17T13:19:44+00:00</updated><id>https://blog.touret.info/feed.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mieux analyser les risques pour simplifier les architectures (ou pas)</title><link href="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/" rel="alternate" type="text/html" title="Mieux analyser les risques pour simplifier les architectures (ou pas)" /><published>2022-02-09T08:00:00+00:00</published><updated>2022-02-09T08:00:00+00:00</updated><id>https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture</id><content type="html" xml:base="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/">&lt;p&gt;&lt;img src=&quot;/assets/images/2022/02/architecture.jpg&quot; alt=&quot;architecture&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://blog.touret.info/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-05-17T13:27:03+00:00</updated><id>https://blog.touret.info/feed.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Faire des batchs “Cloud Native” dans Kubernetes</title><link href="https://blog.touret.info/2022/05/17/cloud-native-batchs/" rel="alternate" type="text/html" title="Faire des batchs “Cloud Native” dans Kubernetes" /><published>2022-05-17T08:00:00+00:00</published><updated>2022-05-17T08:00:00+00:00</updated><id>https://blog.touret.info/2022/05/17/cloud-native-batchs</id><content type="html" xml:base="https://blog.touret.info/2022/05/17/cloud-native-batchs/">&lt;p&gt;Quand on parle du Cloud et de Kubernetes, généralement on pense aux APIs.
+Mais qu’en est-il des batchs?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.jpg&quot; alt=&quot;pat-whelen-xSsWBa4rb6E-unsplash.jpg &quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Oui, depuis plusieurs années, on pensait les éradiquer, mais ils sont encore là et on en a encore besoin pour quelques années encore. 
+Ils ont même eu une deuxième jeunesse avec le Big Data et l’explosion des volumétries dans l’IT.&lt;/p&gt;
+
+&lt;p&gt;Je vais essayer de faire un tour d’horizon dans cet article des batchs dans un environnement Cloud et plus particulièrement dans Kubernetes.&lt;/p&gt;
+
+&lt;p&gt;Les exemples présentés dans cet article seront (sans doute) approfondis dans un second article et d’ores et déjà disponibles dans &lt;a href=&quot;https://github.com/alexandre-touret/k8s-batch&quot;&gt;mon GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;pourquoi-des-batchs-dans-le-cloud&quot;&gt;Pourquoi des batchs dans le Cloud?&lt;/h2&gt;
+
+&lt;p&gt;A ce titre un peu provocateur, j’ajouterais aussi &lt;em&gt;“Pourquoi des batchs dans Kubernetes ?”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Oui, aujourd’hui encore,comme j’ai pu l’indiquer précédemment, on doit créer des traitements batchs. A coté des APIs qui représentent le cas d’utilisation “standard” du Cloud, on peut également avoir à traiter des fichiers volumineux allant de plusieurs centaines de Mo à quelques Go.&lt;/p&gt;
+
+&lt;p&gt;Parmi les cas d’utilisation qui nécessitent ce genre de traitement, on pourra avoir:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Les reprises de données (suite à des erreurs ou lors d’une initialisation)&lt;/li&gt;
+  &lt;li&gt;Traitement suite à une réception de fichiers (par ex. traitement de fichiers OPENDATA)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Si vous êtes déjà passé sur le Cloud pour vos applications transactionnelles, vous vous poserez cette question: &lt;em&gt;Puis-je également déployer des batchs?&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;pourquoi-se-poser-cette-question&quot;&gt;Pourquoi se poser cette question?&lt;/h3&gt;
+
+&lt;p&gt;Les réponses sont multiples. 
+Elles sont tout d’abord liées à une rationalisation des environnements.
+Vous avez votre application dans le cloud, votre base de données y est également gérée pour éviter la latence réseau.
+Vous devez donc déployer des traitements tiers au plus proche de celle-ci pour vous soustraire des mêmes soucis.&lt;/p&gt;
+
+&lt;p&gt;De plus, l’écosystème lié au cloud offre des technologies et pratiques qui rendent la vie plus simple (si, si, je vous assure) aux développeurs et ops. 
+Le déploiement via &lt;a href=&quot;https://en.wikipedia.org/wiki/Infrastructure_as_code&quot;&gt;l’Infra As Code&lt;/a&gt; est un bon exemple : Avoir toute l’infrastructure liée aux traitements batchs et transactionnels versionnées et instantiables à la demande est quelque chose dont on a du mal à se passer!&lt;/p&gt;
+
+&lt;h2 id=&quot;difficultés-par-rapport-aux-apis&quot;&gt;Difficulté(s) par rapport aux APIs&lt;/h2&gt;
+
+&lt;p&gt;Quand on déploie une API dans le cloud, généralement tout va bien. 
+On peut voir rapidement que cet environnement convient bien à ce genre de traitements.&lt;/p&gt;
+
+&lt;p&gt;Pour les batchs, c’est une autre affaire!
+Selon les sociétés, il peut y avoir un fort historique et beaucoup plus d’exigences que pour les APIs. 
+Ces dernières pourront être liées aux performances, à la qualité de service ou plus simplement à l’utilisation.&lt;/p&gt;
+
+&lt;p&gt;Il faut donc, à l’instar de toute architecture, déterminer quel sera l’environnement technique de ce type de traitement. 
+Cette fois, on aura à concilier performances, fichiers volumineux et reprises sur erreur.&lt;/p&gt;
+
+&lt;h3 id=&quot;quelques-technologies&quot;&gt;Quelques technologies&lt;/h3&gt;
+
+&lt;p&gt;On pourra retrouver dans notre future architecture les briques suivantes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Une passerelle de fichiers (File Gateway) pour permettre l’envoi des fichiers de manière sécurisée&lt;/li&gt;
+  &lt;li&gt;Un stockage objet pour la distribution de fichiers ou l’archivage.&lt;/li&gt;
+  &lt;li&gt;Les éléments nécessaires à l’API : bases de données, &lt;a href=&quot;https://en.wikipedia.org/wiki/Hardware_security_module&quot;&gt;HSMs&lt;/a&gt;, Cluster Kubernetes,…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;modes-de-déclenchement&quot;&gt;Modes de déclenchement&lt;/h2&gt;
+
+&lt;p&gt;Si on regarde de plus près les exigences techniques liées aux cas d’utilisation, on pourrait résumer les différents modes de déclenchement de la manière suivante:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Traitement sur réception de fichiers&lt;/li&gt;
+  &lt;li&gt;Traitement déclenché par un ordonnanceur de manière régulière ou non.&lt;/li&gt;
+  &lt;li&gt;Traitement déclenché par &lt;a href=&quot;https://en.wikipedia.org/wiki/Cron&quot;&gt;CRON&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;J’ai volontairement exclu les traitements sur présence de messages (ex. Kafka). Je les considère plus liés au monde transactionnel.&lt;/p&gt;
+
+&lt;p&gt;Dans les paragraphes suivants, je vais décrire des solutions d’architecture qui permettent de déployer ces traitements dans Kubernetes. J’aborderai sans doute un exemple dans un autre article&lt;/p&gt;
+
+&lt;h2 id=&quot;contraintes&quot;&gt;Contraintes&lt;/h2&gt;
+
+&lt;p&gt;Dès qu’on s’aventure dans ce type de conception, nous aurons, au-delà des &lt;a href=&quot;https://12factor.net/&quot;&gt;12 factors&lt;/a&gt;, les contraintes suivantes à traiter:&lt;/p&gt;
+
+&lt;h3 id=&quot;gestion-des-erreurs-et-indisponibilités&quot;&gt;Gestion des erreurs et indisponibilités&lt;/h3&gt;
+&lt;p&gt;Dans un cluster Kubernetes, le crash d’un POD n’est pas rédhibitoire.
+Le cluster permet de redémarrer immédiatement une autre instance.&lt;/p&gt;
+
+&lt;p&gt;Pour les APIs, ce n’est pas un problème.
+Pour les batchs, c’est une autre paire de manches. 
+Quid du crash en plein milieu du traitement d’un fichier?&lt;/p&gt;
+
+&lt;p&gt;Il faut donc penser à ce cas (et à d’autres) et archiver les fichiers pour un éventuel rejeu.&lt;/p&gt;
+
+&lt;h3 id=&quot;données-et-idempotence-des-traitements&quot;&gt;Données et idempotence des traitements&lt;/h3&gt;
+
+&lt;p&gt;Idéalement, les fichiers doivent avoir des lignes indépendantes qui peuvent être insérées individuellement et dans n’importe quel ordre.
+Aussi, chaque modification et traitement de données doivent être idempotentes.&lt;/p&gt;
+
+&lt;p&gt;Pourquoi? Pas seulement par ce que c’est sympa et l’état de l’art, mais dans ce nouvel environnement, vous ne pourrez pas forcément garantir l’ordre des traitements.
+L’une des solutions potentielles de traitement est de découpler la lecture et l’insertion par du queueing (Artemis, Kafka &lt;em&gt;- oui ce n’est pas du queuing, mais vous avez compris…&lt;/em&gt;). 
+Dans ce cas, si votre traitement n’est pas idempotent, vous devrez lutter avec des doublons en base.&lt;/p&gt;
+
+&lt;h3 id=&quot;gestion-des-ressources&quot;&gt;Gestion des ressources&lt;/h3&gt;
+
+&lt;p&gt;Imaginez, vous recevez un fichier de 1Go. 
+Vos ressources systèmes sont des PODs avec un 1 Go de RAM.&lt;/p&gt;
+
+&lt;p&gt;Vous voyez le soucis?&lt;/p&gt;
+
+&lt;p&gt;Cet exemple, qui n’est pas trop éloigné de la réalité, mets en évidence l’une des contraintes techniques que vous devrez prendre dès le début de votre conception.&lt;/p&gt;
+
+&lt;p&gt;L’une des solutions serait, par exemple, le traitement quasi systématique du streaming de fichiers et l’obligation d’avoir des fichiers avec des lignes de données indépendantes (c.-à-d. sans avoir à faire de liens inter lignes pendant le traitement).&lt;/p&gt;
+
+&lt;h2 id=&quot;traitement-sur-réception-de-fichiers&quot;&gt;Traitement sur réception de fichiers&lt;/h2&gt;
+
+&lt;p&gt;Dans ce cas, nous avons un processus qui est déclenché lors de la réception d’un fichier. Nous pourrons par exemple avec ce genre d’architecture un fichier qui est envoyé dans espace de stockage objet. Ce dernier est ensuite traité par un programme.
+J’ai fait le choix ici de mettre en oeuvre un couplage lâche (on ne se refait pas) entre l’espace de réception de fichiers et le traitement.&lt;/p&gt;
+
+&lt;p&gt;Je traite ici le risque de crash d’un POD en gardant systématiquement les fichiers dans un stockage objet. De cette manière, si le traitement a échoué, un autre POD pourra le télécharger et rejouer le processus batch.&lt;/p&gt;
+
+&lt;p&gt;Ce découplage permet de gérer facilement la scalabilité et les arrêts/relances de PODs.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/05/batch_evenement-Batch_sur_presence_fichier.svg&quot; alt=&quot;batch_evenement-Batch_sur_presence_fichier&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Dans ce cas, le batch pourra être déployé sous la forme d’un &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/deployment/&quot;&gt;déploiement Kubernetes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;traitement-déclenché-par-un-ordonnanceur&quot;&gt;Traitement déclenché par un ordonnanceur&lt;/h2&gt;
+
+&lt;p&gt;Maintenant, on va aborder les traitements qui sont lancés par un ordonnanceur tiers. 
+Généralement, dans le monde de l’entreprise, la planification des traitements est centralisée au lieu de laisser de le faire sur chaque machine avec des &lt;a href=&quot;https://en.wikipedia.org/wiki/Cron&quot;&gt;CRON Jobs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dans ce cas, on a deux manières de procéder:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Avoir un traitement qui fournit une API permettant de démarrer des traitements et d’avoir leurs statuts.&lt;/li&gt;
+  &lt;li&gt;Lancer des jobs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;avec-une-api&quot;&gt;Avec une API&lt;/h3&gt;
+
+&lt;p&gt;Ici, on conçoit les batchs comme des WEBAPPS qui fournissent des traitements batchs sur demande via des APIs. La contrainte est qu’à l’instar de la solution précédente, le programme tourne toujours et n’est vraiment utile que lorsqu’il est appelé via un endpoint REST.&lt;/p&gt;
+
+&lt;p&gt;Ce modèle de conception peut être utilisé à mon avis si la fréquence est forte et si l’intégration d’un Job Kubernetes est problématique pour vous (voir ci-dessous).&lt;/p&gt;
+
+&lt;p&gt;L’un des avantages que l’on pourra trouver est que le &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/deployment/&quot;&gt;mode de déploiement est assez simple et similaire aux APIs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/05/traitement_api.svg&quot; alt=&quot;traitement_api&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;avec-des-jobs&quot;&gt;Avec des jobs&lt;/h3&gt;
+
+&lt;p&gt;Si votre ordonnanceur peut exécuter le client kubectl, vous pourrez considérer les &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/job/&quot;&gt;jobs  kubernetes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;En résumé, ils permettent de créer un POD et exécute une action en gérant les erreurs potentielles jusqu’à complétion du traitement.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, voici un job permettant de faire un “Hello World!”:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;batch/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Job&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;hello-world&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;helloworld&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;busybox&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;echo&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;World!&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;restartPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Never&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;backoffLimit&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Une fois déployé avec Helm, vous pouvez les voir avec la commande &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl get jobs&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;minikube kubectl &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; get &lt;span class=&quot;nb&quot;&gt;jobs
+&lt;/span&gt;NAME          COMPLETIONS   DURATION   AGE
+hello-world   0/1           25s        25s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Pour les logs et voir le résultat de la commande lancé, cela se passe d’une manière assez habituelle:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;minikube kubectl &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; logs hello-world-zx4wh
+Hello World!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;traitement-déclenché-par-cron&quot;&gt;Traitement déclenché par CRON&lt;/h2&gt;
+
+&lt;p&gt;Maintenant, on va laisser le soin au Cluster Kubernetes de lancer les différents traitements via une CRON.
+Bien que je ne suis pas trop fan de ne pas centraliser l’ordonnancement, cela peut être très utile si votre plateforme est centrée sur Kubernetes.&lt;/p&gt;
+
+&lt;p&gt;Si vous êtes dans ce cas-là, vous pouvez utiliser l’objet &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/&quot;&gt;CronJob&lt;/a&gt; qui n’est ni plus ni moins qu’un &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/job/&quot;&gt;Job&lt;/a&gt; exécuté de manière périodique.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;batch/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;CronJob&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;hello&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;schedule&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;jobTemplate&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;helloworld-cron&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;busybox&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;echo&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Hello&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;World!&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;restartPolicy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;OnFailure&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;panorama-des-solutions-logicielles-possibles&quot;&gt;Panorama des solutions logicielles possibles&lt;/h2&gt;
+
+&lt;p&gt;Une fois qu’on s’est posé toutes (en tout cas certaines) les questions possibles sur nos exigences techniques et la conception, on peut voir quelles sont les technologies possibles pour implémenter des batchs “cloud natifs”.&lt;/p&gt;
+
+&lt;p&gt;Ça ne sera pas une surprise, je vais m’attarder à la plateforme Java. Il est bien évidemment possible d’utiliser d’autres langages et frameworks tels que Go.&lt;/p&gt;
+
+&lt;p&gt;En Java, vous avez le choix entre différents frameworks :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;[Spring avec spring batch et/ou integration&quot;&gt;Spring avec spring batch&lt;/a&gt; et/ou &lt;a href=&quot;https://spring.io/projects/spring-integration&quot;&gt;integration&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://camel.apache.org/&quot;&gt;Camel&lt;/a&gt; qui peut être utilisé avec &lt;a href=&quot;https://camel.apache.org/manual/spring.html&quot;&gt;Spring&lt;/a&gt; ou &lt;a href=&quot;https://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://quarkus.io/&quot;&gt;Quarkus&lt;/a&gt; avec la &lt;a href=&quot;https://github.com/quarkiverse/quarkus-jberet&quot;&gt;JSR 352&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Si vous allez du côté du BigData, vous pouvez aussi envisager d’utiliser des technologies telles qu’&lt;a href=&quot;https://spark.apache.org/&quot;&gt;Apache Spark&lt;/a&gt;.
+Ces dernières vous permettront de &lt;a href=&quot;https://spark.apache.org/docs/latest/running-on-kubernetes.html&quot;&gt;découper “plus facilement” vos traitements&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;le-diable-se-cache-dans-les-détails&quot;&gt;Le diable se cache dans les détails&lt;/h2&gt;
+
+&lt;p&gt;Déployer un batch dans Kubernetes peut se faire assez facilement (en développement) une fois qu’on a compris quelques principes. 
+Cependant, les soucis peuvent survenir une fois arrivé en production.&lt;/p&gt;
+
+&lt;p&gt;La gestion des erreurs est beaucoup plus complexe que les APIs. Il vous faudra donc définir avec les différentes parties prenantes quel est le meilleur fonctionnement (rejeu) en production. 
+Il vous faudra ainsi bien &lt;a href=&quot;https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/&quot;&gt;identifier et évaluer les risques liés à votre application&lt;/a&gt; et voir quelles sont les actions à mener.&lt;/p&gt;
+
+&lt;p&gt;Aussi, si vous devez manipuler des fichiers volumineux, il faudra faire attention au système de fichiers utilisé et ses performances. Habituellement, avec ce type d’architecture, on utilise généralement du SAN. En fonction de vos exigences, un &lt;a href=&quot;https://www.redhat.com/fr/topics/data-storage/file-block-object-storage&quot;&gt;stockage block&lt;/a&gt; pourra être plus adapté.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Pour conclure cet article, vous aurez compris que le sujet des batchs dans Kubernetes peut s’avérer assez complexe à gérer. 
+Au-delà des technologies qui peuvent faire le job (&lt;em&gt;désolé du mauvais jeu de mots&lt;/em&gt;), il vous faudra faire très attention à tout l’environnement dans lequel votre programme devra interagir. Les bases, le réseau, les performances de votre matériel seront des prérequis indispensables.&lt;/p&gt;
+
+&lt;p&gt;Aussi, il vous faudra faire attention à la manière dont sont transmises les données et dont vous les traitez. 
+Bref, il faut étudier la solution dans son ensemble du développement à l’exploitation pour s’assurer de ne rien oublier.&lt;/p&gt;
+
+&lt;p&gt;Enfin, cet article n’est bien évidemment pas exhaustif que cela soit sur les solutions ou les contraintes à adresser. 
+J’ai néanmoins essayé d’apporter quelques cas concrets et retours d’expérience.&lt;/p&gt;
+
+&lt;p&gt;J’essaierai de détailler un cas concret dans un prochain article.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="cloud" /><category term="kubernetes" /><category term="batch" /><summary type="html">Quand on parle du Cloud et de Kubernetes, généralement on pense aux APIs. Mais qu’en est-il des batchs?</summary></entry><entry><title type="html">Mieux analyser les risques pour simplifier les architectures (ou pas)</title><link href="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/" rel="alternate" type="text/html" title="Mieux analyser les risques pour simplifier les architectures (ou pas)" /><published>2022-02-09T08:00:00+00:00</published><updated>2022-02-09T08:00:00+00:00</updated><id>https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture</id><content type="html" xml:base="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/">&lt;p&gt;&lt;img src=&quot;/assets/images/2022/02/architecture.jpg&quot; alt=&quot;architecture&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;lanalyse-des-risques-kezako-&quot;&gt;L’analyse des risques: kezako ?&lt;/h2&gt;
 
@@ -1236,158 +1474,4 @@ On peut suivre la gestion des environnements via un gestionnaire de sources et l
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;Bon, vous l’aurez peut être compris, cette galaxie de technologies est intéressante et peut vous aider dans vos projets. Avant d’arriver à l’utiliser sereinement, il vous faudra sans doute définir une trajectoire et appréhender plusieurs sujets avant d’arriver à déployer vos applications sur un cloud interne ou externe.&lt;br /&gt;
-J’espère que cet article vous aura permis de mettre en évidence les pour et contre d’une telle technologie et le cas échéant vous donnera envie de franchir le pas.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="helm" /><category term="hype" /><category term="k8s" /><category term="kubernetes" /><summary type="html">Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.</summary></entry><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/2020/08/24/music-scores-as-code/">&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-428&quot; /&gt;&lt;/figure&gt;
-
-&lt;p&gt;Derrière ce nom pompeux qui peut effrayer, je vais essayer d’expliquer dans cet article comment on peut versionner facilement ses partitions et les publier sur le web.&lt;/p&gt;
-
-&lt;p&gt;En cherchant comment mettre de la documentation technique avec des diagrammes &lt;a href=&quot;https://plantuml.com/&quot;&gt;PlantUml&lt;/a&gt; dans des repos &lt;a href=&quot;https://about.gitlab.com/&quot;&gt;GITLAB&lt;/a&gt; et générés avec des pipelines, je me suis mis dans la tête de faire la même chose avec des partitions 🙂&lt;/p&gt;
-
-&lt;p&gt;Depuis plusieurs années, j’utilise &lt;a href=&quot;https://lilypond.org/&quot;&gt;lilypond&lt;/a&gt; pour créer mes partitions. C’est un peu difficile de s’y mettre, mais une fois la syntaxe assimilée, la saisie d’une partition est beaucoup plus efficace. Le rendu des partitions est vraiment optimisé.&lt;br /&gt;
-Si vous voulez plus de détails sur le pourquoi du comment je vous conseille &lt;a href=&quot;https://lilypond.org/doc/v2.19/Documentation/essay-big-page&quot;&gt;cette page&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Vous trouverez des exemples sur &lt;a href=&quot;https://lilypond.org/text-input.fr.html&quot;&gt;le site&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;J’ai donc eu l’idée de:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Stocker ces partitions sur un repo github (&lt;em&gt;jusque là rien d’exceptionnel&lt;/em&gt;)&lt;/li&gt;
-  &lt;li&gt;Générer automatiquement les partitions au format PDF, PNG et MIDI via une &lt;a href=&quot;https://github.com/features/actions&quot;&gt;github action&lt;/a&gt; (&lt;em&gt;ça commence à devenir intéressant…&lt;/em&gt;)&lt;/li&gt;
-  &lt;li&gt;Les publier avec &lt;a href=&quot;https://pages.github.com/&quot;&gt;les github pages&lt;/a&gt; (&lt;em&gt;tant qu’à faire 🙂&lt;/em&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;stockage&quot;&gt;Stockage&lt;/h2&gt;
-
-&lt;p&gt;Pourquoi stocker dans un référentiel de sources tel que Github ? Pour les non informaticiens : les partitions sont stockées au format texte.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2.12.1&quot;&lt;/span&gt;
-
-&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Try a little tenderness&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;composer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Harry Woods, Jimmy Campbell &amp;amp; Reg Connely&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;subtitle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Commitments Version&quot;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Poete&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;instrument&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Piano&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;editor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;L'éditeur&quot;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Remarque sur le rhythme&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;style&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Soul&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Alexandre Touret&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;maintainerEmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;alexandre.touret@free.fr&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;maintainerWeb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://blog.touret.info&quot;&lt;/span&gt;     
-  &lt;span class=&quot;n&quot;&gt;lastupdated&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Music room&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;footer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Footer&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;copyright&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;
- &lt;span class=&quot;s&quot;&gt;&quot;Delivered by A TOURET&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;upper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relative&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;treble&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tempo&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;176&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;major&lt;/span&gt;
-  
-  &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;d2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; 
-  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;||&quot;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://git-scm.com/&quot;&gt;GIT&lt;/a&gt; et &lt;a href=&quot;https://github.com&quot;&gt;GITHUB&lt;/a&gt; permettent de versionner facilement et pouvoir faire facilement un retour arrière en cas d’erreur.&lt;br /&gt;
-Aussi, GITHUB offre des &lt;a href=&quot;https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests&quot;&gt;fonctionnalités « sociales » et collaboratives qui facilitent la revue des modifications&lt;/a&gt; ( en cas de travail à plusieurs ).&lt;br /&gt;
-Bref, ça offre la sécurité d’une sauvegarde et la possibilité d’un retour arrière en cas d’erreur.&lt;/p&gt;
-
-&lt;h2 id=&quot;générer-les-partitions-avec-une-github-action&quot;&gt;Générer les partitions avec une github action&lt;/h2&gt;
-
-&lt;p&gt;Les &lt;a href=&quot;https://github.com/features/actions&quot;&gt;github actions&lt;/a&gt; sont des outils permettant:&lt;/p&gt;
-
-&lt;blockquote class=&quot;wp-block-quote&quot;&gt;
-  &lt;p&gt;
-    GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want.
-  &lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;J’ai donc décidé de créer un workflow qui permet de générer les partitions au format lilypond.&lt;/p&gt;
-
-&lt;p&gt;J’ai mis à disposition &lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action&quot;&gt;le code sur github&lt;/a&gt; sous &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;licence GNU GPLv3&lt;/a&gt;. Elle est utilisable telle quelle.&lt;/p&gt;
-
-&lt;p&gt;Pour créer l’action, il faut créer un fichier action.yml à la racine du repo. Voici le contenu&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Lilypond&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Generator&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-&lt;span class=&quot;nl&quot;&gt;description:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lilypond&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;given&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;music&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sheets&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-&lt;span class=&quot;nl&quot;&gt;author:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@alexandre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touret&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-
-&lt;span class=&quot;nl&quot;&gt;inputs:&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;description:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lilyponid&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;required:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-
-&lt;span class=&quot;nl&quot;&gt;runs:&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;using:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;image:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Dockerfile&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-
-&lt;span class=&quot;nl&quot;&gt;branding:&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;icon:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;underline&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;color:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Vous aurez compris que ce fichier fait référence à une &lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action/blob/master/Dockerfile&quot;&gt;image Docker&lt;/a&gt;. Cette dernière n’est ni plus ni moins qu’une Debian avec lilypond d’installé.&lt;/p&gt;
-
-&lt;p&gt;Pour l’utiliser dans un repo github, on peut créer une action qui l’utilise. Voici un exemple:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;build_sheets:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;LILYPOND_FILES:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;*.ly&quot;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Checkout&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Source&lt;/span&gt; 
-        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Get&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;changed&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;id:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getfile&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;::set-output name=files::$(find $ -name &quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; -printf &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; | xargs)&quot;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LILYPOND&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;considered&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Generate&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PDF&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;music&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sheets&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alexandre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lilypond&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
-            &lt;span class=&quot;nl&quot;&gt;args:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;V&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;A la dernière ligne on peut passer &lt;a href=&quot;http://lilypond.org/doc/v2.18/Documentation/usage/command_002dline-usage&quot;&gt;les arguments nécessaires à lilypond&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;publication&quot;&gt;Publication&lt;/h2&gt;
-
-&lt;p&gt;La c’est l’étape la plus facile :). Il suffit d’activer &lt;a href=&quot;https://pages.github.com/&quot;&gt;les github pages&lt;/a&gt; et de commiter et pusher les partitions générées&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Push&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Local&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Changes&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Add changes&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;changes&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;github_token:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Il suffit de créer une page index.md à la racine et d’ajouter des liens vers les partitions générées ( dans mon cas, ça se passe dans le répertoire /docs ).&lt;br /&gt;
-Vous pouvez trouver un exemple &lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;ici&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Voila comment on peut générer un site avec des partitions crées avec Lilypond.&lt;br /&gt;
-Vous trouverez les différents liens ci-dessous. Peut être que je publierai cette action sur le marketplace une fois que j’aurai publié une documentation digne de ce nom :).&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/alexandre-touret/lilypond-github-action&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/alexandre-touret/piano-sheets-as-code&quot;&gt;Exemple d’utilisation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;Exemple de site généré&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Alexandre Touret</name></author><category term="docker" /><category term="github" /><category term="lilypond" /><category term="planetlibre" /><summary type="html"></summary></entry></feed>
+J’espère que cet article vous aura permis de mettre en évidence les pour et contre d’une telle technologie et le cas échéant vous donnera envie de franchir le pas.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="helm" /><category term="hype" /><category term="k8s" /><category term="kubernetes" /><summary type="html">Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.</summary></entry></feed>
