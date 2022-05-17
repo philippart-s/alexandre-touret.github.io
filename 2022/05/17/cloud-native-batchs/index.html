@@ -312,7 +312,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          8 minute(s) de lecture
+          9 minute(s) de lecture
         
       </span>
     
@@ -388,8 +388,8 @@ Cette fois, on aura à concilier performances, fichiers volumineux et reprises s
 
 <ul>
   <li>Traitement sur réception de fichiers</li>
-  <li>Traitement déclenché par un ordonnanceur de manière régulière ou non.</li>
-  <li>Traitement déclenché par <a href="https://en.wikipedia.org/wiki/Cron">CRON</a></li>
+  <li>Traitement déclenché par un ordonnanceur/orchestrateur centralisé (ex. https://dkron.io/) de manière régulière ou non.</li>
+  <li>Traitement déclenché par <a href="https://en.wikipedia.org/wiki/Cron">CRON</a> (qui est un ordonnanceur, mais un peu plus roots)</li>
 </ul>
 
 <p>J’ai volontairement exclu les traitements sur présence de messages (ex. Kafka). Je les considère plus liés au monde transactionnel.</p>
@@ -443,9 +443,9 @@ J’ai fait le choix ici de mettre en oeuvre un couplage lâche (on ne se refait
 
 <p>Dans ce cas, le batch pourra être déployé sous la forme d’un <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">déploiement Kubernetes</a>.</p>
 
-<h2 id="traitement-déclenché-par-un-ordonnanceur">Traitement déclenché par un ordonnanceur</h2>
+<h2 id="traitement-déclenché-à-distance-par-ex-par-un-orchestrateur-de-traitements">Traitement déclenché à distance (par ex. par un orchestrateur de traitements)</h2>
 
-<p>Maintenant, on va aborder les traitements qui sont lancés par un ordonnanceur tiers. 
+<p>Maintenant, on va aborder les traitements qui sont lancés par un ordonnanceur tiers ou tout simplement lancé à distance. 
 Généralement, dans le monde de l’entreprise, la planification des traitements est centralisée au lieu de laisser de le faire sur chaque machine avec des <a href="https://en.wikipedia.org/wiki/Cron">CRON Jobs</a>.</p>
 
 <p>Dans ce cas, on a deux manières de procéder:</p>
