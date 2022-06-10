@@ -262,4 +262,10 @@ var store = [{
         "tags": ["cloud","kubernetes","batch"],
         "url": "/2022/05/17/cloud-native-batchs/",
         "teaser": "/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.jpg"
+      },{
+        "title": "Mon Camping des Speakers",
+        "excerpt":"Au début de l’année, j’ai interpelé mes managers: “J’ai été retenu au Camping des Speakers”! Unanimement, j’ai eu la même réponse: “Le QUOI ???!!!” Oui j’en conviens le titre peut paraître à première vue tout sauf sérieux. Il faut dire que le lieu est un camping en Bretagne dans le...","categories": [],
+        "tags": ["conference"],
+        "url": "/2022/06/10/camping-speakers-2022/",
+        "teaser": "/assets/images/2022/06/camping_speakers_2.png"
       }]

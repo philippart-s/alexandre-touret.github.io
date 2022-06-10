@@ -1,4 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-10T19:00:57+00:00</updated><id>https://blog.touret.info/feed.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Faire des batchs “Cloud Native” dans Kubernetes</title><link href="https://blog.touret.info/2022/05/17/cloud-native-batchs/" rel="alternate" type="text/html" title="Faire des batchs “Cloud Native” dans Kubernetes" /><published>2022-05-17T08:00:00+00:00</published><updated>2022-05-17T08:00:00+00:00</updated><id>https://blog.touret.info/2022/05/17/cloud-native-batchs</id><content type="html" xml:base="https://blog.touret.info/2022/05/17/cloud-native-batchs/">&lt;p&gt;Quand on parle du Cloud et de Kubernetes, généralement on pense aux APIs.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-10T19:07:20+00:00</updated><id>https://blog.touret.info/feed.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mon Camping des Speakers</title><link href="https://blog.touret.info/2022/06/10/camping-speakers-2022/" rel="alternate" type="text/html" title="Mon Camping des Speakers" /><published>2022-06-10T08:00:00+00:00</published><updated>2022-06-10T08:00:00+00:00</updated><id>https://blog.touret.info/2022/06/10/camping-speakers-2022</id><content type="html" xml:base="https://blog.touret.info/2022/06/10/camping-speakers-2022/">&lt;p&gt;Au début de l’année, j’ai interpelé mes managers: &lt;em&gt;“J’ai été retenu au &lt;a href=&quot;https://camping-speakers.fr/&quot;&gt;Camping des Speakers”&lt;/a&gt;!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Unanimement, j’ai eu la même réponse: &lt;em&gt;“Le QUOI ???!!!”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Oui j’en conviens le titre peut paraître à première vue tout sauf sérieux. 
+Il faut dire que le lieu est un camping en Bretagne dans le golfe du Morbihan.&lt;/p&gt;
+
+&lt;p&gt;Et pourtant !&lt;/p&gt;
+
+&lt;p&gt;La programmation était de qualité et a tenu ses promesses.&lt;/p&gt;
+
+&lt;p&gt;Je vais essayer de retranscrire quelques sujets qui ont retenu mon attention. J’en oublierai sans doute beaucoup. Je m’en excuse d’avance.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/06/camping_speakers_2.png&quot; alt=&quot;bollinette&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tout d’abord, l’intérêt de cette conférence réside, selon moi, au-delà des talks donnés.&lt;/p&gt;
+
+&lt;p&gt;Le cadre atypique (un camping dans le Morbihan), des conférences &lt;em&gt;slideless&lt;/em&gt; données en extérieur en mode “feu de camp” a eu le même effet, enfin il me semble, sur tous les participantes et participants qu’ils soient speakers ou non.&lt;/p&gt;
+
+&lt;p&gt;Chose originale que j’ai pu constater lors de ces talks, on passait beaucoup de temps à échanger avec les speakers &lt;strong&gt;pendant&lt;/strong&gt; leur présentation. 
+C’était génial pour les spectateurs, peut-être un peu moins pour la gestion du timing :).&lt;/p&gt;
+
+&lt;p&gt;Vous l’aurez compris. L’environnement mis en place par les organisateurs permettait de réels échanges… Et on avait le temps de le faire.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, la programmation donnait la part belle à des sujets non techniques.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, j’ai enfin pu voir la conférence de mon ancienne collègue &lt;a href=&quot;https://camping-speakers.fr/sessions/rendez_lagilite_aux_developpeurs/&quot;&gt;Fanny Klauk : “Rendez l’agilité aux développeur(se)s !”&lt;/a&gt; qui, au travers d’une histoire dont est le héros, a mis en évidence les travers des (grosses) organisations. Les solutions sont &lt;em&gt;“naturelles”&lt;/em&gt; dans la théorie, mais permettent de donner plus d’agilité et de sens aux développeurs.&lt;/p&gt;
+
+&lt;p&gt;Un autre sujet “non technique” m’a très intéressé, c’était &lt;a href=&quot;https://camping-speakers.fr/sessions/le_voyage_du_heros/&quot;&gt;“Le voyage du héros de l’IT” d’ Olivier Beautier&lt;/a&gt;. 
+Après nous avoir présenté &lt;a href=&quot;https://archive.org/details/leguideduscenari0000vogl&quot;&gt;le guide du scénariste de C. VOGLER&lt;/a&gt;, on a construit une histoire d’une développeuse.
+Au travers de cette histoire, on a pu voir entre autres l’importance du mentorat dans notre métier.&lt;/p&gt;
+
+&lt;p&gt;Puis, j’ai vu la conférence &lt;a href=&quot;https://camping-speakers.fr/sessions/java_a_la_vitesse_de_la_lumiere_grace_au_graal/&quot;&gt;d’A. PENA “Java à la vitesse de la lumière grâce au Graal !”&lt;/a&gt;. 
+Il a présenté GraalVM, une comparaison avec HotSpot et les perspectives d’évolution de cette JVM. Nul doute que le mode natif sera de plus en plus utilisé dans les prochaines années.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, avec &lt;a href=&quot;https://davidaparicio.github.io/website/fr/event/&quot;&gt;D. APARICIO&lt;/a&gt;, nous avons pu voir les travers d’une (mauvaise) modélisation de données au travers de son retour d’expérience &lt;a href=&quot;https://camping-speakers.fr/sessions/au_secours_jai_un_homonyme/&quot;&gt;“Au secours 😨! J’ai un homonyme !! “&lt;/a&gt;
+Il a illustré l’importance de bien modéliser pour ne pas avoir que le nom et prénom comme identifiants dans un système par ex. ainsi que les impacts dans la vie courante.&lt;/p&gt;
+
+&lt;p&gt;Vous l’aurez compris, il y avait beaucoup de conférences intéressantes qui donnaient lieu à des discussions tout aussi passionnantes.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Last but not least&lt;/em&gt;, j’ai eu la chance de présenter les katas d’architecture, comment les mettre en œuvre et quels sont les bénéfices qu’on peut en tirer.
+Je tiens à remercier &lt;a href=&quot;https://julientopcu.com/&quot;&gt;Julien TOPCU&lt;/a&gt; et &lt;a href=&quot;https://craftsrecords.org/&quot;&gt;Craft Records&lt;/a&gt; pour l’accompagnement dans la préparation.&lt;/p&gt;
+
+&lt;p&gt;Vous pourrez trouver les slides sur &lt;a href=&quot;https://speakerdeck.com/alexandretouret/ameliorer-les-competences-et-les-infrastructures-avec-les-katas-darchitecture-cc629dfb-87f6-4033-aabd-472472ae5655&quot;&gt;ma page speackerdeck&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour finir, je conseille cette expérience à toutes les personnes qui veulent apprendre, échanger dans un environnement convivial et zen.&lt;/p&gt;
+
+&lt;p&gt;Si vous n’êtes toujours pas convaincu, sachez qu’il y a également des mashmallows.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Avec cet argument massue, on devrait convaincre les plus sceptiques! ;)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/06/camping_speakers_1.png&quot; alt=&quot;mashmallow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Merci encore aux organisatrices et organisateurs pour ces deux jours.&lt;/p&gt;
+
+&lt;p&gt;À l’année prochaine !!&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="conference" /><summary type="html">Au début de l’année, j’ai interpelé mes managers: “J’ai été retenu au Camping des Speakers”!</summary></entry><entry><title type="html">Faire des batchs “Cloud Native” dans Kubernetes</title><link href="https://blog.touret.info/2022/05/17/cloud-native-batchs/" rel="alternate" type="text/html" title="Faire des batchs “Cloud Native” dans Kubernetes" /><published>2022-05-17T08:00:00+00:00</published><updated>2022-05-17T08:00:00+00:00</updated><id>https://blog.touret.info/2022/05/17/cloud-native-batchs</id><content type="html" xml:base="https://blog.touret.info/2022/05/17/cloud-native-batchs/">&lt;p&gt;Quand on parle du Cloud et de Kubernetes, généralement on pense aux APIs.
 Mais qu’en est-il des batchs?&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.jpg&quot; alt=&quot;pat-whelen-xSsWBa4rb6E-unsplash.jpg &quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
@@ -1374,104 +1429,4 @@ Il est important de noter également que les données présentes dans les fichie
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;Vous l’aurez compris, les charts HELM n’échappent pas aux règles déjà connues de gestion des environnements et des livrables. Même si il y a quelques subtilités à connaître pour intégrer des fichiers de configuration par exemple, les grands principes restent les mêmes.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><summary type="html">Dès qu'on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d'un environnement à l'autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.</summary></entry><entry><title type="html">K8S, HELM et Cie: au delà de la hype</title><link href="https://blog.touret.info/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/" rel="alternate" type="text/html" title="K8S, HELM et Cie: au delà de la hype" /><published>2020-10-08T08:09:59+00:00</published><updated>2020-10-08T08:09:59+00:00</updated><id>https://blog.touret.info/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype</id><content type="html" xml:base="https://blog.touret.info/2020/10/08/k8s-helm-et-cie-au-dela-de-la-hype/">&lt;p&gt;Depuis quelques années, &lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt; (K8S) et &lt;a href=&quot;https://www.cncf.io/&quot;&gt;son écosystème&lt;/a&gt; deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme.&lt;br /&gt;
-Vous l’aurez compris, cette technologie n’échappe pas &lt;a href=&quot;https://fr.wikipedia.org/wiki/Cycle_du_hype&quot;&gt;au cycle du hype&lt;/a&gt; et à la fameuse courbe du Gartner.&lt;/p&gt;
-
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;320&quot; height=&quot;208&quot; src=&quot;/assets/images/2020/10/gartner_hype_cycle.svg_.png?w=320&quot; alt=&quot;&quot; class=&quot;wp-image-445&quot; srcset=&quot;/assets/images/2020/10/gartner_hype_cycle.svg_.png 320w, /assets/images/2020/10/gartner_hype_cycle.svg_-300x195.png 300w&quot; sizes=&quot;(max-width: 320px) 100vw, 320px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Après quelques expériences sur cette plateforme ( et beaucoup sur d’autres 😀 ) je vais essayer de peser le pour et le contre qui m’apparaissent importants.&lt;br /&gt;
-Bien évidemment, ce n’est que mon avis, j’ai sans doute omis certaines informations qui pourraient être indispensables pour d’ autres.&lt;/p&gt;
-
-&lt;h2 id=&quot;pourquoi-et-dans-quelles-conditions-il-ne-faut-pas-utiliser-k8s-&quot;&gt;Pourquoi et dans quelles conditions il ne faut pas utiliser K8S ?&lt;/h2&gt;
-
-&lt;p&gt;Avant de présenter les avantages des applications cloud, je vais essayer de réaliser l’anti thèse de mon propos.&lt;/p&gt;
-
-&lt;h3 id=&quot;en-avez-vous-vraiment-besoin-&quot;&gt;En avez vous (vraiment) besoin ?&lt;/h3&gt;
-
-&lt;p&gt;Vaste sujet et question délicate pour la population informaticienne qui a tendance à suivre les tendances du marché.&lt;/p&gt;
-
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash.png?w=986&quot; alt=&quot;&quot; class=&quot;wp-image-464&quot; width=&quot;611&quot; height=&quot;404&quot; srcset=&quot;/assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash.png 986w, /assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash-300x199.png 300w, /assets/images/2020/10/aaron-blanco-tejedor-vbe9zj-jhbs-unsplash-768x509.png 768w&quot; sizes=&quot;(max-width: 611px) 100vw, 611px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Avant de foncer tête baissée dans cette technologie qui est très intéressante au demeurant, il est important de se poser ces quelques questions:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Est-ce que mes &lt;a href=&quot;https://fr.wikipedia.org/wiki/Service-level_objectives&quot;&gt;SLO&lt;/a&gt; sont contraignantes?&lt;/li&gt;
-  &lt;li&gt;Quel le cycle de déploiement de mes applications?&lt;/li&gt;
-  &lt;li&gt;Qui gère les environnements ?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Bref, il faut savoir si le jeu en vaut la chandelle. Si vous avez une application qui doit scaler dynamiquement, encaisser les pics, et avoir du &lt;a href=&quot;https://dzone.com/articles/zero-downtime-deployment&quot;&gt;zero downtime durant les mises à jour&lt;/a&gt;, Kubernetes est fait pour vous. Si vous avez une application de gestion qui n’a pas d’exigences fortes si ce n’est de répondre aux besoins fonctionnels, l’utilisation de Kubernetes est discutable.&lt;/p&gt;
-
-&lt;h3 id=&quot;êtes-vous-taillé-pour-&quot;&gt;Êtes vous taillé pour ?&lt;/h3&gt;
-
-&lt;p&gt;Kubernetes et son écosystème peuvent s’avérer complexes à appréhender. Si votre entreprise opte pour une utilisation « &lt;a href=&quot;https://en.wikipedia.org/wiki/On-premises_software&quot;&gt;on premise&lt;/a&gt;« , c’est pire. Vous devrez avoir une équipe dédiée qui gérera cette plateforme et offrir une expertise aux équipes de développement.&lt;br /&gt;
-Ne vous trompez pas. Si votre rôle est de développer des applications métier, il vous sera très difficile d’avoir également une expertise sur l’administration de cette plateforme. Vous pourrez l’utiliser et être à l’aise, mais l’administration d’une telle technologie est très compliquée.&lt;/p&gt;
-
-&lt;p&gt;Le seul conseil que je pourrais vous donner, c’est de ne partir sur Kubernetes que si vous avez une &lt;strong&gt;équipe support à disposition&lt;/strong&gt;. C’est vrai si vous utilisez des services du Cloud tels que Google Cloud ou AWS. Ça l’est encore plus si vous utilisez des services « on premise » tels qu’ Openshift.&lt;/p&gt;
-
-&lt;h3 id=&quot;est-ce-que-vos-développements-sont-cloud-native-&quot;&gt;Est-ce que vos développements sont &lt;a href=&quot;https://www.redhat.com/fr/topics/cloud-native-apps&quot;&gt;« cloud native »&lt;/a&gt; ?&lt;/h3&gt;
-
-&lt;p&gt;Au delà de la plateforme, vous devrez monter en compétence sur le développement et la conception de vos applications.&lt;/p&gt;
-
-&lt;p&gt;Il vous faudra prendre en considération &lt;a href=&quot;https://en.wikipedia.org/wiki/Twelve-Factor_App_methodology&quot;&gt;les 12 facteurs clés&lt;/a&gt; dans vos applications. Il n’est pas forcément la peine de passer sur des microservices. Il est également possible de faire des monolithes modulaires qui peuvent être légers et stateless. Beaucoup de ces facteurs sont communément admis comme des bonnes pratiques de développement logiciel (ex. Il faut une intégration continue).&lt;/p&gt;
-
-&lt;p&gt;Aussi, cela va sans dire, il faut également monter (réellement) en compétence sur les conteneurs et leurs contraintes. Si vous n’avez pas l’habitude de travailler avec des conteneurs ( construction, déploiement, disponibilité d’une &lt;a href=&quot;https://docs.docker.com/registry/&quot;&gt;registry&lt;/a&gt;). Il est préférable de définir une trajectoire avec des étapes intermédiaires.&lt;/p&gt;
-
-&lt;p&gt;Bref, tous ces sujets doivent être adressés et compris pour toutes les parties prenantes de vos équipes que ça soit les développeurs, les chefs de projet et les équipes métiers à une moindre mesure. Cette technologie représente réellement un grand pas à franchir. Si vous ne vous sentez pas de le faire, ou si vous devez gagner en maturité sur ces sujets, attendez avant de vous lancer sur Kubernetes.&lt;/p&gt;
-
-&lt;p&gt;On ne pourra jamais vous reprocher de ne pas opter sur Kubernetes si vous ne remplissez pas tous les pré-requis. Pour ce qui est du contraire…&lt;/p&gt;
-
-&lt;h3 id=&quot;avez-vous-des-interactions-avec-des-services-tiers-qui-sont-compatible-avec-kubernetes-&quot;&gt;Avez vous des interactions avec des services tiers qui sont compatible avec Kubernetes ?&lt;/h3&gt;
-
-&lt;p&gt;Quand vous restez dans votre cluster Kubernetes, généralement, tout va bien. Dès que vous avez des interactions avec des services tiers, ça peut se compliquer.&lt;br /&gt;
-En effet, généralement vous devrez vous connecter à des services tiers qui ne sont pas orienté cloud : &lt;a href=&quot;https://en.wikipedia.org/wiki/Hardware_security_module&quot;&gt;des boitiers crypto&lt;/a&gt;, des passerelles de transfert, …&lt;br /&gt;
-Il se peut que certains protocoles soient également incompatibles avec Kubernetes. Il vous faudra vous assurer que tout la galaxie de logiciels et systèmes gravitant autour de votre application sera compatible avec une telle architecture. Ceci n’est pas une mince affaire. L’aide d’une équipe support (voir ci-dessus) vous sera d’une grande utilité.&lt;/p&gt;
-
-&lt;h2 id=&quot;pourquoi-sauter-le-pas-&quot;&gt;Pourquoi sauter le pas ?&lt;/h2&gt;
-
-&lt;h3 id=&quot;la-scalabilité-et-la-résistance-à-la-panne&quot;&gt;La scalabilité et la résistance à la panne&lt;/h3&gt;
-
-&lt;p&gt;Personnellement, la première fonctionnalité qui m’a intéressé c’est la gestion de la scalabilité. Si vous avez des objectifs de 99.9% de disponibilité. Kubernetes sera une plus value indéniable dans votre architecture. Après quelques &lt;s&gt;jours&lt;/s&gt; heures à batailler avec les fichiers YAML, vous pourrez gérer automatiquement la scalabilité en fonction de plusieurs indicateurs qu’ils soient techniques (ce sont les plus faciles à gérer) ou un peu plus métier &lt;a href=&quot;https://www.metricfire.com/blog/prometheus-metrics-based-autoscaling-in-kubernetes/&quot;&gt;en utilisant Prometheus&lt;/a&gt; – et oui encore une technologie supplémentaire à connaître.&lt;/p&gt;
-
-&lt;p&gt;En effet, au lieu de vous en soucier une fois arrivé en production, vous aurez lors du développement l’obligation de prendre en considération l’observabilité de votre application. Par exemple, vous aurez à renseigner &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/&quot;&gt;si votre application est prête et/ou disponible pour traiter les requêtes&lt;/a&gt;. Ces indicateurs vous permettront de scaler &lt;strong&gt;automatiquement&lt;/strong&gt; et de re-créer si nécessaire un &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/pods/&quot;&gt;POD&lt;/a&gt; en cas de panne.&lt;/p&gt;
-
-&lt;p&gt;J’ai trouvé que cette pratique était vertueuse. Bien évidemment, pas besoin d’être sur Kubernetes pour avoir de l’observabilité dans des applications. Par contre, ici, c’est obligatoire et implémenté dès le développement.&lt;/p&gt;
-
-&lt;p&gt;La scalabilité automatique est aussi très intéressante. On a souvent vu des serveurs en production qui n’étaient pas suffisamment utilisés. Ici vous n’aurez que les instances nécessaires pour votre cas d’utilisation.&lt;br /&gt;
-La contrainte que l’on peut voir à cette fonctionnalité et qu’on ne maitrise pas complètement le nombre d’instances disponibles. C’est Kubernetes qui s’en charge en prenant en compte le paramétrage que vous aurez renseigné dans vos &lt;a href=&quot;https://helm.sh/docs/chart_best_practices/templates/&quot;&gt;templates HELM&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;le-déploiement&quot;&gt;Le déploiement&lt;/h3&gt;
-
-&lt;p&gt;Avant de déployer (dans la vraie vie), vous aurez à mettre en place un pipeline CI/CD qui orchestre les différents déploiements sur tous vos environnements. Attention, ce n’est pas une mince affaire 🙂 !&lt;/p&gt;
-
-&lt;p&gt;Une fois réalisé, vous verrez automatiquement le gain. Vos déploiements seront réellement fluides. Bon OK, on peut le faire sur des &lt;a href=&quot;https://en.wikipedia.org/wiki/Virtual_machine&quot;&gt;VMS&lt;/a&gt; standards. Mais on peut améliorer la procédure de déploiement pour mettre en place du &lt;a href=&quot;https://dzone.com/articles/zero-downtime-deployment&quot;&gt;zero downtime&lt;/a&gt; pour ne pas interrompre le service lors d’un déploiement.&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;RollingUpdate&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;rollingUpdate&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;maxSurge&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;maxUnavailable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;linfrastructure-as-code&quot;&gt;L’Infrastructure As Code&lt;/h3&gt;
-
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash.png?w=683&quot; alt=&quot;&quot; class=&quot;wp-image-462&quot; width=&quot;452&quot; height=&quot;678&quot; srcset=&quot;/assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash.png 719w, /assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash-200x300.png 200w, /assets/images/2020/10/jacek-dylag-nhcpop4a2xo-unsplash-683x1024.png 683w&quot; sizes=&quot;(max-width: 452px) 100vw, 452px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Quand on pense à Kubernetes, et au cloud, on ne pense pas trop à l’&lt;a href=&quot;https://en.wikipedia.org/wiki/Infrastructure_as_code&quot;&gt;Infrastructure As Code&lt;/a&gt; au début. Cependant, cette pratique est pour moi l’une des plus utiles.&lt;/p&gt;
-
-&lt;p&gt;En effet, avoir votre système décrit dans des fichiers, versionnés vous permet de le tester dès le développement. Ça évite ( dans la majorité des cas ) les erreurs lors des installations d’environnement. La mise à jour des logiciels est largement accélérée.&lt;/p&gt;
-
-&lt;p&gt;Bien évidemment, il existe &lt;a href=&quot;https://www.terraform.io/&quot;&gt;Terraform&lt;/a&gt; et &lt;a href=&quot;https://www.ansible.com/&quot;&gt;Ansible&lt;/a&gt; pour le provisionning des environnements. Ici je trouve qu’on pousse le concept encore plus loin. L’automatisation est à mon avis poussé à paroxysme.&lt;br /&gt;
-Prenons par exemple la gestion des systèmes d’exploitation. La mise à jour sur des serveurs physiques ou virtuels peut prendre énormément de temps et générer des erreurs. Avec de l’infra as code, ceci est testé et validé automatiquement via des tests unitaires dès l’environnement de développement.&lt;br /&gt;
-On peut suivre la gestion des environnements via un gestionnaire de sources et la promotion vers les autres environnements (recette[1-n], pré-production, production) est grandement accélérée.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Bon, vous l’aurez peut être compris, cette galaxie de technologies est intéressante et peut vous aider dans vos projets. Avant d’arriver à l’utiliser sereinement, il vous faudra sans doute définir une trajectoire et appréhender plusieurs sujets avant d’arriver à déployer vos applications sur un cloud interne ou externe.&lt;br /&gt;
-J’espère que cet article vous aura permis de mettre en évidence les pour et contre d’une telle technologie et le cas échéant vous donnera envie de franchir le pas.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="helm" /><category term="hype" /><category term="k8s" /><category term="kubernetes" /><summary type="html">Depuis quelques années, Kubernetes (K8S) et son écosystème deviennent l’environnement d’ exécution à la mode. Certaines personnes veulent déployer sur cet environnement en mettant en avant ses capacités de scalabilité. D’autres font du bashing (souvent) justifié sur la complexité et le coût de mise en œuvre d’une telle plateforme. Vous l’aurez compris, cette technologie n’échappe pas au cycle du hype et à la fameuse courbe du Gartner.</summary></entry></feed>
+&lt;p&gt;Vous l’aurez compris, les charts HELM n’échappent pas aux règles déjà connues de gestion des environnements et des livrables. Même si il y a quelques subtilités à connaître pour intégrer des fichiers de configuration par exemple, les grands principes restent les mêmes.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><summary type="html">Dès qu'on veut déployer des environnements Kubernetes, Helm devient une des solutions à considérer.Le déploiement des objets standards tels que deployment, autoscaler et autres se fait aisément car ces derniers ne changent pas d'un environnement à l'autre. Généralement on déploie la même infrastructure sur tous les environnements du développement à la production.</summary></entry></feed>

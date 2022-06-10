@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/conference.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-10T19:07:20+00:00</updated><id>https://blog.touret.info/feed/by_tag/conference.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mon Camping des Speakers</title><link href="https://blog.touret.info/2022/06/10/camping-speakers-2022/" rel="alternate" type="text/html" title="Mon Camping des Speakers" /><published>2022-06-10T08:00:00+00:00</published><updated>2022-06-10T08:00:00+00:00</updated><id>https://blog.touret.info/2022/06/10/camping-speakers-2022</id><content type="html" xml:base="https://blog.touret.info/2022/06/10/camping-speakers-2022/">&lt;p&gt;Au début de l’année, j’ai interpelé mes managers: &lt;em&gt;“J’ai été retenu au &lt;a href=&quot;https://camping-speakers.fr/&quot;&gt;Camping des Speakers”&lt;/a&gt;!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Unanimement, j’ai eu la même réponse: &lt;em&gt;“Le QUOI ???!!!”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Oui j’en conviens le titre peut paraître à première vue tout sauf sérieux. 
+Il faut dire que le lieu est un camping en Bretagne dans le golfe du Morbihan.&lt;/p&gt;
+
+&lt;p&gt;Et pourtant !&lt;/p&gt;
+
+&lt;p&gt;La programmation était de qualité et a tenu ses promesses.&lt;/p&gt;
+
+&lt;p&gt;Je vais essayer de retranscrire quelques sujets qui ont retenu mon attention. J’en oublierai sans doute beaucoup. Je m’en excuse d’avance.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/06/camping_speakers_2.png&quot; alt=&quot;bollinette&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tout d’abord, l’intérêt de cette conférence réside, selon moi, au-delà des talks donnés.&lt;/p&gt;
+
+&lt;p&gt;Le cadre atypique (un camping dans le Morbihan), des conférences &lt;em&gt;slideless&lt;/em&gt; données en extérieur en mode “feu de camp” a eu le même effet, enfin il me semble, sur tous les participantes et participants qu’ils soient speakers ou non.&lt;/p&gt;
+
+&lt;p&gt;Chose originale que j’ai pu constater lors de ces talks, on passait beaucoup de temps à échanger avec les speakers &lt;strong&gt;pendant&lt;/strong&gt; leur présentation. 
+C’était génial pour les spectateurs, peut-être un peu moins pour la gestion du timing :).&lt;/p&gt;
+
+&lt;p&gt;Vous l’aurez compris. L’environnement mis en place par les organisateurs permettait de réels échanges… Et on avait le temps de le faire.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, la programmation donnait la part belle à des sujets non techniques.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, j’ai enfin pu voir la conférence de mon ancienne collègue &lt;a href=&quot;https://camping-speakers.fr/sessions/rendez_lagilite_aux_developpeurs/&quot;&gt;Fanny Klauk : “Rendez l’agilité aux développeur(se)s !”&lt;/a&gt; qui, au travers d’une histoire dont est le héros, a mis en évidence les travers des (grosses) organisations. Les solutions sont &lt;em&gt;“naturelles”&lt;/em&gt; dans la théorie, mais permettent de donner plus d’agilité et de sens aux développeurs.&lt;/p&gt;
+
+&lt;p&gt;Un autre sujet “non technique” m’a très intéressé, c’était &lt;a href=&quot;https://camping-speakers.fr/sessions/le_voyage_du_heros/&quot;&gt;“Le voyage du héros de l’IT” d’ Olivier Beautier&lt;/a&gt;. 
+Après nous avoir présenté &lt;a href=&quot;https://archive.org/details/leguideduscenari0000vogl&quot;&gt;le guide du scénariste de C. VOGLER&lt;/a&gt;, on a construit une histoire d’une développeuse.
+Au travers de cette histoire, on a pu voir entre autres l’importance du mentorat dans notre métier.&lt;/p&gt;
+
+&lt;p&gt;Puis, j’ai vu la conférence &lt;a href=&quot;https://camping-speakers.fr/sessions/java_a_la_vitesse_de_la_lumiere_grace_au_graal/&quot;&gt;d’A. PENA “Java à la vitesse de la lumière grâce au Graal !”&lt;/a&gt;. 
+Il a présenté GraalVM, une comparaison avec HotSpot et les perspectives d’évolution de cette JVM. Nul doute que le mode natif sera de plus en plus utilisé dans les prochaines années.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, avec &lt;a href=&quot;https://davidaparicio.github.io/website/fr/event/&quot;&gt;D. APARICIO&lt;/a&gt;, nous avons pu voir les travers d’une (mauvaise) modélisation de données au travers de son retour d’expérience &lt;a href=&quot;https://camping-speakers.fr/sessions/au_secours_jai_un_homonyme/&quot;&gt;“Au secours 😨! J’ai un homonyme !! “&lt;/a&gt;
+Il a illustré l’importance de bien modéliser pour ne pas avoir que le nom et prénom comme identifiants dans un système par ex. ainsi que les impacts dans la vie courante.&lt;/p&gt;
+
+&lt;p&gt;Vous l’aurez compris, il y avait beaucoup de conférences intéressantes qui donnaient lieu à des discussions tout aussi passionnantes.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Last but not least&lt;/em&gt;, j’ai eu la chance de présenter les katas d’architecture, comment les mettre en œuvre et quels sont les bénéfices qu’on peut en tirer.
+Je tiens à remercier &lt;a href=&quot;https://julientopcu.com/&quot;&gt;Julien TOPCU&lt;/a&gt; et &lt;a href=&quot;https://craftsrecords.org/&quot;&gt;Craft Records&lt;/a&gt; pour l’accompagnement dans la préparation.&lt;/p&gt;
+
+&lt;p&gt;Vous pourrez trouver les slides sur &lt;a href=&quot;https://speakerdeck.com/alexandretouret/ameliorer-les-competences-et-les-infrastructures-avec-les-katas-darchitecture-cc629dfb-87f6-4033-aabd-472472ae5655&quot;&gt;ma page speackerdeck&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Pour finir, je conseille cette expérience à toutes les personnes qui veulent apprendre, échanger dans un environnement convivial et zen.&lt;/p&gt;
+
+&lt;p&gt;Si vous n’êtes toujours pas convaincu, sachez qu’il y a également des mashmallows.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Avec cet argument massue, on devrait convaincre les plus sceptiques! ;)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2022/06/camping_speakers_1.png&quot; alt=&quot;mashmallow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Merci encore aux organisatrices et organisateurs pour ces deux jours.&lt;/p&gt;
+
+&lt;p&gt;À l’année prochaine !!&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="conference" /><summary type="html">Au début de l’année, j’ai interpelé mes managers: “J’ai été retenu au Camping des Speakers”!</summary></entry></feed>
