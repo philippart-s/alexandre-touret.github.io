@@ -1,70 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/gitlab.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-10T19:07:20+00:00</updated><id>https://blog.touret.info/feed/by_tag/gitlab.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Vérifier les commit GIT avec GPG</title><link href="https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/" rel="alternate" type="text/html" title="Vérifier les commit GIT avec GPG" /><published>2019-08-09T14:13:21+00:00</published><updated>2019-08-09T14:13:21+00:00</updated><id>https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg</id><content type="html" xml:base="https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/">&lt;p&gt;Juste pour un pense bête, voici comment paramétrer &lt;a href=&quot;https://git-scm.com/&quot;&gt;GIT&lt;/a&gt; et &lt;a href=&quot;https://github.com/&quot;&gt;GITHUB&lt;/a&gt;/&lt;a href=&quot;https://about.gitlab.com/&quot;&gt;GITLAB&lt;/a&gt; pour signer les commits avec &lt;a href=&quot;https://gnupg.org&quot;&gt;GPG&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/gitlab.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-11T09:07:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/gitlab.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Vérifier les commit GIT avec GPG</title><link href="https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/" rel="alternate" type="text/html" title="Vérifier les commit GIT avec GPG" /><published>2019-08-09T14:13:21+00:00</published><updated>2019-08-09T14:13:21+00:00</updated><id>https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg</id><content type="html" xml:base="https://blog.touret.info/2019/08/09/verifier-les-commit-git-avec-gpg/">&lt;p&gt;Juste pour un pense bête, voici comment paramétrer &lt;a href=&quot;https://git-scm.com/&quot;&gt;GIT&lt;/a&gt; et &lt;a href=&quot;https://github.com/&quot;&gt;GITHUB&lt;/a&gt;/&lt;a href=&quot;https://about.gitlab.com/&quot;&gt;GITLAB&lt;/a&gt; pour signer les commits avec &lt;a href=&quot;https://gnupg.org&quot;&gt;GPG&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-196 size-large&quot; src=&quot;/assets/images/2019/08/kelly-sikkema-c3rk5toz0qa-unsplash.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2019/08/kelly-sikkema-c3rk5toz0qa-unsplash.jpg?w=612&quot; alt=&quot;sign&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;configuration-gpg&quot;&gt;Configuration GPG&lt;/h2&gt;
 
 &lt;p&gt;Exécutez la commande suivante :&lt;/p&gt;
 
-&lt;pre class=&quot;prettyprint prettyprinted&quot;&gt;&lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;gpg --full-generate-key
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gpg &lt;span class=&quot;nt&quot;&gt;--full-generate-key&lt;/span&gt;
+Sélectionnez une clé RSA &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;question 1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; de 4096 bits &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;question 2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Sélectionnez une clé RSA (question 1) de 4096 bits (question 2).&lt;/span&gt;&lt;/span&gt;
-```
+&lt;p&gt;Une fois cette commande effectuée, vous pouvez récupérer votre clé GPG avec cette commande:&lt;/p&gt;
 
-
-&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
-  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;Une fois cette commande effectuée, vous pouvez récupérer votre clé GPG avec cette commande:&lt;/span&gt;&lt;/span&gt;
-&lt;/p&gt;
-
-&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
-  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;gpg &amp;#8211;list-secret-keys &amp;#8211;keyid-format LONG&lt;br /&gt; &lt;/span&gt;&lt;/span&gt;
-&lt;/p&gt;
-
-&lt;pre&gt;gpg --list-secret-keys --keyid-format LONG alexandre@....
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gpg &lt;span class=&quot;nt&quot;&gt;--list-secret-keys&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--keyid-format&lt;/span&gt; LONG alexandre@....
 /home/alexandre/.gnupg/pubring.kbx
-----------------------------------
-sec rsa4096/XXXXXXXXXX 2019-08-09 [SC]
+&lt;span class=&quot;nt&quot;&gt;----------------------------------&lt;/span&gt;
+sec rsa4096/XXXXXXXXXX 2019-08-09 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;SC]
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-uid [ ultime ] Alexandre Touret &amp;lt;mon.mail.github.ou.gitlab@monprovider.fr&amp;gt;
-ssb rsa4096/XXXXXXXXXX 2019-08-09 [E]
-```
+uid &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ultime &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Alexandre Touret &amp;lt;mon.mail.github.ou.gitlab@monprovider.fr&amp;gt;
+ssb rsa4096/XXXXXXXXXX 2019-08-09 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;Ensuite, il faut exécuter cette commande&lt;/p&gt;
 
-&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
-  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;Ensuite, il faut exécuter cette commande &lt;/span&gt;&lt;/span&gt;
-&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gpg &lt;span class=&quot;nt&quot;&gt;--armor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--export&lt;/span&gt; XXXXXXXXXX
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;pre&gt;gpg --armor --export XXXXXXXXXX
-```
+&lt;h2 id=&quot;configuration-git&quot;&gt;Configuration GIT&lt;/h2&gt;
 
+&lt;p&gt;Indiquez la clé GPG à GIT&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;nt&quot;&gt;--local&lt;/span&gt; user.signingkey XXXXXXXXXXXX
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## Configuration GIT
+&lt;p&gt;Et indiquez que vous voulez signer tous vos commits&lt;/p&gt;
 
-Indiquez la clé GPG à GIT
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;nt&quot;&gt;--local&lt;/span&gt; commit.gpgsign &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;pre&gt;git config --local user.signingkey 6F9D7D5FCE959337
-```
+&lt;p&gt;Si vous ne faites pas cette dernière commande, vous devrez ajouter l’option -S à chaque exécution de la commande git commit.&lt;/p&gt;
 
+&lt;p&gt;Exemple:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-S&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Ajout javadoc&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Et indiquez que vous voulez signer tous vos commits
+&lt;h2 id=&quot;configuration-github&quot;&gt;Configuration GITHUB&lt;/h2&gt;
 
-&lt;pre&gt;&lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;git &lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt;config &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;gpgsign &lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;true&lt;/span&gt;&lt;/span&gt;
-```
+&lt;p&gt;Sur Github ( il y a la même chose sur gitlab), vous pouvez &lt;a href=&quot;https://github.com/settings/keys&quot;&gt;dans vos paramètres&lt;/a&gt; ajouter cette clé . De cette manière, vos prochains commits envoyés seront vérifiés.&lt;/p&gt;
 
-
-Si vous ne faites pas cette dernière commande, vous devrez ajouter l'option -S à chaque exécution de la commande git commit.
-
-Exemple:
-
-&lt;pre&gt;git -a -S -m &quot;Ajout javadoc&quot;
-```
-
-
-## Configuration GITHUB
-
-Sur Github ( il y a la même chose sur gitlab), vous pouvez [dans vos paramètres](https://github.com/settings/keys) ajouter cette clé . De cette manière, vos prochains commits envoyés seront vérifiés.
-
-&lt;p class=&quot;prettyprint prettyprinted&quot;&gt;
-  &lt;span class=&quot;s1&quot;&gt;&lt;span class=&quot;pln&quot;&gt; En espérant que ça serve à d'autres 🙂&lt;br /&gt; &lt;/span&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="github" /><category term="gitlab" /><category term="gpg" /><category term="planetlibre" /><summary type="html">Juste pour un pense bête, voici comment paramétrer GIT et GITHUB/GITLAB pour signer les commits avec GPG.</summary></entry></feed>
+&lt;p&gt;En espérant que ça serve à d’autres 🙂&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="git" /><category term="github" /><category term="gitlab" /><category term="gpg" /><category term="planetlibre" /><summary type="html">Juste pour un pense bête, voici comment paramétrer GIT et GITHUB/GITLAB pour signer les commits avec GPG.</summary></entry></feed>

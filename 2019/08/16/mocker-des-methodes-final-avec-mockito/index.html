@@ -325,7 +325,7 @@
         
         <p>Auparavant, dans nos tests, quand on voulait <a href="https://fr.wikipedia.org/wiki/Mock_(programmation_orient%C3%A9e_objet)">mocker</a> des <a href="https://fr.wikipedia.org/wiki/Final_(Java)">méthodes « final »</a> ou <a href="https://stackoverflow.com/questions/2671496/java-when-to-use-static-methods">statiques</a>, on devait passer par <a href="https://github.com/powermock/powermock">PowerMock</a>.</p>
 
-<p><img loading="lazy" class="aligncenter size-medium wp-image-203" src="/assets/images/2019/08/logo-mockito.png?w=300" alt="" width="300" height="150" srcset="/assets/images/2019/08/logo-mockito.png 400w, /assets/images/2019/08/logo-mockito-300x150.png 300w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p><img src="/assets/images/2019/08/logo-mockito-300x150.png" alt="mockito" class="align-center" /></p>
 
 <p>Depuis peu, si on utilise Mockito ( &gt;2.1) , on n’a plus besoin d’ajouter PowerMock pour mocker des méthodes « final ».</p>
 
@@ -335,22 +335,18 @@
 
 <p>Dans le répertoire src/test/resources, il faut créer un répertoire mockito-extensions avec un fichier nommé org.mockito.plugins.MockMaker.</p>
 
-<pre>src/test/resources
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/test/resources
 └── mockito-extensions
 └── org.mockito.plugins.MockMaker
-```
+</code></pre></div></div>
 
+<p>A l’intérieur de ce fichier, vous devrez ajouter le contenu suivant :</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mock-maker-inline
+</code></pre></div></div>
 
-A l'intérieur de ce fichier, vous devrez ajouter le contenu suivant :
+<p>Avec cette configuration, vous pourrez dorénavant mocker des méthodes « final » 🙂</p>
 
-<pre>mock-maker-inline
-```
-
-
-Avec cette configuration, vous pourrez dorénavant mocker des méthodes « final » 🙂
-
-Enjoy
-</pre></pre>
+<p>Enjoy</p>
 
         
       </section>

@@ -325,7 +325,7 @@
         
         <p>Après avoir mis à jour mon mot de passe Spotify ( oui, il faut modifier régulièrement ses mots de passe ) , j’ai eu un petit soucis sur <a href="http://moodeaudio.org/">MoodeAudio</a> ( version 4.4) et notamment sur la connexion avec Spotify.</p>
 
-<p><img loading="lazy" class="size-medium wp-image-164 aligncenter" src="/assets/images/2019/03/moode-r44.png?w=300" alt="" width="300" height="225" srcset="/assets/images/2019/03/moode-r44.png 1024w, /assets/images/2019/03/moode-r44-300x225.png 300w, /assets/images/2019/03/moode-r44-768x576.png 768w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p><img src="/assets/images/2019/03/moode-r44.png" alt="moode" class="align-center" /></p>
 
 <p>Après quelques recherches sur <a href="http://moodeaudio.org/forum/showthread.php?tid=765&amp;page=2">le forum de moodeaudio</a>, j’ai trouvé la correction qui allait bien.</p>
 
@@ -333,19 +333,16 @@
 
 <p>D’abord on se connecte via SSH sur le raspberry pi</p>
 
-<pre>$ ssh pi@192.168.0.xx
-```
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh pi@192.168.0.xx
+</code></pre></div></div>
 
+<p>Puis on lance la commande:</p>
 
-Puis on lance la commande:
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo mv</span> /var/local/www/spotify_cache/credentials.json /home/pi/
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
 
-<pre>$ sudo mv /var/local/www/spotify_cache/credentials.json /home/pi/
-$ sudo reboot
-```
-
-
-Normalement, [Spotify Connect](https://www.spotify.com/fr/connect/) devrait fonctionner après le redémarrage 🙂
-</pre></pre>
+<p>Normalement, <a href="https://www.spotify.com/fr/connect/">Spotify Connect</a> devrait fonctionner après le redémarrage 🙂</p>
 
         
       </section>

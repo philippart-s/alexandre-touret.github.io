@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/architecture.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-10T19:07:20+00:00</updated><id>https://blog.touret.info/feed/by_tag/architecture.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mieux analyser les risques pour simplifier les architectures (ou pas)</title><link href="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/" rel="alternate" type="text/html" title="Mieux analyser les risques pour simplifier les architectures (ou pas)" /><published>2022-02-09T08:00:00+00:00</published><updated>2022-02-09T08:00:00+00:00</updated><id>https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture</id><content type="html" xml:base="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/">&lt;p&gt;&lt;img src=&quot;/assets/images/2022/02/architecture.jpg&quot; alt=&quot;architecture&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/architecture.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-11T09:07:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/architecture.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mieux analyser les risques pour simplifier les architectures (ou pas)</title><link href="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/" rel="alternate" type="text/html" title="Mieux analyser les risques pour simplifier les architectures (ou pas)" /><published>2022-02-09T08:00:00+00:00</published><updated>2022-02-09T08:00:00+00:00</updated><id>https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture</id><content type="html" xml:base="https://blog.touret.info/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/">&lt;p&gt;&lt;img src=&quot;/assets/images/2022/02/architecture.jpg&quot; alt=&quot;architecture&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;lanalyse-des-risques-kezako-&quot;&gt;L’analyse des risques: kezako ?&lt;/h2&gt;
 
@@ -240,19 +240,49 @@ Ce sujet y est abordé.&lt;/p&gt;
 
 &lt;p&gt;Mon hands on portait sur l’architecture, j’ai eu une vingtaine de personnes qui l’on suivi et ont pratiqué sur différents sujets.&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-145 size-large&quot; src=&quot;/assets/images/2019/02/dsc03972.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-144 size-large&quot; src=&quot;/assets/images/2019/02/dsc03973.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-143 size-large&quot; src=&quot;/assets/images/2019/02/dsc03974.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-142 size-large&quot; src=&quot;/assets/images/2019/02/dsc03975.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;408&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-148 size-large&quot; src=&quot;/assets/images/2019/02/dsc03976.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;918&quot; /&gt;&lt;/p&gt;
+&lt;figure class=&quot;half &quot;&gt;
+  
+    
+      &lt;a href=&quot;/assets/images/2019/02/dsc03972.jpg&quot; title=&quot;Yoda&quot;&gt;
+          &lt;img src=&quot;/assets/images/2019/02/dsc03972.jpg&quot; alt=&quot;Kata&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+    
+      &lt;a href=&quot;/assets/images/2019/02/dsc03973.jpg&quot; title=&quot;Yoda&quot;&gt;
+          &lt;img src=&quot;/assets/images/2019/02/dsc03973.jpg&quot; alt=&quot;Kata&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+    
+      &lt;a href=&quot;/assets/images/2019/02/dsc03974.jpg&quot; title=&quot;Yoda&quot;&gt;
+          &lt;img src=&quot;/assets/images/2019/02/dsc03974.jpg&quot; alt=&quot;Kata&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+    
+      &lt;a href=&quot;/assets/images/2019/02/dsc03975.jpg&quot; title=&quot;Yoda&quot;&gt;
+          &lt;img src=&quot;/assets/images/2019/02/dsc03975.jpg&quot; alt=&quot;Kata&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+    
+      &lt;a href=&quot;/assets/images/2019/02/dsc03976.jpg&quot; title=&quot;Yoda&quot;&gt;
+          &lt;img src=&quot;/assets/images/2019/02/dsc03976.jpg&quot; alt=&quot;Kata&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+  
+    &lt;figcaption&gt;Un kata d’architecture à TNT
+&lt;/figcaption&gt;
+  
+&lt;/figure&gt;
 
 &lt;p&gt;La cave à vin connecté a remporté un franc succès, du moins pendant la présentation des sujets 🙂&lt;/p&gt;
 
 &lt;p&gt;Voici le feedback que j’ai eu sur ma présentation:&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;aligncenter wp-image-137 size-large&quot; src=&quot;/assets/images/2019/02/img_20190201_174057.jpg?w=612&quot; alt=&quot;&quot; width=&quot;612&quot; height=&quot;458&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Vous trouverez les slides ci-dessous ( &lt;a href=&quot;https://www.slideshare.net/AlexandreTouret1/objectiftoparchitectefinal-190201181915&quot;&gt;voici le lien pour aller directement sur slideshare&lt;/a&gt;) :&lt;/p&gt;
-
-&lt;p&gt;[slideshare id=130266762&amp;amp;doc=objectiftoparchitectefinal-190201181915-190202084057]&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2019/02/img_20190201_174057.jpg&quot; alt=&quot;Feedback&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;RDV l’année prochaine !&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="architecture" /><category term="conférence" /><category term="handson" /><category term="TNT19" /><summary type="html">J’ai fini l’édition 2019 du Touraine Tech. Tout d’abord, merci aux organisateurs pour l’accueil et l’organisation. C’était vraiment top!</summary></entry><entry><title type="html">Touraine Tech 2019</title><link href="https://blog.touret.info/2018/12/25/touraine-tech-2019/" rel="alternate" type="text/html" title="Touraine Tech 2019" /><published>2018-12-25T16:24:29+00:00</published><updated>2018-12-25T16:24:29+00:00</updated><id>https://blog.touret.info/2018/12/25/touraine-tech-2019</id><content type="html" xml:base="https://blog.touret.info/2018/12/25/touraine-tech-2019/">&lt;p&gt;Mon sujet de talk « Objectif Top Architecte » a été retenu pour l’édition 2019 de &lt;a href=&quot;https://touraine.tech/&quot;&gt;Touraine Tech&lt;/a&gt;.&lt;/p&gt;
 

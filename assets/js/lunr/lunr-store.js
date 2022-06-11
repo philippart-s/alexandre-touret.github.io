@@ -78,7 +78,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Objectif Top Architecte !",
-        "excerpt":"Voila la description de la conférence/ hands que j’animerai au Touraine Tech est en ligne 🙂  Vous trouverez le descriptif sur cette page.   Bon maintenant, je n’ai plus qu’à préparer mes slides …. 🙂      ","categories": [],
+        "excerpt":"Voila la description de la conférence/ hands que j’animerai au Touraine Tech est en ligne 🙂  Vous trouverez le descriptif sur cette page.     ","categories": [],
         "tags": ["tourainetech"],
         "url": "/2019/01/14/objectif-top-architecte/",
         "teaser": null
@@ -126,7 +126,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Vérifier les commit GIT avec GPG",
-        "excerpt":"Juste pour un pense bête, voici comment paramétrer GIT et GITHUB/GITLAB pour signer les commits avec GPG. Configuration GPG Exécutez la commande suivante : gpg --full-generate-key Sélectionnez une clé RSA (question 1) de 4096 bits (question 2). ``` Une fois cette commande effectuée, vous pouvez récupérer votre clé GPG avec...","categories": [],
+        "excerpt":"Juste pour un pense bête, voici comment paramétrer GIT et GITHUB/GITLAB pour signer les commits avec GPG. Configuration GPG Exécutez la commande suivante : gpg --full-generate-key Sélectionnez une clé RSA (question 1) de 4096 bits (question 2). Une fois cette commande effectuée, vous pouvez récupérer votre clé GPG avec cette...","categories": [],
         "tags": ["git","github","gitlab","gpg","planetlibre"],
         "url": "/2019/08/09/verifier-les-commit-git-avec-gpg/",
         "teaser": null
@@ -150,7 +150,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Partager des variables entre scénarios gatling",
-        "excerpt":"Je suis en train de mettre en œuvre des tests de performance avec Gatling. Un des principaux outils libres de tests de performance. &lt;/figure&gt; J’ai eu récemment à résoudre un « petit » soucis : je souhaitai partager des variables entre plusieurs scénarios. Il existe pas mal de solutions sur stackoverflow. J’ai...","categories": [],
+        "excerpt":"Je suis en train de mettre en œuvre des tests de performance avec Gatling. Un des principaux outils libres de tests de performance. J’ai eu récemment à résoudre un « petit » soucis : je souhaitai partager des variables entre plusieurs scénarios. Il existe pas mal de solutions sur stackoverflow. J’ai condensé...","categories": [],
         "tags": ["gatling","planetlibre","scala"],
         "url": "/2019/11/21/partager-des-variables-entre-scenarios-gatling/",
         "teaser": null
