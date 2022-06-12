@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/debian.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T11:46:22+00:00</updated><id>https://blog.touret.info/feed/by_tag/debian.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/debian.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T15:57:04+00:00</updated><id>https://blog.touret.info/feed/by_tag/debian.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/boot_time.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
@@ -70,9 +70,7 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/boot_apres-2.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><summary type="html">Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.</summary></entry><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-303&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg&quot; alt=&quot;sign&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Il y a plusieurs logiciels payants/propriétaires sur différentes plateformes:&lt;/p&gt;
 
@@ -93,17 +91,17 @@
 
 &lt;p&gt;Créer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/modules.load.d/midi.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;snd-virmidi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ensuite créer le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/modprobe.d/midi.conf&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;options snd-virmidi &lt;span class=&quot;nv&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Logiquement à ce stade, lors du prochain reboot, vous aurez un périphérique virtuel MIDI activé. En attendant vous pouvez lancer la commande suivante&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;modprobe&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virmidi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe snd-virmidi &lt;span class=&quot;nv&quot;&gt;midi_devs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;synthétiser-du-midi&quot;&gt;Synthétiser du MIDI&lt;/h3&gt;
@@ -113,14 +111,14 @@ La banque de son recommandée est disponible via &lt;a href=&quot;https://musica
 
 &lt;p&gt;Pour le second, il vous faudra installer &lt;a href=&quot;http://www.fluidsynth.org/&quot;&gt;fluidsynth&lt;/a&gt;. Voic les quelques commandes à lancer:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fluid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qsynth&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;fluid-synth qsynth
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;petite-vérification&quot;&gt;Petite vérification…&lt;/h3&gt;
 
 &lt;p&gt;Avant d’ aller plus loin dans la configuration de fluidsynth, vous pouvez vous assurer que tout est OK &lt;a href=&quot;https://en.wikipedia.org/wiki/File:MIDI_sample.mid?qsrc=3044&quot;&gt;en récupérant un fichier MIDI&lt;/a&gt; et en lançant la commande suivante:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fluidsynth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pulseaudio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alsa_seq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Linux&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SoundFont&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sf2&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;MIDI_sample&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mid&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fluidsynth &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; pulseaudio &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; alsa_seq &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; /opt/JJazzLab-2.0-Linux/JJazzLab-SoundFont.sf2  MIDI_sample.mid
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Normalement vous devriez avoir du son.&lt;/p&gt;
@@ -131,11 +129,11 @@ La banque de son recommandée est disponible via &lt;a href=&quot;https://musica
 
 &lt;p&gt;Vous trouverez ci-dessous la configuration que j’ai appliqué. Elle diffère légèrement de &lt;a href=&quot;https://www.jjazzlab.com/en/doc/fluidsynth/&quot;&gt;celle présentée dans la documentation&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png&quot; alt=&quot;fluidsynth1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png&quot; alt=&quot;fluidsynth1&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02-300x202.png&quot; alt=&quot;fluidsynth2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png&quot; alt=&quot;fluidsynth2&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png&quot; alt=&quot;fluidsynth3&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png&quot; alt=&quot;fluidsynth3&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Pensez à redémarrer fluidsynth après application de ces nouveaux paramètres.&lt;/p&gt;
 
@@ -143,37 +141,37 @@ La banque de son recommandée est disponible via &lt;a href=&quot;https://musica
 
 &lt;p&gt;Disclaimer: La c’est la partie la plus obscure…&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png&quot; alt=&quot;aconnect&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/pegi_18_annotated_2009-2010.png&quot; alt=&quot;aconnect&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Il faut maintenant « brancher » la sortie du synthétiseur virtuel MIDI à fluidsynth pour que le son MIDI soit interprété par ce dernier à travers sa banque de son. Ce n’est pas intuitif, je vous avais prévenu …&lt;br /&gt;
 Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de console est plus parlante ( c’est pour dire ) .&lt;/p&gt;
 
 &lt;p&gt;Exécutez la commande suivante:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aconnect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lo&lt;/span&gt;                                            
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Virtual&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Raw&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;card&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;VirMIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;FLUID&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JJLAB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utilisateur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17838&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;JJLAB:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;aconnect &lt;span class=&quot;nt&quot;&gt;-lo&lt;/span&gt;                                            
+client 14: &lt;span class=&quot;s1&quot;&gt;'Midi Through'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noyau]
+    0 &lt;span class=&quot;s1&quot;&gt;'Midi Through Port-0'&lt;/span&gt;
+client 24: &lt;span class=&quot;s1&quot;&gt;'Virtual Raw MIDI 2-0'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noyau,card&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2]
+    0 &lt;span class=&quot;s1&quot;&gt;'VirMIDI 2-0     '&lt;/span&gt;
+client 128: &lt;span class=&quot;s1&quot;&gt;'FLUID Synth (JJLAB)'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;utilisateur,pid&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;17838]
+    0 &lt;span class=&quot;s1&quot;&gt;'Synth input port (JJLAB:0)'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Dans mon cas, je vais avoir à connecter le client 24:0 au synthétiseur 128:0 grâce à la commande :&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aconnect&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;aconnect 24:0 128:0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Maintenant, si on relance la commande &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aconnect -lo&lt;/code&gt; on obtient le résultat suivant:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Midi&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Through&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Virtual&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Raw&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noyau&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;card&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;VirMIDI&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;     &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-	&lt;span class=&quot;nc&quot;&gt;Connexion&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;À:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;FLUID&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JJLAB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utilisateur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17838&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Synth&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;JJLAB:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-	&lt;span class=&quot;nc&quot;&gt;Connecté&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Depuis:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;client 14: &lt;span class=&quot;s1&quot;&gt;'Midi Through'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noyau]
+    0 &lt;span class=&quot;s1&quot;&gt;'Midi Through Port-0'&lt;/span&gt;
+client 24: &lt;span class=&quot;s1&quot;&gt;'Virtual Raw MIDI 2-0'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;noyau,card&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2]
+    0 &lt;span class=&quot;s1&quot;&gt;'VirMIDI 2-0     '&lt;/span&gt;
+	Connexion À: 128:0
+client 128: &lt;span class=&quot;s1&quot;&gt;'FLUID Synth (JJLAB)'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;utilisateur,pid&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;17838]
+    0 &lt;span class=&quot;s1&quot;&gt;'Synth input port (JJLAB:0)'&lt;/span&gt;
+	Connecté Depuis: 24:0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Attention, cette commande devra être lancée ( ainsi que fluidsynth) avant chaque démarrage de jjazzlab.&lt;/p&gt;
@@ -184,19 +182,19 @@ Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de c
 
 &lt;p&gt;Vous devez également installer java&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;openjdk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jdk&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;openjdk-11-jdk
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ensuite, vous devez créer le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.local/share/applications/jjazzlab.desktop&lt;/code&gt; avec le contenu suivant:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Desktop&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Entry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Application&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;GenericName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JJazzLab&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Icon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/opt/JJazzLab-2.0-Linux/bin/jjazzlab&quot;&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Terminal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Categories&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Audio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;AudioVideo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Desktop Entry]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;JJazzLab&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;GenericName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;JJazzLab&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Icon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/opt/JJazzLab-2.0-Linux/bin/jjazzlab&quot;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Terminal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Categories&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Audio;Music;Player;AudioVideo;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Maintenant vous pouvez directement démarrer JJazzlab via le menu.&lt;/p&gt;
@@ -205,17 +203,17 @@ Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de c
 
 &lt;p&gt;Une fois jjazzlab démarré, vous devez aller dans le menu « Tools&amp;gt;Options » et sélectionnez les valeurs suivantes:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png&quot; alt=&quot;configuration&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png&quot; alt=&quot;configuration&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Ouvrez un fichier example (ex. sunny )&lt;/p&gt;
 
 &lt;p&gt;Cliquez sur le menu décrit par un clavier&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png&quot; alt=&quot;configuration&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png&quot; alt=&quot;configuration&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Puis configurez comme suit:&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png&quot; alt=&quot;configuration&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png&quot; alt=&quot;configuration&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Maintenant vous pouvez &lt;a href=&quot;https://www.jjazzlab.com/docs/JJazzLab-Realbook.zip&quot;&gt;télécharger les standards fournis sur le site&lt;/a&gt; et improviser dessus 🙂&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="musique" /><category term="planetlibre" /><summary type="html">Avec les contraintes liées au confinement, les répétitions se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.</summary></entry><entry><title type="html">Erreur 139 à l’exécution d’un container docker</title><link href="https://blog.touret.info/2020/04/01/erreur-139-a-lexecution-dun-container-docker/" rel="alternate" type="text/html" title="Erreur 139 à l’exécution d’un container docker" /><published>2020-04-01T09:09:44+00:00</published><updated>2020-04-01T09:09:44+00:00</updated><id>https://blog.touret.info/2020/04/01/erreur-139-a-lexecution-dun-container-docker</id><content type="html" xml:base="https://blog.touret.info/2020/04/01/erreur-139-a-lexecution-dun-container-docker/">&lt;p&gt;Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une &lt;a href=&quot;https://medium.com/better-programming/understanding-docker-container-exit-codes-5ee79a1d58f6&quot;&gt;erreur SIGSEGV 139&lt;/a&gt;. Un crash avec aucune log.&lt;/p&gt;
 
@@ -521,9 +519,9 @@ Voici un rapide tuto pour installer &lt;a href=&quot;https://docs.docker.com/ins
 
 &lt;p&gt;Arrivé à ce niveau, je suis quand même un peu déçu/ Il n’y a pas une vrai intégration dans debian ( pas de lanceur pour l’equalizer ) et il n’y a pas de presets configurés ( #souvienstoiwinamp)&lt;/p&gt;
 
-&lt;p&gt;J’ai essayé de poster mon soucis sur IRC, mais je n’ai pas encore eu de réponse. Je pense soumettre un bug dans les prochains jours.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><category term="pulseaudio" /><summary type="html">Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne!</summary></entry><entry><title type="html">Ma Configuration Debian 9</title><link href="https://blog.touret.info/2018/02/10/ma-configuration-debian-9/" rel="alternate" type="text/html" title="Ma Configuration Debian 9" /><published>2018-02-10T07:58:47+00:00</published><updated>2018-02-10T07:58:47+00:00</updated><id>https://blog.touret.info/2018/02/10/ma-configuration-debian-9</id><content type="html" xml:base="https://blog.touret.info/2018/02/10/ma-configuration-debian-9/">&lt;p&gt;Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .&lt;/p&gt;
+&lt;p&gt;J’ai essayé de poster mon soucis sur IRC, mais je n’ai pas encore eu de réponse. Je pense soumettre un bug dans les prochains jours.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><category term="pulseaudio" /><summary type="html">Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne!</summary></entry><entry><title type="html">Ma Configuration Debian 9</title><link href="https://blog.touret.info/2018/02/10/ma-configuration-debian-9/" rel="alternate" type="text/html" title="Ma Configuration Debian 9" /><published>2018-02-10T07:58:47+00:00</published><updated>2018-02-10T07:58:47+00:00</updated><id>https://blog.touret.info/2018/02/10/ma-configuration-debian-9</id><content type="html" xml:base="https://blog.touret.info/2018/02/10/ma-configuration-debian-9/">&lt;p&gt;Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot; size-full wp-image-39 aligncenter&quot; src=&quot;/assets/images/2018/02/220px-debian-openlogo-svg.png&quot; alt=&quot;220px-Debian-OpenLogo.svg&quot; width=&quot;220&quot; height=&quot;291&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2018/02/220px-debian-openlogo-svg.png&quot; alt=&quot;debian&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Voici ce que j’ai réalisé post-installation:&lt;/p&gt;
 
@@ -531,191 +529,174 @@ Voici un rapide tuto pour installer &lt;a href=&quot;https://docs.docker.com/ins
 
 &lt;p&gt;Dans le fichier /etc/apt/sources.list, ajouter les repo contrib et non-free . Activer également les mises à jour de sécurité.&lt;/p&gt;
 
-&lt;pre&gt;deb http://ftp.fr.debian.org/debian/ stretch main non-free contrib
-deb-src http://ftp.fr.debian.org/debian/ stretch main non-free contrib
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;deb&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://ftp.fr.debian.org/debian/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;deb-src&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://ftp.fr.debian.org/debian/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
 
-deb http://security.debian.org/debian-security stretch/updates main non-free contrib
-deb-src http://security.debian.org/debian-security stretch/updates main non-free contrib
+&lt;span class=&quot;err&quot;&gt;deb&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://security.debian.org/debian-security&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch/updates&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;deb-src&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://security.debian.org/debian-security&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch/updates&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
 
-# stretch-updates, previously known as 'volatile'
-deb http://ftp.fr.debian.org/debian/ stretch-updates main non-free contrib
-deb-src http://ftp.fr.debian.org/debian/ stretch-updates main non-free contrib
-```
+&lt;span class=&quot;c&quot;&gt;# stretch-updates, previously known as 'volatile'
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;deb&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://ftp.fr.debian.org/debian/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch-updates&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;deb-src&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://ftp.fr.debian.org/debian/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch-updates&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;logiciels-tiers&quot;&gt;Logiciels tiers&lt;/h2&gt;
 
-## Logiciels tiers
+&lt;h3 id=&quot;etcher&quot;&gt;Etcher&lt;/h3&gt;
 
-### Etcher
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#echo &quot;deb https://dl.bintray.com/resin-io/debian stable etcher&quot; | sudo tee /etc/apt/sources.list.d/etcher.list
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-    #echo &quot;deb https://dl.bintray.com/resin-io/debian stable etcher&quot; | sudo tee /etc/apt/sources.list.d/etcher.list
-    
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &amp;lt;pre&amp;gt;#apt-key adv &lt;span class=&quot;nt&quot;&gt;--keyserver&lt;/span&gt; hkp://pgp.mit.edu:80 &lt;span class=&quot;nt&quot;&gt;--recv-keys&lt;/span&gt; 379CE192D401AB61
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlight highlight-source-shell&quot;&gt;
-  &lt;pre&gt;#apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 379CE192D401AB61
-```
+&lt;h3 id=&quot;virtualbox&quot;&gt;Virtualbox&lt;/h3&gt;
 
-&amp;lt;/div&amp;gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-### Virtualbox
+&lt;p&gt;Dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/apt/sources.list.d/virtualbox.list&lt;/code&gt;&lt;/p&gt;
 
-&lt;pre&gt;# wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-```
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;deb&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;https://download.virtualbox.org/virtualbox/debian&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stretch&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;contrib&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;spotify&quot;&gt;Spotify&lt;/h3&gt;
 
-Dans le fichier /etc/apt/sources.list.d/virtualbox.list
+&lt;p&gt;Dans le fichier /etc/apt/sources.list.d/spotify.list&lt;/p&gt;
 
-&lt;pre&gt;deb https://download.virtualbox.org/virtualbox/debian stretch contrib
-```
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;deb&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;http://repository.spotify.com&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;stable&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;non-free&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;installation-paquets-supplémentaires&quot;&gt;Installation paquets supplémentaires&lt;/h2&gt;
 
-### Spotify
-
-Dans le fichier /etc/apt/sources.list.d/spotify.list
-
-&lt;pre&gt;deb http://repository.spotify.com stable non-free
-```
-
-
-## Installation paquets supplémentaires
-
-&lt;pre&gt;# apt-get update
-# apt-get install firmware-iwlwifi virtualbox-5.2\
-ttf-mscorefonts-installer easytag tuxguitar-jsa htop\
- frescobaldi gparted grsync ntfs-config chromium autofs\
- openjdk-8-jdk openjdk-8-jre gnome-tweak-tool ntfs-config \
-ntfs-3g cifs-utils geogebra-gnome arduino libmediainfo \
-libmediainfo0v5 network-manager-openvpn-gnome dirmngr \
-spotify-client spotify-client-gnome-support \
- etcher apt-transport-https etcher-electron vim \
-fonts-powerline audacity ffmpeg lame unrar rar gdebi \
-sound-juicer traceroute scala net-tools nmap \
-gnome-shell-pomodoro hplip dig dnsutils build-essential \
-linux-headers-amd64 firmware-linux-nonfree lshw ethtool \
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# apt-get update&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# apt-get install firmware-iwlwifi virtualbox-5.2\&lt;/span&gt;
+ttf-mscorefonts-installer easytag tuxguitar-jsa htop&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+ frescobaldi gparted grsync ntfs-config chromium autofs&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+ openjdk-8-jdk openjdk-8-jre gnome-tweak-tool ntfs-config &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+ntfs-3g cifs-utils geogebra-gnome arduino libmediainfo &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+libmediainfo0v5 network-manager-openvpn-gnome dirmngr &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+spotify-client spotify-client-gnome-support &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+ etcher apt-transport-https etcher-electron vim &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+fonts-powerline audacity ffmpeg lame unrar rar gdebi &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+sound-juicer traceroute scala net-tools nmap &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+gnome-shell-pomodoro hplip dig dnsutils build-essential &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+linux-headers-amd64 firmware-linux-nonfree lshw ethtool &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 libsane-hpaio xsane autofs vlc
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;configuration-autofs&quot;&gt;Configuration autofs&lt;/h2&gt;
 
-## Configuration autofs
+&lt;p&gt;Pour ceux qui ne connaissent pas , &lt;a href=&quot;https://wiki.debian.org/AutoFs&quot;&gt;autofs&lt;/a&gt; est un outil permettant de monter directement des partages &lt;a href=&quot;https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux&quot;&gt;nfs&lt;/a&gt; et cicfs à l’utilisation et non au démarrage de l’ordinateur.&lt;/p&gt;
 
-Pour ceux qui ne connaissent pas , [autofs](https://wiki.debian.org/AutoFs) est un outil permettant de monter directement des partages [nfs](https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux) et cicfs à l'utilisation et non au démarrage de l'ordinateur.
+&lt;p&gt;Dans le fichier /etc/auto.master&lt;/p&gt;
 
-Dans le fichier /etc/auto.master
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;/mnt/SERV1/nfs&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;/etc/auto.nfs&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;--ghost,&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;--timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;60 &lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/mnt/SERV1/cifs&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;/etc/auto.SERV1.cifs&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;--ghost,&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;--timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;60 &lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/mnt/SERV2&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;/etc/auto.cifs&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;--ghost,&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;--timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;60&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;pre&gt;/mnt/SERV1/nfs /etc/auto.nfs --ghost, --timeout=60 
-/mnt/SERV1/cifs /etc/auto.SERV1.cifs --ghost, --timeout=60 
-/mnt/SERV2 /etc/auto.cifs --ghost, --timeout=60
-```
+&lt;p&gt;ensuite insérer la configuration adéquate dans les fichiers référencés :&lt;/p&gt;
 
+&lt;h3 id=&quot;autocicfs&quot;&gt;auto.cicfs&lt;/h3&gt;
 
-ensuite insérer la configuration adéquate dans les fichiers référencés :
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;-fstype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;cifs,credentials=/home/USER/.cred-file,user=littlewing,uid=1000,gid=1000 ://192.168.0.XX/REPERTOIRE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-### auto.cicfs
+&lt;p&gt;Les identifiants / mots de passe sont stockés dans un fichier .cred-file stocké à la racine du répertoire utilisateur.&lt;/p&gt;
 
-&lt;pre&gt;data -fstype=cifs,credentials=/home/USER/.cred-file,user=littlewing,uid=1000,gid=1000 ://192.168.0.XX/REPERTOIRE
-```
+&lt;p&gt;Voici un exemple :&lt;/p&gt;
 
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;user&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;password&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Les identifiants / mots de passe sont stockés dans un fichier .cred-file stocké à la racine du répertoire utilisateur.
+&lt;p&gt;Le fichier auto.SERV1.cifs reprend la même structure&lt;/p&gt;
 
-Voici un exemple :
+&lt;h3 id=&quot;autonfs&quot;&gt;auto.nfs&lt;/h3&gt;
 
-&lt;pre&gt;username=user
-password=password
-```
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;REP1&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;-fstype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;nfs,rw,intr 192.168.0.XX:/volume1/REP1&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;REP2&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;-fstype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;nfs,rw,intr 192.168.0.XX:/volume1/REP2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;installation-datom&quot;&gt;Installation d’atom&lt;/h2&gt;
 
-Le fichier auto.SERV1.cifs reprend la même structure
+&lt;p&gt;J’ai choisi d’installer &lt;a href=&quot;https://atom.io/&quot;&gt;atom&lt;/a&gt; via le package .deb fourni par &lt;a href=&quot;http://github.com/&quot;&gt;github&lt;/a&gt;. Afin d’automatiser l’installation et la mise à jour, voici le script que j’ai réalisé :&lt;/p&gt;
 
-### auto.nfs
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;SETUP_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp
+wget &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SETUP_ROOT&lt;/span&gt;/atom.deb &lt;span class=&quot;s2&quot;&gt;&quot;https://atom.io/download/deb&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Installation du paquet...&quot;&lt;/span&gt;
+dpkg &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SETUP_ROOT&lt;/span&gt;/atom.deb
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Fini :)&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;pre&gt;REP1 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP1
-REP2 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP2
-```
+&lt;p&gt;Ce script est placé dans le répertoire /usr/local/sbin et lancé comme suit :&lt;/p&gt;
 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# upgrade-atom.sh&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## Installation d'atom
+&lt;h2 id=&quot;installation-de-firefox&quot;&gt;Installation de Firefox&lt;/h2&gt;
 
-J'ai choisi d'installer [atom](https://atom.io/) via le package .deb fourni par [github](http://github.com/). Afin d'automatiser l'installation et la mise à jour, voici le script que j'ai réalisé :
+&lt;p&gt;Afin d’avoir la dernière version de firefox, voici le script que j’ai réalisé:&lt;/p&gt;
 
-&lt;pre&gt;#!/bin/sh
-SETUP_ROOT=/tmp
-wget -O $SETUP_ROOT/atom.deb &quot;https://atom.io/download/deb&quot;
-echo &quot;Installation du paquet...&quot;
-dpkg -i $SETUP_ROOT/atom.deb
-echo &quot;Fini :)&quot;
-```
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;SETUP_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/tmp
+&lt;span class=&quot;nv&quot;&gt;BIN_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/firefox
+&lt;span class=&quot;nv&quot;&gt;DATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%Y-%m-%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;OLD_EXE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/lib/firefox-esr/firefox-esr
+wget &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SETUP_ROOT&lt;/span&gt;/FirefoxSetup.tar.bz2 &lt;span class=&quot;s2&quot;&gt;&quot;https://download.mozilla.org/?product=firefox-latest&amp;amp;os=linux64&amp;amp;lang=fr&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Extraction de l'archive...&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;tar &lt;/span&gt;xjf &lt;span class=&quot;nv&quot;&gt;$SETUP_ROOT&lt;/span&gt;/FirefoxSetup.tar.bz2 &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; /usr/local
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Changement des droits utilisateur&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;chown&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; :users &lt;span class=&quot;nv&quot;&gt;$BIN_ROOT&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+x &lt;span class=&quot;nv&quot;&gt;$BIN_ROOT&lt;/span&gt;/firefox
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Sauvegarde de l'ancien binaire et Creation des liens symboliques&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$OLD_EXE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then
+ &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;OLD_BINARY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;OLD_EXE&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;_orig_&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DATE&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$OLD_EXE&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$OLD_BINARY&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;fi 
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$BIN_ROOT&lt;/span&gt;/firefox &lt;span class=&quot;nv&quot;&gt;$OLD_EXE&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;a+x &lt;span class=&quot;nv&quot;&gt;$OLD_EXE&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Fini :)&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h2 id=&quot;minecraft&quot;&gt;Minecraft&lt;/h2&gt;
 
-Ce script est placé dans le répertoire /usr/local/sbin et lancé comme suit :
+&lt;p&gt;Voila l’étape la plus importante, du moins pour mes enfants …&lt;/p&gt;
 
-&lt;pre&gt;# upgrade-atom.sh
-```
+&lt;p&gt;J’ai crée le script /usr/local/bin/minecraft.sh&lt;/p&gt;
 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/minecraft
+java &lt;span class=&quot;nt&quot;&gt;-Xmx1G&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Xms512M&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-cp&lt;/span&gt; /usr/local/minecraft/Minecraft.jar net.minecraft.bootstrap.Bootstrap
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-## Installation de Firefox
+&lt;p&gt;J’ai placé le JAR en question dans le répertoire /usr/local/minecraft.&lt;/p&gt;
 
-Afin d'avoir la dernière version de firefox, voici le script que j'ai réalisé:
+&lt;p&gt;Enfin, j’ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop&lt;/p&gt;
 
-&lt;pre&gt;#!/bin/sh
-SETUP_ROOT=/tmp
-BIN_ROOT=/usr/local/firefox
-DATE=`date +%Y-%m-%d`
-OLD_EXE=/usr/lib/firefox-esr/firefox-esr
-wget -O $SETUP_ROOT/FirefoxSetup.tar.bz2 &quot;https://download.mozilla.org/?product=firefox-latest&amp;amp;os=linux64&amp;amp;lang=fr&quot;
-echo &quot;Extraction de l'archive...&quot;
-tar xjf $SETUP_ROOT/FirefoxSetup.tar.bz2 -C /usr/local
-echo &quot;Changement des droits utilisateur&quot;
-chown -R :users $BIN_ROOT
-chmod a+x $BIN_ROOT/firefox
-echo &quot;Sauvegarde de l'ancien binaire et Creation des liens symboliques&quot;
-if [ -e $OLD_EXE ]
-then
- OLD_BINARY=${OLD_EXE}_orig_${DATE}
- mv $OLD_EXE $OLD_BINARY
-fi 
-ln -s $BIN_ROOT/firefox $OLD_EXE
-chmod a+x $OLD_EXE
-echo &quot;Fini :)&quot;
-```
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Desktop Entry]&lt;/span&gt; 
+&lt;span class=&quot;py&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Minecraft&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Comment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Categories&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Game;BoardGame;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/local/bin/minecraft.sh&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Icon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Minecraft_Block&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Terminal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;StartupNotify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;J’ai également mis une icone SVG dans le répertoire /usr/share/icons/&lt;/p&gt;
 
-## Minecraft
+&lt;h2 id=&quot;optimisation-du-boot&quot;&gt;Optimisation du boot&lt;/h2&gt;
 
-Voila l'étape la plus importante, du moins pour mes enfants &amp;#8230;
+&lt;p&gt;Après toutes ces installations, il faut vérifier que les performances, notamment au démarrage ne sont pas trop altérées&lt;/p&gt;
 
-J'ai crée le script /usr/local/bin/minecraft.sh
+&lt;p&gt;Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze&lt;/p&gt;
 
-&lt;pre&gt;#!/bin/bash
-cd /usr/local/minecraft
-java -Xmx1G -Xms512M -cp /usr/local/minecraft/Minecraft.jar net.minecraft.bootstrap.Bootstrap
-```
-
-
-J'ai placé le JAR en question dans le répertoire /usr/local/minecraft.
-
-Enfin, j'ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop
-
-&lt;pre&gt;[Desktop Entry] 
-Name=Minecraft
-Comment=
-Categories=Game;BoardGame;
-Exec=/usr/local/bin/minecraft.sh
-Icon=Minecraft_Block
-Terminal=false
-Type=Application
-StartupNotify=true
-```
-
-
-J'ai également mis une icone SVG dans le répertoire /usr/share/icons/
-
-## Optimisation du boot
-
-Après toutes ces installations, il faut vérifier que les performances, notamment au démarrage ne sont pas trop altérées
-
-Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze
-
-&lt;pre&gt;#systemd-analyze blame
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#systemd-analyze blame&lt;/span&gt;
  8.113s NetworkManager-wait-online.service
  2.549s apt-daily-upgrade.service
  803ms networking.service
@@ -725,14 +706,13 @@ Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze
  128ms ModemManager.service
  102ms autofs.service
 ....
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;On peut également voir le chemin critique avec cette commande:&lt;/p&gt;
 
-On peut également voir le chemin critique avec cette commande:
-
-&lt;pre&gt;#systemd-analyze critical-chain 
-The time after the unit is active or started is printed after the &quot;@&quot; character.
-The time the unit takes to start is printed after the &quot;+&quot; character.
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#systemd-analyze critical-chain &lt;/span&gt;
+The &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;after the unit is active or started is printed after the &lt;span class=&quot;s2&quot;&gt;&quot;@&quot;&lt;/span&gt; character.
+The &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;the unit takes to start is printed after the &lt;span class=&quot;s2&quot;&gt;&quot;+&quot;&lt;/span&gt; character.
 
 graphical.target @8.944s
 └─multi-user.target @8.944s
@@ -746,39 +726,27 @@ graphical.target @8.944s
  └─acpid.path @610ms
  └─sysinit.target @608ms
  └─systemd-backlight@backlight:acpi_video0.service @1.042s +8ms
- └─system-systemd\x2dbacklight.slice @1.042s
+ └─system-systemd&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2dbacklight.slice @1.042s
  └─system.slice @119ms
  └─-.slice @108ms
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;désactivation-des-services&quot;&gt;Désactivation des services&lt;/h3&gt;
 
-### Désactivation des services
+&lt;p&gt;Par exemple, si vous voulez désactiver le service virtualbox au démarrage&lt;/p&gt;
 
-Par exemple, si vous voulez désactiver le service virtualbox au démarrage
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# systemctl disable vboxautostart-service.service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;pre&gt;# systemctl disable vboxautostart-service.service
-```
+&lt;p&gt;et ainsi de suite pour tous les services inutiles au démarrage&lt;/p&gt;
 
+&lt;h2 id=&quot;analyse-du-démarrage-dun-service&quot;&gt;Analyse du démarrage d’un service&lt;/h2&gt;
 
-et ainsi de suite pour tous les services inutiles au démarrage
+&lt;p&gt;Pour analyser le démarrage d’un service, on peut utiliser la commande journalctl&lt;/p&gt;
 
-## Analyse du démarrage d'un service
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# journalctl -b -u NetworkManager-wait-online.service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Pour analyser le démarrage d'un service, on peut utiliser la commande journalctl
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
-&lt;pre&gt;# journalctl -b -u NetworkManager-wait-online.service
-```
-
-
-&amp;nbsp;
-
-## Conclusion
-
-Après toutes ces étapes, j'ai un système opérationnel. Il manque pas mal d'outils ( ex. maven, npm, intellij,&amp;#8230;). Ces outils tiennent plus du poste de développement.
-
-&amp;nbsp;
-
-&amp;nbsp;
-
-&amp;nbsp;
-&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/pre&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="debian" /><summary type="html">Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .</summary></entry></feed>
+&lt;p&gt;Après toutes ces étapes, j’ai un système opérationnel. Il manque pas mal d’outils ( ex. maven, npm, intellij,…). Ces outils tiennent plus du poste de développement.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="planetlibre" /><category term="debian" /><summary type="html">Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .</summary></entry></feed>

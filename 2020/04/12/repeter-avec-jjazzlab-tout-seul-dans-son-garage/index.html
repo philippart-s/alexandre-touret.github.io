@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret.png" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -325,9 +325,7 @@
         
         <p>Avec les contraintes liées au confinement, les <a href="http://george-abitbol.fr/v/c0bce857">répétitions</a> se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large"><img src="/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg?w=1024" alt="" class="wp-image-303" /></figure>
-</div>
+<p><img src="/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg" alt="sign" class="align-center" /></p>
 
 <p>Il y a plusieurs logiciels payants/propriétaires sur différentes plateformes:</p>
 
@@ -348,17 +346,17 @@
 
 <p>Créer un fichier <code class="language-plaintext highlighter-rouge">/etc/modules.load.d/midi.conf</code> avec le contenu suivant:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">snd</span><span class="o">-</span><span class="n">virmidi</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>snd-virmidi
 </code></pre></div></div>
 
 <p>Ensuite créer le fichier <code class="language-plaintext highlighter-rouge">/etc/modprobe.d/midi.conf</code> avec le contenu suivant:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">options</span> <span class="n">snd</span><span class="o">-</span><span class="n">virmidi</span> <span class="n">midi_devs</span><span class="o">=</span><span class="mi">1</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>options snd-virmidi <span class="nv">midi_devs</span><span class="o">=</span>1
 </code></pre></div></div>
 
 <p>Logiquement à ce stade, lors du prochain reboot, vous aurez un périphérique virtuel MIDI activé. En attendant vous pouvez lancer la commande suivante</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">sudo</span> <span class="n">modprobe</span> <span class="n">snd</span><span class="o">-</span><span class="n">virmidi</span> <span class="n">midi_devs</span><span class="o">=</span><span class="mi">1</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>modprobe snd-virmidi <span class="nv">midi_devs</span><span class="o">=</span>1
 </code></pre></div></div>
 
 <h3 id="synthétiser-du-midi">Synthétiser du MIDI</h3>
@@ -368,14 +366,14 @@ La banque de son recommandée est disponible via <a href="https://musical-artifa
 
 <p>Pour le second, il vous faudra installer <a href="http://www.fluidsynth.org/">fluidsynth</a>. Voic les quelques commandes à lancer:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">fluid</span><span class="o">-</span><span class="n">synth</span> <span class="n">qsynth</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>fluid-synth qsynth
 </code></pre></div></div>
 
 <h3 id="petite-vérification">Petite vérification…</h3>
 
 <p>Avant d’ aller plus loin dans la configuration de fluidsynth, vous pouvez vous assurer que tout est OK <a href="https://en.wikipedia.org/wiki/File:MIDI_sample.mid?qsrc=3044">en récupérant un fichier MIDI</a> et en lançant la commande suivante:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">fluidsynth</span> <span class="o">-</span><span class="n">a</span> <span class="n">pulseaudio</span> <span class="o">-</span><span class="n">m</span> <span class="n">alsa_seq</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">i</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="nc">JJazzLab</span><span class="o">-</span><span class="mf">2.0</span><span class="o">-</span><span class="nc">Linux</span><span class="o">/</span><span class="nc">JJazzLab</span><span class="o">-</span><span class="nc">SoundFont</span><span class="o">.</span><span class="na">sf2</span>  <span class="n">MIDI_sample</span><span class="o">.</span><span class="na">mid</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fluidsynth <span class="nt">-a</span> pulseaudio <span class="nt">-m</span> alsa_seq <span class="nt">-l</span> <span class="nt">-i</span> /opt/JJazzLab-2.0-Linux/JJazzLab-SoundFont.sf2  MIDI_sample.mid
 </code></pre></div></div>
 
 <p>Normalement vous devriez avoir du son.</p>
@@ -386,11 +384,11 @@ La banque de son recommandée est disponible via <a href="https://musical-artifa
 
 <p>Vous trouverez ci-dessous la configuration que j’ai appliqué. Elle diffère légèrement de <a href="https://www.jjazzlab.com/en/doc/fluidsynth/">celle présentée dans la documentation</a>.</p>
 
-<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png" alt="fluidsynth1" /></p>
+<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-04-39.png" alt="fluidsynth1" class="align-center" /></p>
 
-<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02-300x202.png" alt="fluidsynth2" /></p>
+<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-02.png" alt="fluidsynth2" class="align-center" /></p>
 
-<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png" alt="fluidsynth3" /></p>
+<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-05-13.png" alt="fluidsynth3" class="align-center" /></p>
 
 <p>Pensez à redémarrer fluidsynth après application de ces nouveaux paramètres.</p>
 
@@ -398,37 +396,37 @@ La banque de son recommandée est disponible via <a href="https://musical-artifa
 
 <p>Disclaimer: La c’est la partie la plus obscure…</p>
 
-<p><img src="/assets/images/2020/04/pegi_18_annotated_2009-2010.png" alt="aconnect" /></p>
+<p><img src="/assets/images/2020/04/pegi_18_annotated_2009-2010.png" alt="aconnect" class="align-center" /></p>
 
 <p>Il faut maintenant « brancher » la sortie du synthétiseur virtuel MIDI à fluidsynth pour que le son MIDI soit interprété par ce dernier à travers sa banque de son. Ce n’est pas intuitif, je vous avais prévenu …<br />
 Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de console est plus parlante ( c’est pour dire ) .</p>
 
 <p>Exécutez la commande suivante:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">aconnect</span> <span class="o">-</span><span class="n">lo</span>                                            
-<span class="n">client</span> <span class="mi">14</span><span class="o">:</span> <span class="err">'</span><span class="nc">Midi</span> <span class="nc">Through</span><span class="err">'</span> <span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="n">noyau</span><span class="o">]</span>
-    <span class="mi">0</span> <span class="err">'</span><span class="nc">Midi</span> <span class="nc">Through</span> <span class="nc">Port</span><span class="o">-</span><span class="mi">0</span><span class="err">'</span>
-<span class="n">client</span> <span class="mi">24</span><span class="o">:</span> <span class="err">'</span><span class="nc">Virtual</span> <span class="nc">Raw</span> <span class="no">MIDI</span> <span class="mi">2</span><span class="o">-</span><span class="mi">0</span><span class="err">'</span> <span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="n">noyau</span><span class="o">,</span><span class="n">card</span><span class="o">=</span><span class="mi">2</span><span class="o">]</span>
-    <span class="mi">0</span> <span class="err">'</span><span class="nc">VirMIDI</span> <span class="mi">2</span><span class="o">-</span><span class="mi">0</span>     <span class="err">'</span>
-<span class="n">client</span> <span class="mi">128</span><span class="o">:</span> <span class="err">'</span><span class="no">FLUID</span> <span class="nf">Synth</span> <span class="o">(</span><span class="no">JJLAB</span><span class="o">)</span><span class="err">'</span> <span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="n">utilisateur</span><span class="o">,</span><span class="n">pid</span><span class="o">=</span><span class="mi">17838</span><span class="o">]</span>
-    <span class="mi">0</span> <span class="err">'</span><span class="nc">Synth</span> <span class="n">input</span> <span class="nf">port</span> <span class="o">(</span><span class="nl">JJLAB:</span><span class="mi">0</span><span class="o">)</span><span class="err">'</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>aconnect <span class="nt">-lo</span>                                            
+client 14: <span class="s1">'Midi Through'</span> <span class="o">[</span><span class="nb">type</span><span class="o">=</span>noyau]
+    0 <span class="s1">'Midi Through Port-0'</span>
+client 24: <span class="s1">'Virtual Raw MIDI 2-0'</span> <span class="o">[</span><span class="nb">type</span><span class="o">=</span>noyau,card<span class="o">=</span>2]
+    0 <span class="s1">'VirMIDI 2-0     '</span>
+client 128: <span class="s1">'FLUID Synth (JJLAB)'</span> <span class="o">[</span><span class="nb">type</span><span class="o">=</span>utilisateur,pid<span class="o">=</span>17838]
+    0 <span class="s1">'Synth input port (JJLAB:0)'</span>
 </code></pre></div></div>
 
 <p>Dans mon cas, je vais avoir à connecter le client 24:0 au synthétiseur 128:0 grâce à la commande :</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">aconnect</span> <span class="mi">24</span><span class="o">:</span><span class="mi">0</span> <span class="mi">128</span><span class="o">:</span><span class="mi">0</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>aconnect 24:0 128:0
 </code></pre></div></div>
 
 <p>Maintenant, si on relance la commande <code class="language-plaintext highlighter-rouge">aconnect -lo</code> on obtient le résultat suivant:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">client</span> <span class="mi">14</span><span class="o">:</span> <span class="err">'</span><span class="nc">Midi</span> <span class="nc">Through</span><span class="err">'</span> <span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="n">noyau</span><span class="o">]</span>
-    <span class="mi">0</span> <span class="err">'</span><span class="nc">Midi</span> <span class="nc">Through</span> <span class="nc">Port</span><span class="o">-</span><span class="mi">0</span><span class="err">'</span>
-<span class="n">client</span> <span class="mi">24</span><span class="o">:</span> <span class="err">'</span><span class="nc">Virtual</span> <span class="nc">Raw</span> <span class="no">MIDI</span> <span class="mi">2</span><span class="o">-</span><span class="mi">0</span><span class="err">'</span> <span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="n">noyau</span><span class="o">,</span><span class="n">card</span><span class="o">=</span><span class="mi">2</span><span class="o">]</span>
-    <span class="mi">0</span> <span class="err">'</span><span class="nc">VirMIDI</span> <span class="mi">2</span><span class="o">-</span><span class="mi">0</span>     <span class="err">'</span>
-	<span class="nc">Connexion</span> <span class="nl">À:</span> <span class="mi">128</span><span class="o">:</span><span class="mi">0</span>
-<span class="n">client</span> <span class="mi">128</span><span class="o">:</span> <span class="err">'</span><span class="no">FLUID</span> <span class="nf">Synth</span> <span class="o">(</span><span class="no">JJLAB</span><span class="o">)</span><span class="err">'</span> <span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="n">utilisateur</span><span class="o">,</span><span class="n">pid</span><span class="o">=</span><span class="mi">17838</span><span class="o">]</span>
-    <span class="mi">0</span> <span class="err">'</span><span class="nc">Synth</span> <span class="n">input</span> <span class="nf">port</span> <span class="o">(</span><span class="nl">JJLAB:</span><span class="mi">0</span><span class="o">)</span><span class="err">'</span>
-	<span class="nc">Connecté</span> <span class="nl">Depuis:</span> <span class="mi">24</span><span class="o">:</span><span class="mi">0</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>client 14: <span class="s1">'Midi Through'</span> <span class="o">[</span><span class="nb">type</span><span class="o">=</span>noyau]
+    0 <span class="s1">'Midi Through Port-0'</span>
+client 24: <span class="s1">'Virtual Raw MIDI 2-0'</span> <span class="o">[</span><span class="nb">type</span><span class="o">=</span>noyau,card<span class="o">=</span>2]
+    0 <span class="s1">'VirMIDI 2-0     '</span>
+	Connexion À: 128:0
+client 128: <span class="s1">'FLUID Synth (JJLAB)'</span> <span class="o">[</span><span class="nb">type</span><span class="o">=</span>utilisateur,pid<span class="o">=</span>17838]
+    0 <span class="s1">'Synth input port (JJLAB:0)'</span>
+	Connecté Depuis: 24:0
 </code></pre></div></div>
 
 <p>Attention, cette commande devra être lancée ( ainsi que fluidsynth) avant chaque démarrage de jjazzlab.</p>
@@ -439,19 +437,19 @@ Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de c
 
 <p>Vous devez également installer java</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">openjdk</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="n">jdk</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>openjdk-11-jdk
 </code></pre></div></div>
 
 <p>Ensuite, vous devez créer le fichier <code class="language-plaintext highlighter-rouge">~/.local/share/applications/jjazzlab.desktop</code> avec le contenu suivant:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span><span class="nc">Desktop</span> <span class="nc">Entry</span><span class="o">]</span>
-<span class="nc">Type</span><span class="o">=</span><span class="nc">Application</span>
-<span class="nc">Name</span><span class="o">=</span><span class="nc">JJazzLab</span>
-<span class="nc">GenericName</span><span class="o">=</span><span class="nc">JJazzLab</span>
-<span class="nc">Icon</span><span class="o">=</span>
-<span class="nc">Exec</span><span class="o">=</span><span class="s">"/opt/JJazzLab-2.0-Linux/bin/jjazzlab"</span>
-<span class="nc">Terminal</span><span class="o">=</span><span class="kc">false</span>
-<span class="nc">Categories</span><span class="o">=</span><span class="nc">Audio</span><span class="o">;</span><span class="nc">Music</span><span class="o">;</span><span class="nc">Player</span><span class="o">;</span><span class="nc">AudioVideo</span><span class="o">;</span>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Desktop Entry]</span>
+<span class="py">Type</span><span class="p">=</span><span class="s">Application</span>
+<span class="py">Name</span><span class="p">=</span><span class="s">JJazzLab</span>
+<span class="py">GenericName</span><span class="p">=</span><span class="s">JJazzLab</span>
+<span class="py">Icon</span><span class="p">=</span>
+<span class="py">Exec</span><span class="p">=</span><span class="s">"/opt/JJazzLab-2.0-Linux/bin/jjazzlab"</span>
+<span class="py">Terminal</span><span class="p">=</span><span class="s">false</span>
+<span class="py">Categories</span><span class="p">=</span><span class="s">Audio;Music;Player;AudioVideo;</span>
 </code></pre></div></div>
 
 <p>Maintenant vous pouvez directement démarrer JJazzlab via le menu.</p>
@@ -460,17 +458,17 @@ Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de c
 
 <p>Une fois jjazzlab démarré, vous devez aller dans le menu « Tools&gt;Options » et sélectionnez les valeurs suivantes:<figure class="wp-block-image size-large"></figure></p>
 
-<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png" alt="configuration" /></p>
+<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-29-27.png" alt="configuration" class="align-center" /></p>
 
 <p>Ouvrez un fichier example (ex. sunny )</p>
 
 <p>Cliquez sur le menu décrit par un clavier</p>
 
-<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png" alt="configuration" /></p>
+<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-34-11.png" alt="configuration" class="align-center" /></p>
 
 <p>Puis configurez comme suit:<figure class="wp-block-image size-large"></figure></p>
 
-<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png" alt="configuration" /></p>
+<p><img src="/assets/images/2020/04/capture-de28099c3a9cran-du-2020-04-12-15-35-04.png" alt="configuration" class="align-center" /></p>
 
 <p>Maintenant vous pouvez <a href="https://www.jjazzlab.com/docs/JJazzLab-Realbook.zip">télécharger les standards fournis sur le site</a> et improviser dessus 🙂</p>
 
@@ -560,7 +558,7 @@ Je ne vous parle pas de la pseudo interface graphique à aconnect. La ligne de c
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.png" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">

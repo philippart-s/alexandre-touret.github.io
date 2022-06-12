@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret.png" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -323,7 +323,7 @@
 
       <section class="page__content e-content" itemprop="text">
         
-        <figure class="wp-block-image size-large"><img src="/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024" alt="" class="wp-image-428" /></figure>
+        <p><img src="/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg" alt="boot" class="align-center" /></p>
 
 <p>Derrière ce nom pompeux qui peut effrayer, je vais essayer d’expliquer dans cet article comment on peut versionner facilement ses partitions et les publier sur le web.</p>
 
@@ -346,38 +346,38 @@ Si vous voulez plus de détails sur le pourquoi du comment je vous conseille <a 
 
 <p>Pourquoi stocker dans un référentiel de sources tel que Github ? Pour les non informaticiens : les partitions sont stockées au format texte.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">\</span><span class="n">version</span> <span class="s">"2.12.1"</span>
+<div class="language-latex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">\version</span> "2.12.1"
 
-<span class="err">\</span><span class="n">header</span> <span class="o">{</span>
-  <span class="n">title</span><span class="o">=</span><span class="s">"Try a little tenderness"</span>
-  <span class="n">composer</span><span class="o">=</span><span class="s">"Harry Woods, Jimmy Campbell &amp; Reg Connely"</span>
-  <span class="n">subtitle</span> <span class="o">=</span> <span class="s">"Commitments Version"</span>
-  <span class="o">%</span><span class="n">poet</span> <span class="o">=</span> <span class="s">"Poete"</span>
-  <span class="n">instrument</span> <span class="o">=</span> <span class="s">"Piano"</span>
-  <span class="n">editor</span> <span class="o">=</span> <span class="s">"L'éditeur"</span>
-  <span class="o">%</span><span class="n">meter</span><span class="o">=</span><span class="err">\</span><span class="n">markup</span> <span class="o">{</span><span class="err">\</span><span class="n">bold</span> <span class="o">{</span><span class="s">"Remarque sur le rhythme"</span><span class="o">}}</span>
-  <span class="n">style</span> <span class="o">=</span> <span class="s">"Soul"</span>
-  <span class="n">maintainer</span> <span class="o">=</span> <span class="s">"Alexandre Touret"</span>
-  <span class="n">maintainerEmail</span> <span class="o">=</span> <span class="s">"alexandre.touret@free.fr"</span>
-  <span class="n">maintainerWeb</span> <span class="o">=</span> <span class="s">"http://blog.touret.info"</span>     
-  <span class="n">lastupdated</span> <span class="o">=</span> <span class="s">""</span>
-  <span class="n">source</span> <span class="o">=</span> <span class="s">"Music room"</span>
-  <span class="n">footer</span> <span class="o">=</span> <span class="s">"Footer"</span>
-  <span class="n">copyright</span> <span class="o">=</span><span class="err">\</span><span class="n">markup</span> <span class="o">{</span><span class="err">\</span><span class="n">fontsize</span> <span class="err">#</span><span class="o">-</span><span class="mf">1.5</span>
- <span class="s">"Delivered by A TOURET"</span><span class="o">}</span>
-<span class="o">}</span>
-<span class="n">upper</span><span class="o">=</span>
-<span class="err">\</span><span class="n">relative</span> <span class="n">c</span><span class="err">'</span><span class="o">{</span>
-  <span class="err">\</span><span class="n">clef</span> <span class="n">treble</span>
-  <span class="err">\</span><span class="n">time</span> <span class="mi">4</span><span class="o">/</span><span class="mi">4</span>
-  <span class="err">\</span><span class="n">tempo</span> <span class="mi">4</span><span class="o">=</span><span class="mi">176</span>
-  <span class="err">\</span><span class="n">key</span> <span class="n">g</span> <span class="err">\</span><span class="n">major</span>
+<span class="k">\header</span> <span class="p">{</span>
+  title="Try a little tenderness"
+  composer="Harry Woods, Jimmy Campbell <span class="p">&amp;</span> Reg Connely"
+  subtitle = "Commitments Version"
+  <span class="c">%poet = "Poete"</span>
+  instrument = "Piano"
+  editor = "L'éditeur"
+  <span class="c">%meter=\markup {\bold {"Remarque sur le rhythme"}}</span>
+  style = "Soul"
+  maintainer = "Alexandre Touret"
+  maintainerEmail = "alexandre.touret@free.fr"
+  maintainerWeb = "http://blog.touret.info"     
+  lastupdated = ""
+  source = "Music room"
+  footer = "Footer"
+  copyright =<span class="k">\markup</span> <span class="p">{</span><span class="k">\fontsize</span> #-1.5
+ "Delivered by A TOURET"<span class="p">}</span>
+<span class="p">}</span>
+upper=
+<span class="k">\relative</span> c'<span class="p">{</span>
+  <span class="k">\clef</span> treble
+  <span class="k">\time</span> 4/4
+  <span class="k">\tempo</span> 4=176
+  <span class="k">\key</span> g <span class="k">\major</span>
   
-  <span class="n">d</span><span class="err">'</span><span class="mi">2</span> <span class="o">(</span><span class="n">b4</span> <span class="n">e</span>
-  <span class="n">d2</span> <span class="n">b4</span> <span class="n">a</span> 
-  <span class="n">g2</span> <span class="n">g2</span> 
-  <span class="o">&lt;</span><span class="n">e</span> <span class="n">g</span><span class="o">,&gt;</span><span class="mi">2</span><span class="o">)</span> <span class="o">&lt;</span><span class="n">fis</span><span class="o">,</span> <span class="n">c</span><span class="err">'</span> <span class="n">d</span><span class="o">&gt;</span> 
-  <span class="err">\</span><span class="n">bar</span> <span class="s">"||"</span>
+  d'2 (b4 e
+  d2 b4 a 
+  g2 g2 
+  &lt;e g,&gt;2) &lt;fis, c' d&gt; 
+  <span class="k">\bar</span> "||"
 
 </code></pre></div></div>
 
@@ -567,7 +567,7 @@ Vous trouverez les différents liens ci-dessous. Peut être que je publierai cet
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.png" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">

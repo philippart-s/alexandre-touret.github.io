@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/gradle.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T11:46:22+00:00</updated><id>https://blog.touret.info/feed/by_tag/gradle.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine</title><link href="https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/" rel="alternate" type="text/html" title="Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine" /><published>2020-05-10T06:22:00+00:00</published><updated>2020-05-10T06:22:00+00:00</updated><id>https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine</id><content type="html" xml:base="https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/">&lt;p class=&quot;has-drop-cap&quot;&gt;
-  A mes heures perdues, je travaille sur un « &lt;em&gt;POC/side project qui n'aboutira pas et je m'en fiche&lt;/em&gt; » basé sur Quarkus. J' ai choisi d'utiliser les langages et composants suivants :
-&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/gradle.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T15:57:04+00:00</updated><id>https://blog.touret.info/feed/by_tag/gradle.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine</title><link href="https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/" rel="alternate" type="text/html" title="Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine" /><published>2020-05-10T06:22:00+00:00</published><updated>2020-05-10T06:22:00+00:00</updated><id>https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine</id><content type="html" xml:base="https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/">&lt;p&gt;A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://kotlinlang.org/&quot;&gt;Kotlin&lt;/a&gt;&lt;/li&gt;
@@ -11,13 +9,7 @@
 
 &lt;p&gt;Oui, tant qu’à faire, autant aller dans la hype …&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-group&quot;&gt;
-  &lt;div class=&quot;wp-block-group__inner-container&quot;&gt;
-    &lt;div class=&quot;wp-block-image&quot;&gt;
-      &lt;figure class=&quot;aligncenter size-medium&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;696&quot; height=&quot;549&quot; src=&quot;/assets/images/2020/05/article_github_actions_k8s-1.png?w=300&quot; alt=&quot;&quot; class=&quot;wp-image-412&quot; srcset=&quot;/assets/images/2020/05/article_github_actions_k8s-1.png 696w, /assets/images/2020/05/article_github_actions_k8s-1-300x237.png 300w&quot; sizes=&quot;(max-width: 696px) 100vw, 696px&quot; /&gt;&lt;/figure&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/05/article_github_actions_k8s-1.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/alexandre-touret/music-quote&quot;&gt;Mon projet est sur GITHUB&lt;/a&gt;. Pour automatiser certaines actions et, disons-le, par fierté personnelle, j’ai choisi d’automatiser certaines actions par la mise en œuvre de pipelines CI/CD.&lt;br /&gt;
 Depuis peu, GITHUB a intégré un mécanisme de pipeline : &lt;a href=&quot;https://github.com/features/actions&quot;&gt;GITHUB Actions&lt;/a&gt;.&lt;/p&gt;
@@ -28,33 +20,31 @@ Depuis peu, GITHUB a intégré un mécanisme de pipeline : &lt;a href=&quot;http
 
 &lt;p&gt;Par exemple, si on veut lancer une compilation lors d’un push, on peut placer un fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows/build.xml&lt;/code&gt; avec le contenu :&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CI&lt;/span&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;CI&lt;/span&gt;
 
-&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
 
-&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;build:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JDK&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Gradle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;without&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testing&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v1&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Set up JDK &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;11&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/setup-java@v1&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;java-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Build with Gradle without testing&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./gradlew build -x test&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Coté GITHUB, vous verrez l’exécution sur un écran dédié&lt;figure class=&quot;wp-block-image size-large is-resized&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-376&quot; width=&quot;768&quot; height=&quot;305&quot; srcset=&quot;/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png 1025w, /assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote-300x119.png 300w, /assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote-768x306.png 768w&quot; sizes=&quot;(max-width: 768px) 100vw, 768px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Vous pouvez créer autant de workflows que vous souhaitez (si votre projet est en libre accès).&lt;br /&gt;
 Pour chaque workflow, on peut définir et utiliser des jobs. Les logs d’exécution sont disponibles dans ce même écran:&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png?w=936&quot; alt=&quot;&quot; class=&quot;wp-image-399&quot; width=&quot;702&quot; height=&quot;275&quot; srcset=&quot;/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png 936w, /assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote-300x117.png 300w, /assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote-768x300.png 768w&quot; sizes=&quot;(max-width: 702px) 100vw, 702px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png&quot; alt=&quot;workflow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;worflows-implémentés&quot;&gt;Worflows implémentés&lt;/h2&gt;
 
@@ -67,9 +57,7 @@ Pour chaque workflow, on peut définir et utiliser des jobs. Les logs d’exécu
 
 &lt;p&gt;On obtient donc dans mon cas:&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/workflow.png?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-378&quot; width=&quot;512&quot; height=&quot;396&quot; srcset=&quot;/assets/images/2020/05/workflow.png 1056w, /assets/images/2020/05/workflow-300x232.png 300w, /assets/images/2020/05/workflow-1024x791.png 1024w, /assets/images/2020/05/workflow-768x593.png 768w&quot; sizes=&quot;(max-width: 512px) 100vw, 512px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/05/workflow.png&quot; alt=&quot;workflow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Ce n’est pas parfait. Loin de là. Dans la « vraie vie », pour une équipe de dev, je l’améliorerai sans doute par un build docker dans les features branches, une validation formelle et bloquante de l’analyse sonar, etc.&lt;br /&gt;
 Pour un dev perso ça suffit largement. Le contenu de la branche master est compilé et une image docker est crée pour être déployée automatiquement dans GKE.&lt;/p&gt;
@@ -78,20 +66,20 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 &lt;p&gt;J’ai choisi d’utiliser &lt;a href=&quot;http://sonarcloud.io/&quot;&gt;sonarcloud&lt;/a&gt; pour analyser mon code. C’est gratuit pour les projets opensource. L’analyse se fait simplement:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;sonarCloudTrigger:&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SonarCloud&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Trigger&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JDK&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SonarCloud&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Scan&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;GITHUB_TOKEN:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;SONAR_TOKEN:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacocoTestReport&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sonarqube&lt;/span&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;sonarCloudTrigger&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;SonarCloud Trigger&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v1&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Set up JDK &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;11&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/setup-java@v1&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;java-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;SonarCloud Scan&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;GITHUB_TOKEN&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;SONAR_TOKEN&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./gradlew jacocoTestReport sonarqube&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -101,27 +89,27 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 &lt;p&gt;Ici aussi, ça se fait simplement. La preuve :&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;jobs:&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;publish:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;on:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;steps:&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JDK&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@v1&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JVM&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mode&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Gradle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;without&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testing&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradlew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;quarkusBuild&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Branch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;running&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;branch&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_REF&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;##&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*/}&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Quarkus&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JVM&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Dockerfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;jvm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_REPOSITORY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;jvm:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Login&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;against&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repository&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;env:&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;GITHUB_TOKEN:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_ACTOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_TOKEN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Publish&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Quarkus&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;JVM&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GITHUB_REPOSITORY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;music&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;jvm:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v1&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Set up JDK &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;11&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/setup-java@v1&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;java-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Build in JVM Mode with Gradle without testing&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./gradlew quarkusBuild  [1]&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Branch name&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo running on branch ${GITHUB_REF##*/}&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Build the Docker image Quarkus JVM&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker build -f src/main/docker/Dockerfile.jvm -t docker.pkg.github.com/${GITHUB_REPOSITORY}/music-quote-jvm:latest .  [2]&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Login against github docker repository&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;GITHUB_TOKEN&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker login -u ${GITHUB_ACTOR} -p ${GITHUB_TOKEN}  docker.pkg.github.com   [3]&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Publish the Docker image Quarkus JVM&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/music-quote-jvm:latest  [4]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ol&gt;
@@ -137,19 +125,11 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 &lt;p&gt;Mon application est pour l’instant architecturée comme suit (&lt;em&gt;attention c’est compliqué&lt;/em&gt;):&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-columns&quot;&gt;
-  &lt;div class=&quot;wp-block-column&quot; style=&quot;flex-basis:100%;&quot;&gt;
-    &lt;div class=&quot;wp-block-image is-style-default&quot;&gt;
-      &lt;figure class=&quot;aligncenter size-medium&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;359&quot; height=&quot;483&quot; src=&quot;/assets/images/2020/05/application-1.png?w=223&quot; alt=&quot;&quot; class=&quot;wp-image-391&quot; srcset=&quot;/assets/images/2020/05/application-1.png 359w, /assets/images/2020/05/application-1-223x300.png 223w&quot; sizes=&quot;(max-width: 359px) 100vw, 359px&quot; /&gt;&lt;/figure&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/05/application-1.png&quot; alt=&quot;workflow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Pour la déployer dans Google Kubernetes Engine, j’ai besoin d’ implémenter cette « architecture » par les objets Kubernetes suivants:&lt;/p&gt;
 
-&lt;div class=&quot;wp-block-image&quot;&gt;
-  &lt;figure class=&quot;aligncenter size-large is-resized&quot;&gt;&lt;img loading=&quot;lazy&quot; src=&quot;/assets/images/2020/05/application_gke.png?w=561&quot; alt=&quot;&quot; class=&quot;wp-image-392&quot; width=&quot;421&quot; height=&quot;443&quot; srcset=&quot;/assets/images/2020/05/application_gke.png 561w, /assets/images/2020/05/application_gke-285x300.png 285w&quot; sizes=&quot;(max-width: 421px) 100vw, 421px&quot; /&gt;&lt;/figure&gt;
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/05/application_gke.png&quot; alt=&quot;workflow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;J’utilise les objets suivants:&lt;/p&gt;
 
@@ -164,27 +144,26 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 &lt;p&gt;Pour lancer le déploiement, il faut au préalable créer un secret ( fait manuellement pour ne pas stocker d’objet yaml dans le repository GITHUB) pour se connecter au repo GITHUB via la commande suivante:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;kubectl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;pkg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;com&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;PASSWORD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EMAIL&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kubectl create secret docker-registry github-registry &lt;span class=&quot;nt&quot;&gt;--docker-server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;docker.pkg.github.com &lt;span class=&quot;nt&quot;&gt;--docker-username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;USER--docker-password&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;PASSWORD &lt;span class=&quot;nt&quot;&gt;--docker-email&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;EMAIL
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
 &lt;p&gt;On peut faire pareil pour les connexions base de données. J’ai mis dans un configmap pour ne pas trop me prendre la tête…&lt;/p&gt;
 
 &lt;p&gt;Après le déploiement via le pipeline se fait assez simplement:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[...]&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;uses:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GoogleCloudPlatform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gcloud&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@master&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;with:&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;version:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;286.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;service_account_email:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;service_account_key:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;project_id:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-      &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Get&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GKE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;so&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;we&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;can&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deploy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|-&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;gcloud&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;container&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zone&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;$&quot;&lt;/span&gt;
-      &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Deploy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docker&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;GKE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;name:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Deploy&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;run:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|-&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;kubectl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apply&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;./&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k8s&lt;/span&gt;     
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;GoogleCloudPlatform/github-actions/setup-gcloud@master&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;286.0.0'&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;service_account_email&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;service_account_key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;project_id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# Get the GKE credentials so we can deploy to the cluster&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|-&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;gcloud container clusters get-credentials &quot;$&quot; --zone &quot;$&quot;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# Deploy the Docker image to the GKE cluster&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deploy&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|-&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;kubectl apply -f ./k8s     &lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;J’utilise &lt;a href=&quot;https://github.com/GoogleCloudPlatform/github-actions&quot;&gt;les « actions » fournies par Google&lt;/a&gt;.&lt;/p&gt;
@@ -193,7 +172,7 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 &lt;p&gt;Pour que ça marche il y a pas mal d’étapes préalables ( des tokens à générer, un utilisateur technique, …).&lt;br /&gt;
 J’ai essayé de les référencer dans &lt;a href=&quot;https://github.com/alexandre-touret/music-quote&quot;&gt;le README du projet&lt;/a&gt;.&lt;br /&gt;
-Si vous voulez tester l’intégration Kubernetes dans le cloud google, sachez que vous pouvez disposer d’un crédit de 300€ valable un an. Attention, avec ce genre d’architecture, ça part vite…&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="gradle" /><category term="kubernetes" /><summary type="html">A mes heures perdues, je travaille sur un « POC/side project qui n'aboutira pas et je m'en fiche » basé sur Quarkus. J' ai choisi d'utiliser les langages et composants suivants :</summary></entry><entry><title type="html">Premiers pas avec Gradle</title><link href="https://blog.touret.info/2019/12/30/premiers-pas-avec-gradle/" rel="alternate" type="text/html" title="Premiers pas avec Gradle" /><published>2019-12-30T14:03:36+00:00</published><updated>2019-12-30T14:03:36+00:00</updated><id>https://blog.touret.info/2019/12/30/premiers-pas-avec-gradle</id><content type="html" xml:base="https://blog.touret.info/2019/12/30/premiers-pas-avec-gradle/">&lt;p&gt;&lt;img src=&quot;/assets/images/2019/12/gradle_logo.png&quot; alt=&quot;gradle&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+Si vous voulez tester l’intégration Kubernetes dans le cloud google, sachez que vous pouvez disposer d’un crédit de 300€ valable un an. Attention, avec ce genre d’architecture, ça part vite…&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="github" /><category term="gradle" /><category term="kubernetes" /><summary type="html">A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :</summary></entry><entry><title type="html">Premiers pas avec Gradle</title><link href="https://blog.touret.info/2019/12/30/premiers-pas-avec-gradle/" rel="alternate" type="text/html" title="Premiers pas avec Gradle" /><published>2019-12-30T14:03:36+00:00</published><updated>2019-12-30T14:03:36+00:00</updated><id>https://blog.touret.info/2019/12/30/premiers-pas-avec-gradle</id><content type="html" xml:base="https://blog.touret.info/2019/12/30/premiers-pas-avec-gradle/">&lt;p&gt;&lt;img src=&quot;/assets/images/2019/12/gradle_logo.png&quot; alt=&quot;gradle&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Depuis quelques temps je me mets à &lt;a href=&quot;https://gradle.org/&quot;&gt;Gradle&lt;/a&gt;. Après de (trop?) nombreuses années à utiliser Maven (depuis la version 0.9…), je me risque à modifier mon environnement de build. Du moins sur des projets démo.&lt;/p&gt;
 

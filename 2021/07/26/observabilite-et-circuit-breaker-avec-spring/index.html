@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret.png" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -341,9 +341,7 @@
 
 <p>Vous trouverez ci-dessous un schéma d’architecture de l’application <a href="https://c4model.com/">au format C4</a>.</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large"><img loading="lazy" width="825" height="668" src="/assets/images/2021/07/rest-book-architecture.png?w=825" alt="" class="wp-image-580" srcset="/assets/images/2021/07/rest-book-architecture.png 825w, /assets/images/2021/07/rest-book-architecture-300x243.png 300w, /assets/images/2021/07/rest-book-architecture-768x622.png 768w" sizes="(max-width: 825px) 100vw, 825px" /></figure>
-</div>
+<p><img src="/assets/images/2021/07/rest-book-architecture.png" alt="maintenance" class="align-center" /></p>
 
 <h2 id="circuit-breaker">Circuit Breaker</h2>
 
@@ -397,10 +395,10 @@ Les architectures de ce type d’applications sont <a href="https://en.wikipedia
 
 <p>Ajouter la/les dépendance(s)</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
 <span class="o">[...]</span>
-        <span class="n">implementation</span> <span class="err">'</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">:</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">actuator</span><span class="err">'</span>
-        <span class="n">implementation</span> <span class="err">'</span><span class="n">io</span><span class="o">.</span><span class="na">micrometer</span><span class="o">:</span><span class="n">micrometer</span><span class="o">-</span><span class="n">registry</span><span class="o">-</span><span class="n">prometheus</span><span class="err">'</span>
+        <span class="n">implementation</span> <span class="s1">'org.springframework.boot:spring-boot-starter-actuator'</span>
+        <span class="n">implementation</span> <span class="s1">'io.micrometer:micrometer-registry-prometheus'</span>
      <span class="o">[...]</span>
     <span class="o">}</span>
 </code></pre></div></div>
@@ -452,18 +450,18 @@ Grâce à cet librairie, nous allons pouvoir tracer toutes les transactions de n
 
 <p>Pour activer la fonctionnalité il suffit d’ajouter la dépendance au classpath:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">implementation</span> <span class="err">'</span><span class="n">io</span><span class="o">.</span><span class="na">opentracing</span><span class="o">.</span><span class="na">contrib</span><span class="o">:</span><span class="n">opentracing</span><span class="o">-</span><span class="n">spring</span><span class="o">-</span><span class="n">jaeger</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="nl">starter:</span><span class="mf">3.3</span><span class="o">.</span><span class="mi">1</span><span class="err">'</span>
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">implementation</span> <span class="s1">'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'</span>
 </code></pre></div></div>
 
 <p>et de configurer l’URL de Jaeger dans l’application</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span> <span class="nc">Default</span> <span class="n">values</span>
-<span class="nl">opentracing:</span>
-  <span class="nl">jaeger:</span>
-    <span class="n">udp</span><span class="o">-</span><span class="nl">sender:</span>
-      <span class="nl">host:</span> <span class="n">localhost</span>
-      <span class="nl">port:</span> <span class="mi">6831</span>
-    <span class="nl">enabled:</span> <span class="kc">true</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Default values</span>
+<span class="na">opentracing</span><span class="pi">:</span>
+  <span class="na">jaeger</span><span class="pi">:</span>
+    <span class="na">udp-sender</span><span class="pi">:</span>
+      <span class="na">host</span><span class="pi">:</span> <span class="s">localhost</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">6831</span>
+    <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre></div></div>
 
 <p>Une fois l’application reconstruite et redémarrée, vous pourrez visualiser les transactions dans JAEGER:<figure class="wp-block-gallery columns-2 is-cropped"></figure></p>
@@ -566,7 +564,7 @@ Aussi, n’hésitez pas à cloner, tester ce projet et me donner votre retour. J
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.png" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">

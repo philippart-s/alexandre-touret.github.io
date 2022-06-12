@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine - blog.touret.info</title>
-<meta name="description" content="A mes heures perdues, je travaille sur un « POC/side project qui n&#39;aboutira pas et je m&#39;en fiche » basé sur Quarkus. J&#39; ai choisi d&#39;utiliser les langages et composants suivants :">
+<meta name="description" content="A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :">
 
 
   <meta name="author" content="Alexandre Touret">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/">
 
 
-  <meta property="og:description" content="A mes heures perdues, je travaille sur un « POC/side project qui n&#39;aboutira pas et je m&#39;en fiche » basé sur Quarkus. J&#39; ai choisi d&#39;utiliser les langages et composants suivants :">
+  <meta property="og:description" content="A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :">
 
 
 
@@ -36,7 +36,7 @@
 
   <meta name="twitter:site" content="@touret_alex">
   <meta name="twitter:title" content="Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine">
-  <meta name="twitter:description" content="A mes heures perdues, je travaille sur un « POC/side project qui n&#39;aboutira pas et je m&#39;en fiche » basé sur Quarkus. J&#39; ai choisi d&#39;utiliser les langages et composants suivants :">
+  <meta name="twitter:description" content="A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :">
   <meta name="twitter:url" content="https://blog.touret.info/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/">
 
   
@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret.png" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -279,7 +279,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine">
-    <meta itemprop="description" content="  A mes heures perdues, je travaille sur un « POC/side project qui n&#39;aboutira pas et je m&#39;en fiche » basé sur Quarkus. J&#39; ai choisi d&#39;utiliser les langages et composants suivants :">
+    <meta itemprop="description" content="A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :">
     <meta itemprop="datePublished" content="2020-05-10T06:22:00+00:00">
     
 
@@ -323,9 +323,7 @@
 
       <section class="page__content e-content" itemprop="text">
         
-        <p class="has-drop-cap">
-  A mes heures perdues, je travaille sur un « <em>POC/side project qui n'aboutira pas et je m'en fiche</em> » basé sur Quarkus. J' ai choisi d'utiliser les langages et composants suivants :
-</p>
+        <p>A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants :</p>
 
 <ul>
   <li><a href="https://kotlinlang.org/">Kotlin</a></li>
@@ -336,13 +334,7 @@
 
 <p>Oui, tant qu’à faire, autant aller dans la hype …</p>
 
-<div class="wp-block-group">
-  <div class="wp-block-group__inner-container">
-    <div class="wp-block-image">
-      <figure class="aligncenter size-medium"><img loading="lazy" width="696" height="549" src="/assets/images/2020/05/article_github_actions_k8s-1.png?w=300" alt="" class="wp-image-412" srcset="/assets/images/2020/05/article_github_actions_k8s-1.png 696w, /assets/images/2020/05/article_github_actions_k8s-1-300x237.png 300w" sizes="(max-width: 696px) 100vw, 696px" /></figure>
-    </div>
-  </div>
-</div>
+<p><img src="/assets/images/2020/05/article_github_actions_k8s-1.png" alt="boot" class="align-center" /></p>
 
 <p><a href="https://github.com/alexandre-touret/music-quote">Mon projet est sur GITHUB</a>. Pour automatiser certaines actions et, disons-le, par fierté personnelle, j’ai choisi d’automatiser certaines actions par la mise en œuvre de pipelines CI/CD.<br />
 Depuis peu, GITHUB a intégré un mécanisme de pipeline : <a href="https://github.com/features/actions">GITHUB Actions</a>.</p>
@@ -353,33 +345,31 @@ Depuis peu, GITHUB a intégré un mécanisme de pipeline : <a href="https://gith
 
 <p>Par exemple, si on veut lancer une compilation lors d’un push, on peut placer un fichier <code class="language-plaintext highlighter-rouge">.github/workflows/build.xml</code> avec le contenu :</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">name:</span> <span class="no">CI</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
 
-<span class="nl">on:</span> <span class="o">[</span><span class="n">push</span><span class="o">]</span>
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
 
-<span class="nl">jobs:</span>
-  <span class="nl">build:</span>
-    <span class="n">runs</span><span class="o">-</span><span class="nl">on:</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
-    <span class="nl">steps:</span>
-      <span class="o">-</span> <span class="nl">uses:</span> <span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="nd">@v1</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Set</span> <span class="n">up</span> <span class="no">JDK</span> <span class="mi">11</span>
-        <span class="nl">uses:</span> <span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">java</span><span class="nd">@v1</span>
-        <span class="nl">with:</span>
-          <span class="n">java</span><span class="o">-</span><span class="nl">version:</span> <span class="mi">11</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Build</span> <span class="n">with</span> <span class="nc">Gradle</span> <span class="n">without</span> <span class="n">testing</span>
-        <span class="nl">run:</span> <span class="o">./</span><span class="n">gradlew</span> <span class="n">build</span> <span class="o">-</span><span class="n">x</span> <span class="n">test</span>
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v1</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up JDK </span><span class="m">11</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-java@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">java-version</span><span class="pi">:</span> <span class="m">11</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build with Gradle without testing</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">./gradlew build -x test</span>
 </code></pre></div></div>
 
 <p>Coté GITHUB, vous verrez l’exécution sur un écran dédié<figure class="wp-block-image size-large is-resized"></figure></p>
 
-<p><img loading="lazy" src="/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png?w=1024" alt="" class="wp-image-376" width="768" height="305" srcset="/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png 1025w, /assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote-300x119.png 300w, /assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote-768x306.png 768w" sizes="(max-width: 768px) 100vw, 768px" /> &lt;/figure&gt;</p>
+<p><img src="/assets/images/2020/05/screenshot_2020-05-08-alexandre-touret-music-quote.png" alt="boot" class="align-center" /></p>
 
 <p>Vous pouvez créer autant de workflows que vous souhaitez (si votre projet est en libre accès).<br />
 Pour chaque workflow, on peut définir et utiliser des jobs. Les logs d’exécution sont disponibles dans ce même écran:</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png?w=936" alt="" class="wp-image-399" width="702" height="275" srcset="/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png 936w, /assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote-300x117.png 300w, /assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote-768x300.png 768w" sizes="(max-width: 702px) 100vw, 702px" /></figure>
-</div>
+<p><img src="/assets/images/2020/05/screenshot_2020-05-09-alexandre-touret-music-quote.png" alt="workflow" class="align-center" /></p>
 
 <h2 id="worflows-implémentés">Worflows implémentés</h2>
 
@@ -392,9 +382,7 @@ Pour chaque workflow, on peut définir et utiliser des jobs. Les logs d’exécu
 
 <p>On obtient donc dans mon cas:</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2020/05/workflow.png?w=1024" alt="" class="wp-image-378" width="512" height="396" srcset="/assets/images/2020/05/workflow.png 1056w, /assets/images/2020/05/workflow-300x232.png 300w, /assets/images/2020/05/workflow-1024x791.png 1024w, /assets/images/2020/05/workflow-768x593.png 768w" sizes="(max-width: 512px) 100vw, 512px" /></figure>
-</div>
+<p><img src="/assets/images/2020/05/workflow.png" alt="workflow" class="align-center" /></p>
 
 <p>Ce n’est pas parfait. Loin de là. Dans la « vraie vie », pour une équipe de dev, je l’améliorerai sans doute par un build docker dans les features branches, une validation formelle et bloquante de l’analyse sonar, etc.<br />
 Pour un dev perso ça suffit largement. Le contenu de la branche master est compilé et une image docker est crée pour être déployée automatiquement dans GKE.</p>
@@ -403,20 +391,20 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 <p>J’ai choisi d’utiliser <a href="http://sonarcloud.io/">sonarcloud</a> pour analyser mon code. C’est gratuit pour les projets opensource. L’analyse se fait simplement:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">sonarCloudTrigger:</span>
-    <span class="nl">name:</span> <span class="nc">SonarCloud</span> <span class="nc">Trigger</span>
-    <span class="n">runs</span><span class="o">-</span><span class="nl">on:</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
-    <span class="nl">steps:</span>
-      <span class="o">-</span> <span class="nl">uses:</span> <span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="nd">@v1</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Set</span> <span class="n">up</span> <span class="no">JDK</span> <span class="mi">11</span>
-        <span class="nl">uses:</span> <span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">java</span><span class="nd">@v1</span>
-        <span class="nl">with:</span>
-          <span class="n">java</span><span class="o">-</span><span class="nl">version:</span> <span class="mi">11</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">SonarCloud</span> <span class="nc">Scan</span>
-        <span class="nl">env:</span>
-          <span class="nl">GITHUB_TOKEN:</span> <span class="err">$</span>
-          <span class="nl">SONAR_TOKEN:</span> <span class="err">$</span>
-        <span class="nl">run:</span> <span class="o">./</span><span class="n">gradlew</span> <span class="n">jacocoTestReport</span> <span class="n">sonarqube</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">sonarCloudTrigger</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">SonarCloud Trigger</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v1</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up JDK </span><span class="m">11</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-java@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">java-version</span><span class="pi">:</span> <span class="m">11</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">SonarCloud Scan</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">GITHUB_TOKEN</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">SONAR_TOKEN</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">./gradlew jacocoTestReport sonarqube</span>
 
 </code></pre></div></div>
 
@@ -426,27 +414,27 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 <p>Ici aussi, ça se fait simplement. La preuve :</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">jobs:</span>
-  <span class="nl">publish:</span>
-    <span class="n">runs</span><span class="o">-</span><span class="nl">on:</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">latest</span>
-    <span class="nl">steps:</span>
-      <span class="o">-</span> <span class="nl">uses:</span> <span class="n">actions</span><span class="o">/</span><span class="n">checkout</span><span class="nd">@v1</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Set</span> <span class="n">up</span> <span class="no">JDK</span> <span class="mi">11</span>
-        <span class="nl">uses:</span> <span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">java</span><span class="nd">@v1</span>
-        <span class="nl">with:</span>
-          <span class="n">java</span><span class="o">-</span><span class="nl">version:</span> <span class="mi">11</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Build</span> <span class="n">in</span> <span class="no">JVM</span> <span class="nc">Mode</span> <span class="n">with</span> <span class="nc">Gradle</span> <span class="n">without</span> <span class="n">testing</span>
-        <span class="nl">run:</span> <span class="o">./</span><span class="n">gradlew</span> <span class="n">quarkusBuild</span>  <span class="o">[</span><span class="mi">1</span><span class="o">]</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Branch</span> <span class="n">name</span>
-        <span class="nl">run:</span> <span class="n">echo</span> <span class="n">running</span> <span class="n">on</span> <span class="n">branch</span> <span class="err">$</span><span class="o">{</span><span class="no">GITHUB_REF</span><span class="err">##</span><span class="o">*/}</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Build</span> <span class="n">the</span> <span class="nc">Docker</span> <span class="n">image</span> <span class="nc">Quarkus</span> <span class="no">JVM</span>
-        <span class="nl">run:</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">f</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="nc">Dockerfile</span><span class="o">.</span><span class="na">jvm</span> <span class="o">-</span><span class="n">t</span> <span class="n">docker</span><span class="o">.</span><span class="na">pkg</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">com</span><span class="o">/</span><span class="err">$</span><span class="o">{</span><span class="no">GITHUB_REPOSITORY</span><span class="o">}/</span><span class="n">music</span><span class="o">-</span><span class="n">quote</span><span class="o">-</span><span class="nl">jvm:</span><span class="n">latest</span> <span class="o">.</span>  <span class="o">[</span><span class="mi">2</span><span class="o">]</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Login</span> <span class="n">against</span> <span class="n">github</span> <span class="n">docker</span> <span class="n">repository</span>
-        <span class="nl">env:</span>
-          <span class="nl">GITHUB_TOKEN:</span> <span class="err">$</span>
-        <span class="nl">run:</span> <span class="n">docker</span> <span class="n">login</span> <span class="o">-</span><span class="n">u</span> <span class="err">$</span><span class="o">{</span><span class="no">GITHUB_ACTOR</span><span class="o">}</span> <span class="o">-</span><span class="n">p</span> <span class="err">$</span><span class="o">{</span><span class="no">GITHUB_TOKEN</span><span class="o">}</span>  <span class="n">docker</span><span class="o">.</span><span class="na">pkg</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">com</span>   <span class="o">[</span><span class="mi">3</span><span class="o">]</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Publish</span> <span class="n">the</span> <span class="nc">Docker</span> <span class="n">image</span> <span class="nc">Quarkus</span> <span class="no">JVM</span>
-        <span class="nl">run:</span> <span class="n">docker</span> <span class="n">push</span> <span class="n">docker</span><span class="o">.</span><span class="na">pkg</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">com</span><span class="o">/</span><span class="err">$</span><span class="o">{</span><span class="no">GITHUB_REPOSITORY</span><span class="o">}/</span><span class="n">music</span><span class="o">-</span><span class="n">quote</span><span class="o">-</span><span class="nl">jvm:</span><span class="n">latest</span>  <span class="o">[</span><span class="mi">4</span><span class="o">]</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">publish</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v1</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up JDK </span><span class="m">11</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-java@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">java-version</span><span class="pi">:</span> <span class="m">11</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build in JVM Mode with Gradle without testing</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">./gradlew quarkusBuild  [1]</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Branch name</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">echo running on branch ${GITHUB_REF##*/}</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build the Docker image Quarkus JVM</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">docker build -f src/main/docker/Dockerfile.jvm -t docker.pkg.github.com/${GITHUB_REPOSITORY}/music-quote-jvm:latest .  [2]</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Login against github docker repository</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">GITHUB_TOKEN</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">docker login -u ${GITHUB_ACTOR} -p ${GITHUB_TOKEN}  docker.pkg.github.com   [3]</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Publish the Docker image Quarkus JVM</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/music-quote-jvm:latest  [4]</span>
 </code></pre></div></div>
 
 <ol>
@@ -462,19 +450,11 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 <p>Mon application est pour l’instant architecturée comme suit (<em>attention c’est compliqué</em>):</p>
 
-<div class="wp-block-columns">
-  <div class="wp-block-column" style="flex-basis:100%;">
-    <div class="wp-block-image is-style-default">
-      <figure class="aligncenter size-medium"><img loading="lazy" width="359" height="483" src="/assets/images/2020/05/application-1.png?w=223" alt="" class="wp-image-391" srcset="/assets/images/2020/05/application-1.png 359w, /assets/images/2020/05/application-1-223x300.png 223w" sizes="(max-width: 359px) 100vw, 359px" /></figure>
-    </div>
-  </div>
-</div>
+<p><img src="/assets/images/2020/05/application-1.png" alt="workflow" class="align-center" /></p>
 
 <p>Pour la déployer dans Google Kubernetes Engine, j’ai besoin d’ implémenter cette « architecture » par les objets Kubernetes suivants:</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2020/05/application_gke.png?w=561" alt="" class="wp-image-392" width="421" height="443" srcset="/assets/images/2020/05/application_gke.png 561w, /assets/images/2020/05/application_gke-285x300.png 285w" sizes="(max-width: 421px) 100vw, 421px" /></figure>
-</div>
+<p><img src="/assets/images/2020/05/application_gke.png" alt="workflow" class="align-center" /></p>
 
 <p>J’utilise les objets suivants:</p>
 
@@ -489,27 +469,26 @@ Pour un dev perso ça suffit largement. Le contenu de la branche master est comp
 
 <p>Pour lancer le déploiement, il faut au préalable créer un secret ( fait manuellement pour ne pas stocker d’objet yaml dans le repository GITHUB) pour se connecter au repo GITHUB via la commande suivante:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kubectl</span> <span class="n">create</span> <span class="n">secret</span> <span class="n">docker</span><span class="o">-</span><span class="n">registry</span> <span class="n">github</span><span class="o">-</span><span class="n">registry</span> <span class="o">--</span><span class="n">docker</span><span class="o">-</span><span class="n">server</span><span class="o">=</span><span class="n">docker</span><span class="o">.</span><span class="na">pkg</span><span class="o">.</span><span class="na">github</span><span class="o">.</span><span class="na">com</span> <span class="o">--</span><span class="n">docker</span><span class="o">-</span><span class="n">username</span><span class="o">=</span><span class="no">USER</span><span class="o">--</span><span class="n">docker</span><span class="o">-</span><span class="n">password</span><span class="o">=</span><span class="no">PASSWORD</span> <span class="o">--</span><span class="n">docker</span><span class="o">-</span><span class="n">email</span><span class="o">=</span><span class="no">EMAIL</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create secret docker-registry github-registry <span class="nt">--docker-server</span><span class="o">=</span>docker.pkg.github.com <span class="nt">--docker-username</span><span class="o">=</span>USER--docker-password<span class="o">=</span>PASSWORD <span class="nt">--docker-email</span><span class="o">=</span>EMAIL
 </code></pre></div></div>
-
 <p>On peut faire pareil pour les connexions base de données. J’ai mis dans un configmap pour ne pas trop me prendre la tête…</p>
 
 <p>Après le déploiement via le pipeline se fait assez simplement:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[...]</span>
-      <span class="o">-</span> <span class="nl">uses:</span> <span class="nc">GoogleCloudPlatform</span><span class="o">/</span><span class="n">github</span><span class="o">-</span><span class="n">actions</span><span class="o">/</span><span class="n">setup</span><span class="o">-</span><span class="n">gcloud</span><span class="nd">@master</span>
-        <span class="nl">with:</span>
-          <span class="nl">version:</span> <span class="err">'</span><span class="mf">286.0</span><span class="o">.</span><span class="mi">0</span><span class="err">'</span>
-          <span class="nl">service_account_email:</span> <span class="err">$</span>
-          <span class="nl">service_account_key:</span> <span class="err">$</span>
-          <span class="nl">project_id:</span> <span class="err">$</span>
-      <span class="err">#</span> <span class="nc">Get</span> <span class="n">the</span> <span class="no">GKE</span> <span class="n">credentials</span> <span class="n">so</span> <span class="n">we</span> <span class="n">can</span> <span class="n">deploy</span> <span class="n">to</span> <span class="n">the</span> <span class="n">cluster</span>
-      <span class="o">-</span> <span class="nl">run:</span> <span class="o">|-</span>
-          <span class="n">gcloud</span> <span class="n">container</span> <span class="n">clusters</span> <span class="n">get</span><span class="o">-</span><span class="n">credentials</span> <span class="s">"$"</span> <span class="o">--</span><span class="n">zone</span> <span class="s">"$"</span>
-      <span class="err">#</span> <span class="nc">Deploy</span> <span class="n">the</span> <span class="nc">Docker</span> <span class="n">image</span> <span class="n">to</span> <span class="n">the</span> <span class="no">GKE</span> <span class="n">cluster</span>
-      <span class="o">-</span> <span class="nl">name:</span> <span class="nc">Deploy</span>
-        <span class="nl">run:</span> <span class="o">|-</span>
-          <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">k8s</span>     
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">[</span><span class="nv">...</span><span class="pi">]</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">GoogleCloudPlatform/github-actions/setup-gcloud@master</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">286.0.0'</span>
+          <span class="na">service_account_email</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">service_account_key</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">project_id</span><span class="pi">:</span> <span class="s">$</span>
+      <span class="c1"># Get the GKE credentials so we can deploy to the cluster</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="pi">|-</span>
+          <span class="s">gcloud container clusters get-credentials "$" --zone "$"</span>
+      <span class="c1"># Deploy the Docker image to the GKE cluster</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Deploy</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|-</span>
+          <span class="s">kubectl apply -f ./k8s     </span>
 </code></pre></div></div>
 
 <p>J’utilise <a href="https://github.com/GoogleCloudPlatform/github-actions">les « actions » fournies par Google</a>.</p>
@@ -606,7 +585,7 @@ Si vous voulez tester l’intégration Kubernetes dans le cloud google, sachez q
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.png" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">

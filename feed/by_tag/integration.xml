@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/integration.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T11:46:22+00:00</updated><id>https://blog.touret.info/feed/by_tag/integration.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Intégration et médiation avec Apache Camel</title><link href="https://blog.touret.info/2018/04/10/integration-et-mediation-avec-apache-camel/" rel="alternate" type="text/html" title="Intégration et médiation avec Apache Camel" /><published>2018-04-10T13:15:05+00:00</published><updated>2018-04-10T13:15:05+00:00</updated><id>https://blog.touret.info/2018/04/10/integration-et-mediation-avec-apache-camel</id><content type="html" xml:base="https://blog.touret.info/2018/04/10/integration-et-mediation-avec-apache-camel/">&lt;p&gt;Depuis quelques jours, je teste &lt;a href=&quot;https://camel.apache.org/&quot;&gt;Apache Camel&lt;/a&gt; pour la mise en œuvre  de médiations.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/integration.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T15:57:04+00:00</updated><id>https://blog.touret.info/feed/by_tag/integration.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Intégration et médiation avec Apache Camel</title><link href="https://blog.touret.info/2018/04/10/integration-et-mediation-avec-apache-camel/" rel="alternate" type="text/html" title="Intégration et médiation avec Apache Camel" /><published>2018-04-10T13:15:05+00:00</published><updated>2018-04-10T13:15:05+00:00</updated><id>https://blog.touret.info/2018/04/10/integration-et-mediation-avec-apache-camel</id><content type="html" xml:base="https://blog.touret.info/2018/04/10/integration-et-mediation-avec-apache-camel/">&lt;p&gt;Depuis quelques jours, je teste &lt;a href=&quot;https://camel.apache.org/&quot;&gt;Apache Camel&lt;/a&gt; pour la mise en œuvre  de médiations.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/2018/04/apache-camel-logo.png&quot; alt=&quot;camel&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
@@ -36,15 +36,15 @@
 
 &lt;p&gt;Elles sont externalisées dans des fichiers de configuration pour faciliter les tests et accessibles via SPRING.&lt;/p&gt;
 
-&lt;script src=&quot;https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b.js&quot;&gt;
+&lt;script src=&quot;https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b.js&quot;&gt;&lt;/script&gt;
 
-&lt;script src=&quot;https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b#file-camel-properties&quot; /&gt;
+&lt;script src=&quot;https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b#file-camel-properties&quot;&gt;&lt;/script&gt;
 
-&lt;script src=&quot;https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b#file-routebuilder-java&quot; /&gt;
+&lt;script src=&quot;https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b#file-routebuilder-java&quot;&gt;&lt;/script&gt;
 
-## Lancement de la route
+&lt;h2 id=&quot;lancement-de-la-route&quot;&gt;Lancement de la route&lt;/h2&gt;
 
-Le lancement de la route se fait dans une méthode main() :
+&lt;p&gt;Le lancement de la route se fait dans une méthode main() :&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/alexandre-touret/40f3cfa13f5947aa922fc1f796668c59.js&quot;&gt;&lt;/script&gt;
 

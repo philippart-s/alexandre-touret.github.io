@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Ma Configuration Debian 9 - blog.touret.info</title>
-<meta name="description" content="Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
+<meta name="description" content="Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
 
 
   <meta name="author" content="Alexandre Touret">
@@ -26,23 +26,23 @@
 <meta property="og:url" content="https://blog.touret.info/2018/02/10/ma-configuration-debian-9/">
 
 
-  <meta property="og:description" content="Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
+  <meta property="og:description" content="Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2018/02/220px-debian-openlogo-svg.png">
 
 
 
   <meta name="twitter:site" content="@touret_alex">
   <meta name="twitter:title" content="Ma Configuration Debian 9">
-  <meta name="twitter:description" content="Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
+  <meta name="twitter:description" content="Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
   <meta name="twitter:url" content="https://blog.touret.info/2018/02/10/ma-configuration-debian-9/">
 
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2018/02/220px-debian-openlogo-svg.png">
     
   
 
@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret.png" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -279,7 +279,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Ma Configuration Debian 9">
-    <meta itemprop="description" content="Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
+    <meta itemprop="description" content="Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .">
     <meta itemprop="datePublished" content="2018-02-10T07:58:47+00:00">
     
 
@@ -323,9 +323,9 @@
 
       <section class="page__content e-content" itemprop="text">
         
-        <p>Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .</p>
+        <p>Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique .</p>
 
-<p><img loading="lazy" class=" size-full wp-image-39 aligncenter" src="/assets/images/2018/02/220px-debian-openlogo-svg.png" alt="220px-Debian-OpenLogo.svg" width="220" height="291" /></p>
+<p><img src="/assets/images/2018/02/220px-debian-openlogo-svg.png" alt="debian" class="align-center" /></p>
 
 <p>Voici ce que j’ai réalisé post-installation:</p>
 
@@ -333,191 +333,174 @@
 
 <p>Dans le fichier /etc/apt/sources.list, ajouter les repo contrib et non-free . Activer également les mises à jour de sécurité.</p>
 
-<pre>deb http://ftp.fr.debian.org/debian/ stretch main non-free contrib
-deb-src http://ftp.fr.debian.org/debian/ stretch main non-free contrib
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">deb</span> <span class="err">http://ftp.fr.debian.org/debian/</span> <span class="err">stretch</span> <span class="err">main</span> <span class="err">non-free</span> <span class="err">contrib</span>
+<span class="err">deb-src</span> <span class="err">http://ftp.fr.debian.org/debian/</span> <span class="err">stretch</span> <span class="err">main</span> <span class="err">non-free</span> <span class="err">contrib</span>
 
-deb http://security.debian.org/debian-security stretch/updates main non-free contrib
-deb-src http://security.debian.org/debian-security stretch/updates main non-free contrib
+<span class="err">deb</span> <span class="err">http://security.debian.org/debian-security</span> <span class="err">stretch/updates</span> <span class="err">main</span> <span class="err">non-free</span> <span class="err">contrib</span>
+<span class="err">deb-src</span> <span class="err">http://security.debian.org/debian-security</span> <span class="err">stretch/updates</span> <span class="err">main</span> <span class="err">non-free</span> <span class="err">contrib</span>
 
-# stretch-updates, previously known as 'volatile'
-deb http://ftp.fr.debian.org/debian/ stretch-updates main non-free contrib
-deb-src http://ftp.fr.debian.org/debian/ stretch-updates main non-free contrib
-```
+<span class="c"># stretch-updates, previously known as 'volatile'
+</span><span class="err">deb</span> <span class="err">http://ftp.fr.debian.org/debian/</span> <span class="err">stretch-updates</span> <span class="err">main</span> <span class="err">non-free</span> <span class="err">contrib</span>
+<span class="err">deb-src</span> <span class="err">http://ftp.fr.debian.org/debian/</span> <span class="err">stretch-updates</span> <span class="err">main</span> <span class="err">non-free</span> <span class="err">contrib</span>
+</code></pre></div></div>
 
+<h2 id="logiciels-tiers">Logiciels tiers</h2>
 
-## Logiciels tiers
+<h3 id="etcher">Etcher</h3>
 
-### Etcher
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#echo "deb https://dl.bintray.com/resin-io/debian stable etcher" | sudo tee /etc/apt/sources.list.d/etcher.list
+</code></pre></div></div>
 
-    #echo "deb https://dl.bintray.com/resin-io/debian stable etcher" | sudo tee /etc/apt/sources.list.d/etcher.list
-    
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;pre&gt;#apt-key adv <span class="nt">--keyserver</span> hkp://pgp.mit.edu:80 <span class="nt">--recv-keys</span> 379CE192D401AB61
+</code></pre></div></div>
 
-<div class="highlight highlight-source-shell">
-  <pre>#apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 379CE192D401AB61
-```
+<h3 id="virtualbox">Virtualbox</h3>
 
-&lt;/div&gt;
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -</span>
+</code></pre></div></div>
 
-### Virtualbox
+<p>Dans le fichier <code class="language-plaintext highlighter-rouge">/etc/apt/sources.list.d/virtualbox.list</code></p>
 
-<pre># wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-```
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">deb</span> <span class="err">https://download.virtualbox.org/virtualbox/debian</span> <span class="err">stretch</span> <span class="err">contrib</span>
+</code></pre></div></div>
 
+<h3 id="spotify">Spotify</h3>
 
-Dans le fichier /etc/apt/sources.list.d/virtualbox.list
+<p>Dans le fichier /etc/apt/sources.list.d/spotify.list</p>
 
-<pre>deb https://download.virtualbox.org/virtualbox/debian stretch contrib
-```
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">deb</span> <span class="err">http://repository.spotify.com</span> <span class="err">stable</span> <span class="err">non-free</span>
+</code></pre></div></div>
 
+<h2 id="installation-paquets-supplémentaires">Installation paquets supplémentaires</h2>
 
-### Spotify
-
-Dans le fichier /etc/apt/sources.list.d/spotify.list
-
-<pre>deb http://repository.spotify.com stable non-free
-```
-
-
-## Installation paquets supplémentaires
-
-<pre># apt-get update
-# apt-get install firmware-iwlwifi virtualbox-5.2\
-ttf-mscorefonts-installer easytag tuxguitar-jsa htop\
- frescobaldi gparted grsync ntfs-config chromium autofs\
- openjdk-8-jdk openjdk-8-jre gnome-tweak-tool ntfs-config \
-ntfs-3g cifs-utils geogebra-gnome arduino libmediainfo \
-libmediainfo0v5 network-manager-openvpn-gnome dirmngr \
-spotify-client spotify-client-gnome-support \
- etcher apt-transport-https etcher-electron vim \
-fonts-powerline audacity ffmpeg lame unrar rar gdebi \
-sound-juicer traceroute scala net-tools nmap \
-gnome-shell-pomodoro hplip dig dnsutils build-essential \
-linux-headers-amd64 firmware-linux-nonfree lshw ethtool \
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># apt-get update</span>
+<span class="c"># apt-get install firmware-iwlwifi virtualbox-5.2\</span>
+ttf-mscorefonts-installer easytag tuxguitar-jsa htop<span class="se">\</span>
+ frescobaldi gparted grsync ntfs-config chromium autofs<span class="se">\</span>
+ openjdk-8-jdk openjdk-8-jre gnome-tweak-tool ntfs-config <span class="se">\</span>
+ntfs-3g cifs-utils geogebra-gnome arduino libmediainfo <span class="se">\</span>
+libmediainfo0v5 network-manager-openvpn-gnome dirmngr <span class="se">\</span>
+spotify-client spotify-client-gnome-support <span class="se">\</span>
+ etcher apt-transport-https etcher-electron vim <span class="se">\</span>
+fonts-powerline audacity ffmpeg lame unrar rar gdebi <span class="se">\</span>
+sound-juicer traceroute scala net-tools nmap <span class="se">\</span>
+gnome-shell-pomodoro hplip dig dnsutils build-essential <span class="se">\</span>
+linux-headers-amd64 firmware-linux-nonfree lshw ethtool <span class="se">\</span>
 libsane-hpaio xsane autofs vlc
-```
+</code></pre></div></div>
 
+<h2 id="configuration-autofs">Configuration autofs</h2>
 
-## Configuration autofs
+<p>Pour ceux qui ne connaissent pas , <a href="https://wiki.debian.org/AutoFs">autofs</a> est un outil permettant de monter directement des partages <a href="https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux">nfs</a> et cicfs à l’utilisation et non au démarrage de l’ordinateur.</p>
 
-Pour ceux qui ne connaissent pas , [autofs](https://wiki.debian.org/AutoFs) est un outil permettant de monter directement des partages [nfs](https://linuxconfig.org/how-to-configure-nfs-on-debian-9-stretch-linux) et cicfs à l'utilisation et non au démarrage de l'ordinateur.
+<p>Dans le fichier /etc/auto.master</p>
 
-Dans le fichier /etc/auto.master
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">/mnt/SERV1/nfs</span> <span class="err">/etc/auto.nfs</span> <span class="err">--ghost,</span> <span class="py">--timeout</span><span class="p">=</span><span class="s">60 </span>
+<span class="err">/mnt/SERV1/cifs</span> <span class="err">/etc/auto.SERV1.cifs</span> <span class="err">--ghost,</span> <span class="py">--timeout</span><span class="p">=</span><span class="s">60 </span>
+<span class="err">/mnt/SERV2</span> <span class="err">/etc/auto.cifs</span> <span class="err">--ghost,</span> <span class="py">--timeout</span><span class="p">=</span><span class="s">60</span>
+</code></pre></div></div>
 
-<pre>/mnt/SERV1/nfs /etc/auto.nfs --ghost, --timeout=60 
-/mnt/SERV1/cifs /etc/auto.SERV1.cifs --ghost, --timeout=60 
-/mnt/SERV2 /etc/auto.cifs --ghost, --timeout=60
-```
+<p>ensuite insérer la configuration adéquate dans les fichiers référencés :</p>
 
+<h3 id="autocicfs">auto.cicfs</h3>
 
-ensuite insérer la configuration adéquate dans les fichiers référencés :
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">data</span> <span class="py">-fstype</span><span class="p">=</span><span class="s">cifs,credentials=/home/USER/.cred-file,user=littlewing,uid=1000,gid=1000 ://192.168.0.XX/REPERTOIRE</span>
+</code></pre></div></div>
 
-### auto.cicfs
+<p>Les identifiants / mots de passe sont stockés dans un fichier .cred-file stocké à la racine du répertoire utilisateur.</p>
 
-<pre>data -fstype=cifs,credentials=/home/USER/.cred-file,user=littlewing,uid=1000,gid=1000 ://192.168.0.XX/REPERTOIRE
-```
+<p>Voici un exemple :</p>
 
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">username</span><span class="p">=</span><span class="s">user</span>
+<span class="py">password</span><span class="p">=</span><span class="s">password</span>
+</code></pre></div></div>
 
-Les identifiants / mots de passe sont stockés dans un fichier .cred-file stocké à la racine du répertoire utilisateur.
+<p>Le fichier auto.SERV1.cifs reprend la même structure</p>
 
-Voici un exemple :
+<h3 id="autonfs">auto.nfs</h3>
 
-<pre>username=user
-password=password
-```
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">REP1</span> <span class="py">-fstype</span><span class="p">=</span><span class="s">nfs,rw,intr 192.168.0.XX:/volume1/REP1</span>
+<span class="err">REP2</span> <span class="py">-fstype</span><span class="p">=</span><span class="s">nfs,rw,intr 192.168.0.XX:/volume1/REP2</span>
+</code></pre></div></div>
 
+<h2 id="installation-datom">Installation d’atom</h2>
 
-Le fichier auto.SERV1.cifs reprend la même structure
+<p>J’ai choisi d’installer <a href="https://atom.io/">atom</a> via le package .deb fourni par <a href="http://github.com/">github</a>. Afin d’automatiser l’installation et la mise à jour, voici le script que j’ai réalisé :</p>
 
-### auto.nfs
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nv">SETUP_ROOT</span><span class="o">=</span>/tmp
+wget <span class="nt">-O</span> <span class="nv">$SETUP_ROOT</span>/atom.deb <span class="s2">"https://atom.io/download/deb"</span>
+<span class="nb">echo</span> <span class="s2">"Installation du paquet..."</span>
+dpkg <span class="nt">-i</span> <span class="nv">$SETUP_ROOT</span>/atom.deb
+<span class="nb">echo</span> <span class="s2">"Fini :)"</span>
+</code></pre></div></div>
 
-<pre>REP1 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP1
-REP2 -fstype=nfs,rw,intr 192.168.0.XX:/volume1/REP2
-```
+<p>Ce script est placé dans le répertoire /usr/local/sbin et lancé comme suit :</p>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># upgrade-atom.sh</span>
+</code></pre></div></div>
 
-## Installation d'atom
+<h2 id="installation-de-firefox">Installation de Firefox</h2>
 
-J'ai choisi d'installer [atom](https://atom.io/) via le package .deb fourni par [github](http://github.com/). Afin d'automatiser l'installation et la mise à jour, voici le script que j'ai réalisé :
+<p>Afin d’avoir la dernière version de firefox, voici le script que j’ai réalisé:</p>
 
-<pre>#!/bin/sh
-SETUP_ROOT=/tmp
-wget -O $SETUP_ROOT/atom.deb "https://atom.io/download/deb"
-echo "Installation du paquet..."
-dpkg -i $SETUP_ROOT/atom.deb
-echo "Fini :)"
-```
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nv">SETUP_ROOT</span><span class="o">=</span>/tmp
+<span class="nv">BIN_ROOT</span><span class="o">=</span>/usr/local/firefox
+<span class="nv">DATE</span><span class="o">=</span><span class="sb">`</span><span class="nb">date</span> +%Y-%m-%d<span class="sb">`</span>
+<span class="nv">OLD_EXE</span><span class="o">=</span>/usr/lib/firefox-esr/firefox-esr
+wget <span class="nt">-O</span> <span class="nv">$SETUP_ROOT</span>/FirefoxSetup.tar.bz2 <span class="s2">"https://download.mozilla.org/?product=firefox-latest&amp;os=linux64&amp;lang=fr"</span>
+<span class="nb">echo</span> <span class="s2">"Extraction de l'archive..."</span>
+<span class="nb">tar </span>xjf <span class="nv">$SETUP_ROOT</span>/FirefoxSetup.tar.bz2 <span class="nt">-C</span> /usr/local
+<span class="nb">echo</span> <span class="s2">"Changement des droits utilisateur"</span>
+<span class="nb">chown</span> <span class="nt">-R</span> :users <span class="nv">$BIN_ROOT</span>
+<span class="nb">chmod </span>a+x <span class="nv">$BIN_ROOT</span>/firefox
+<span class="nb">echo</span> <span class="s2">"Sauvegarde de l'ancien binaire et Creation des liens symboliques"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-e</span> <span class="nv">$OLD_EXE</span> <span class="o">]</span>
+<span class="k">then
+ </span><span class="nv">OLD_BINARY</span><span class="o">=</span><span class="k">${</span><span class="nv">OLD_EXE</span><span class="k">}</span>_orig_<span class="k">${</span><span class="nv">DATE</span><span class="k">}</span>
+ <span class="nb">mv</span> <span class="nv">$OLD_EXE</span> <span class="nv">$OLD_BINARY</span>
+<span class="k">fi 
+</span><span class="nb">ln</span> <span class="nt">-s</span> <span class="nv">$BIN_ROOT</span>/firefox <span class="nv">$OLD_EXE</span>
+<span class="nb">chmod </span>a+x <span class="nv">$OLD_EXE</span>
+<span class="nb">echo</span> <span class="s2">"Fini :)"</span>
+</code></pre></div></div>
 
+<h2 id="minecraft">Minecraft</h2>
 
-Ce script est placé dans le répertoire /usr/local/sbin et lancé comme suit :
+<p>Voila l’étape la plus importante, du moins pour mes enfants …</p>
 
-<pre># upgrade-atom.sh
-```
+<p>J’ai crée le script /usr/local/bin/minecraft.sh</p>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">cd</span> /usr/local/minecraft
+java <span class="nt">-Xmx1G</span> <span class="nt">-Xms512M</span> <span class="nt">-cp</span> /usr/local/minecraft/Minecraft.jar net.minecraft.bootstrap.Bootstrap
+</code></pre></div></div>
 
-## Installation de Firefox
+<p>J’ai placé le JAR en question dans le répertoire /usr/local/minecraft.</p>
 
-Afin d'avoir la dernière version de firefox, voici le script que j'ai réalisé:
+<p>Enfin, j’ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop</p>
 
-<pre>#!/bin/sh
-SETUP_ROOT=/tmp
-BIN_ROOT=/usr/local/firefox
-DATE=`date +%Y-%m-%d`
-OLD_EXE=/usr/lib/firefox-esr/firefox-esr
-wget -O $SETUP_ROOT/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&amp;os=linux64&amp;lang=fr"
-echo "Extraction de l'archive..."
-tar xjf $SETUP_ROOT/FirefoxSetup.tar.bz2 -C /usr/local
-echo "Changement des droits utilisateur"
-chown -R :users $BIN_ROOT
-chmod a+x $BIN_ROOT/firefox
-echo "Sauvegarde de l'ancien binaire et Creation des liens symboliques"
-if [ -e $OLD_EXE ]
-then
- OLD_BINARY=${OLD_EXE}_orig_${DATE}
- mv $OLD_EXE $OLD_BINARY
-fi 
-ln -s $BIN_ROOT/firefox $OLD_EXE
-chmod a+x $OLD_EXE
-echo "Fini :)"
-```
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Desktop Entry]</span> 
+<span class="py">Name</span><span class="p">=</span><span class="s">Minecraft</span>
+<span class="py">Comment</span><span class="p">=</span>
+<span class="py">Categories</span><span class="p">=</span><span class="s">Game;BoardGame;</span>
+<span class="py">Exec</span><span class="p">=</span><span class="s">/usr/local/bin/minecraft.sh</span>
+<span class="py">Icon</span><span class="p">=</span><span class="s">Minecraft_Block</span>
+<span class="py">Terminal</span><span class="p">=</span><span class="s">false</span>
+<span class="py">Type</span><span class="p">=</span><span class="s">Application</span>
+<span class="py">StartupNotify</span><span class="p">=</span><span class="s">true</span>
+</code></pre></div></div>
 
+<p>J’ai également mis une icone SVG dans le répertoire /usr/share/icons/</p>
 
-## Minecraft
+<h2 id="optimisation-du-boot">Optimisation du boot</h2>
 
-Voila l'étape la plus importante, du moins pour mes enfants &#8230;
+<p>Après toutes ces installations, il faut vérifier que les performances, notamment au démarrage ne sont pas trop altérées</p>
 
-J'ai crée le script /usr/local/bin/minecraft.sh
+<p>Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze</p>
 
-<pre>#!/bin/bash
-cd /usr/local/minecraft
-java -Xmx1G -Xms512M -cp /usr/local/minecraft/Minecraft.jar net.minecraft.bootstrap.Bootstrap
-```
-
-
-J'ai placé le JAR en question dans le répertoire /usr/local/minecraft.
-
-Enfin, j'ai crée le fichier « lanceur gnome » /usr/share/applications/minecraft.desktop
-
-<pre>[Desktop Entry] 
-Name=Minecraft
-Comment=
-Categories=Game;BoardGame;
-Exec=/usr/local/bin/minecraft.sh
-Icon=Minecraft_Block
-Terminal=false
-Type=Application
-StartupNotify=true
-```
-
-
-J'ai également mis une icone SVG dans le répertoire /usr/share/icons/
-
-## Optimisation du boot
-
-Après toutes ces installations, il faut vérifier que les performances, notamment au démarrage ne sont pas trop altérées
-
-Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze
-
-<pre>#systemd-analyze blame
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#systemd-analyze blame</span>
  8.113s NetworkManager-wait-online.service
  2.549s apt-daily-upgrade.service
  803ms networking.service
@@ -527,14 +510,13 @@ Pour avoir le détail du boot, il faut utiliser la commande systemd-analyze
  128ms ModemManager.service
  102ms autofs.service
 ....
-```
+</code></pre></div></div>
 
+<p>On peut également voir le chemin critique avec cette commande:</p>
 
-On peut également voir le chemin critique avec cette commande:
-
-<pre>#systemd-analyze critical-chain 
-The time after the unit is active or started is printed after the "@" character.
-The time the unit takes to start is printed after the "+" character.
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#systemd-analyze critical-chain </span>
+The <span class="nb">time </span>after the unit is active or started is printed after the <span class="s2">"@"</span> character.
+The <span class="nb">time </span>the unit takes to start is printed after the <span class="s2">"+"</span> character.
 
 graphical.target @8.944s
 └─multi-user.target @8.944s
@@ -548,42 +530,30 @@ graphical.target @8.944s
  └─acpid.path @610ms
  └─sysinit.target @608ms
  └─systemd-backlight@backlight:acpi_video0.service @1.042s +8ms
- └─system-systemd\x2dbacklight.slice @1.042s
+ └─system-systemd<span class="se">\x</span>2dbacklight.slice @1.042s
  └─system.slice @119ms
  └─-.slice @108ms
-```
+</code></pre></div></div>
 
+<h3 id="désactivation-des-services">Désactivation des services</h3>
 
-### Désactivation des services
+<p>Par exemple, si vous voulez désactiver le service virtualbox au démarrage</p>
 
-Par exemple, si vous voulez désactiver le service virtualbox au démarrage
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># systemctl disable vboxautostart-service.service</span>
+</code></pre></div></div>
 
-<pre># systemctl disable vboxautostart-service.service
-```
+<p>et ainsi de suite pour tous les services inutiles au démarrage</p>
 
+<h2 id="analyse-du-démarrage-dun-service">Analyse du démarrage d’un service</h2>
 
-et ainsi de suite pour tous les services inutiles au démarrage
+<p>Pour analyser le démarrage d’un service, on peut utiliser la commande journalctl</p>
 
-## Analyse du démarrage d'un service
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># journalctl -b -u NetworkManager-wait-online.service</span>
+</code></pre></div></div>
 
-Pour analyser le démarrage d'un service, on peut utiliser la commande journalctl
+<h2 id="conclusion">Conclusion</h2>
 
-<pre># journalctl -b -u NetworkManager-wait-online.service
-```
-
-
-&nbsp;
-
-## Conclusion
-
-Après toutes ces étapes, j'ai un système opérationnel. Il manque pas mal d'outils ( ex. maven, npm, intellij,&#8230;). Ces outils tiennent plus du poste de développement.
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-</pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></pre></div></pre>
+<p>Après toutes ces étapes, j’ai un système opérationnel. Il manque pas mal d’outils ( ex. maven, npm, intellij,…). Ces outils tiennent plus du poste de développement.</p>
 
         
       </section>
@@ -669,7 +639,7 @@ Après toutes ces étapes, j'ai un système opérationnel. Il manque pas mal d'o
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.png" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">

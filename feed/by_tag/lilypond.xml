@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/lilypond.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T11:46:22+00:00</updated><id>https://blog.touret.info/feed/by_tag/lilypond.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/2020/08/24/music-scores-as-code/">&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-428&quot; /&gt;&lt;/figure&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/lilypond.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T15:57:04+00:00</updated><id>https://blog.touret.info/feed/by_tag/lilypond.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/2020/08/24/music-scores-as-code/">&lt;p&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Derrière ce nom pompeux qui peut effrayer, je vais essayer d’expliquer dans cet article comment on peut versionner facilement ses partitions et les publier sur le web.&lt;/p&gt;
 
@@ -21,38 +21,38 @@ Si vous voulez plus de détails sur le pourquoi du comment je vous conseille &lt
 
 &lt;p&gt;Pourquoi stocker dans un référentiel de sources tel que Github ? Pour les non informaticiens : les partitions sont stockées au format texte.&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2.12.1&quot;&lt;/span&gt;
+&lt;div class=&quot;language-latex highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;\version&lt;/span&gt; &quot;2.12.1&quot;
 
-&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Try a little tenderness&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;composer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Harry Woods, Jimmy Campbell &amp;amp; Reg Connely&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;subtitle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Commitments Version&quot;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Poete&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;instrument&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Piano&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;editor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;L'éditeur&quot;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Remarque sur le rhythme&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;style&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Soul&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;maintainer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Alexandre Touret&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;maintainerEmail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;alexandre.touret@free.fr&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;maintainerWeb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://blog.touret.info&quot;&lt;/span&gt;     
-  &lt;span class=&quot;n&quot;&gt;lastupdated&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Music room&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;footer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Footer&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;copyright&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;markup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fontsize&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;
- &lt;span class=&quot;s&quot;&gt;&quot;Delivered by A TOURET&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;upper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relative&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;treble&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tempo&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;176&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;major&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;\header&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  title=&quot;Try a little tenderness&quot;
+  composer=&quot;Harry Woods, Jimmy Campbell &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt; Reg Connely&quot;
+  subtitle = &quot;Commitments Version&quot;
+  &lt;span class=&quot;c&quot;&gt;%poet = &quot;Poete&quot;&lt;/span&gt;
+  instrument = &quot;Piano&quot;
+  editor = &quot;L'éditeur&quot;
+  &lt;span class=&quot;c&quot;&gt;%meter=\markup {\bold {&quot;Remarque sur le rhythme&quot;}}&lt;/span&gt;
+  style = &quot;Soul&quot;
+  maintainer = &quot;Alexandre Touret&quot;
+  maintainerEmail = &quot;alexandre.touret@free.fr&quot;
+  maintainerWeb = &quot;http://blog.touret.info&quot;     
+  lastupdated = &quot;&quot;
+  source = &quot;Music room&quot;
+  footer = &quot;Footer&quot;
+  copyright =&lt;span class=&quot;k&quot;&gt;\markup&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;\fontsize&lt;/span&gt; #-1.5
+ &quot;Delivered by A TOURET&quot;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+upper=
+&lt;span class=&quot;k&quot;&gt;\relative&lt;/span&gt; c'&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;\clef&lt;/span&gt; treble
+  &lt;span class=&quot;k&quot;&gt;\time&lt;/span&gt; 4/4
+  &lt;span class=&quot;k&quot;&gt;\tempo&lt;/span&gt; 4=176
+  &lt;span class=&quot;k&quot;&gt;\key&lt;/span&gt; g &lt;span class=&quot;k&quot;&gt;\major&lt;/span&gt;
   
-  &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;d2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; 
-  &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; 
-  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
-  &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;||&quot;&lt;/span&gt;
+  d'2 (b4 e
+  d2 b4 a 
+  g2 g2 
+  &amp;lt;e g,&amp;gt;2) &amp;lt;fis, c' d&amp;gt; 
+  &lt;span class=&quot;k&quot;&gt;\bar&lt;/span&gt; &quot;||&quot;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 

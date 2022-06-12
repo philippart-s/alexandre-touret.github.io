@@ -6,22 +6,22 @@ var store = [{
         "teaser": null
       },{
         "title": "Ma Configuration Debian 9",
-        "excerpt":"Désolé de remettre ça… Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique . Voici ce que j’ai réalisé post-installation: Ajout dépôts supplémentaires Dans le fichier /etc/apt/sources.list, ajouter les repo contrib et non-free . Activer également les mises à...","categories": [],
+        "excerpt":"Désolé de remettre ça. Je remets sur mon blog ma configuration Debian. Histoire de ne pas la perdre tant qu’elle est dans mon historique . Voici ce que j’ai réalisé post-installation: Ajout dépôts supplémentaires Dans le fichier /etc/apt/sources.list, ajouter les repo contrib et non-free . Activer également les mises à...","categories": [],
         "tags": ["planetlibre","debian"],
         "url": "/2018/02/10/ma-configuration-debian-9/",
-        "teaser": null
+        "teaser": "/assets/images/2018/02/220px-debian-openlogo-svg.png"
       },{
         "title": "Ma configuration CYGWIN",
         "excerpt":"Dans la série, j’essaye de sauvegarder toutes mes configurations, voici ce que j’ai fait pour configurer correctement cygwin. Pour ceux qui ne connaissent pas ou qui n’ont pas la chance d’utiliser windows au travail, cygwin est un shell avec tous les outils GNU. En attendant d’avoir windows 10 ( au...","categories": [],
         "tags": ["cygwin","git","gnu/linux","planetlibre"],
         "url": "/2018/02/16/ma-configuration-cygwin/",
-        "teaser": null
+        "teaser": "/assets/images/2018/02/2000px-cygwin_logo-svg.png"
       },{
         "title": "Ma présentation au Touraine Tech",
         "excerpt":"J’ai eu la chance d’être sélectionné pour la première édition de la conférence TouraineTech. Tout d’abord, je tiens à remercier toute l’équipe du Touraine Tech pour l’accueil et l’organisation de cette conférence. Ma présentation s’intitulait: Jenkins2 le retour (d’expérience). Je faisais un retour d’expérience sur la mise en œuvre de...","categories": [],
         "tags": ["planetlibre","tourainetech"],
         "url": "/2018/02/26/ma-presentation-au-touraine-tech/",
-        "teaser": null
+        "teaser": "/assets/images/2018/02/logotnt_final.jpg"
       },{
         "title": "Installation de Vagrant",
         "excerpt":"Vagrant est un outil permettant de construire des environnements de travail virtualisés hébergés sur vmware, virtualbox ou encore docker. Il permet par exemple de construire et gérer une VM dans un seul et même workflow et d’éviter les exports et partages de machines virtuelles ( tout est déclaré dans un...","categories": [],
@@ -129,13 +129,13 @@ var store = [{
         "excerpt":"Juste pour un pense bête, voici comment paramétrer GIT et GITHUB/GITLAB pour signer les commits avec GPG. Configuration GPG Exécutez la commande suivante : gpg --full-generate-key Sélectionnez une clé RSA (question 1) de 4096 bits (question 2). Une fois cette commande effectuée, vous pouvez récupérer votre clé GPG avec cette...","categories": [],
         "tags": ["git","github","gitlab","gpg","planetlibre"],
         "url": "/2019/08/09/verifier-les-commit-git-avec-gpg/",
-        "teaser": null
+        "teaser": "/assets/images/2019/08/kelly-sikkema-c3rk5toz0qa-unsplash.jpg"
       },{
         "title": "Mocker des méthodes « final » avec Mockito",
         "excerpt":"Auparavant, dans nos tests, quand on voulait mocker des méthodes « final » ou statiques, on devait passer par PowerMock. Depuis peu, si on utilise Mockito ( &gt;2.1) , on n’a plus besoin d’ajouter PowerMock pour mocker des méthodes « final ». Bon il reste toujours la gestion des méthodes statiques à gérer autrement...","categories": [],
         "tags": ["java","mockito","planetlibre","tests-unitaires"],
         "url": "/2019/08/16/mocker-des-methodes-final-avec-mockito/",
-        "teaser": null
+        "teaser": "/assets/images/2019/08/logo-mockito.png"
       },{
         "title": "Comment coacher des jeunes développeurs &#8211; The last blood",
         "excerpt":"Après avoir soumis mon article sur le coaching des développeurs, je me suis rendu compte que j’ai oublié pas mal de points qui, à bien y réfléchir, me paraissent essentiels. Dans mon précédent article ( the first blood pour le coup ) je me suis attardé sur le « quoi » :...","categories": [],
@@ -192,7 +192,7 @@ var store = [{
         "teaser": "/assets/images/2020/04/boot_avant.png"
       },{
         "title": "Utiliser des GITHUB Actions pour déployer dans Google Kubernetes Engine",
-        "excerpt":"A mes heures perdues, je travaille sur un « POC/side project qui n'aboutira pas et je m'en fiche » basé sur Quarkus. J' ai choisi d'utiliser les langages et composants suivants : Kotlin Quarkus Gradle Kubernetes pour le déploiement Oui, tant qu’à faire, autant aller dans la hype … Mon projet est...","categories": [],
+        "excerpt":"A mes heures perdues, je travaille sur un « POC/side project qui n’aboutira pas et je m’en fiche » basé sur Quarkus. J’ ai choisi d’utiliser les langages et composants suivants : Kotlin Quarkus Gradle Kubernetes pour le déploiement Oui, tant qu’à faire, autant aller dans la hype … Mon projet est...","categories": [],
         "tags": ["github","gradle","kubernetes"],
         "url": "/2020/05/10/utiliser-des-github-actions-pour-deployer-dans-google-kubernetes-engine/",
         "teaser": "/assets/images/2020/05/article_github_actions_k8s-1.png"
@@ -216,19 +216,19 @@ var store = [{
         "teaser": "/assets/images/2021/01/loik-marras-sq0l3spwlhi-unsplash.jpg"
       },{
         "title": "Installer Ubuntu 20.04 LTS sur un DELL Inspiron 13 5000",
-        "excerpt":"Les confinements se suivent et se ressemblent. Me voilà à installer Ubuntu sur un nouvel ordinateur. A l'instar de l'ancien laptop que j'ai acheté pour mon aînée, j'ai acheté un DELL pour ma deuxième fille. J'ai opté pour un DELL Inspiron 5301. A l’instar de mon autre laptop, je j’ai...","categories": [],
+        "excerpt":"Les confinements se suivent et se ressemblent. Me voilà à installer Ubuntu sur un nouvel ordinateur. A l’instar de l’ancien laptop que j’ai acheté pour mon aînée, j’ai acheté un DELL pour ma deuxième fille.J’ai opté pour un DELL Inspiron 5301. A l’instar de mon autre laptop, je j’ai pas...","categories": [],
         "tags": ["dell","planetlibre","ubuntu"],
         "url": "/2021/04/02/installer-ubuntu-20-04-lts-sur-un-dell-inspiron-13-5000/",
         "teaser": "/assets/images/2021/04/dell-inspiron-13-5301-argent-01.jpg"
       },{
         "title": "Utiliser GPG dans WSL2",
-        "excerpt":"Photo by Pixabay on Pexels.com Pourquoi utiliser GPG ? Par exemple pour signer les commits GIT. Maintenant comment faire quand on est sous Windows 10 et qu'on souhaite utiliser le sous système Linux (WSL2)? Sous GNU/Linux, l’installation et l’utilisation avec git est très simple. Avec WSL2,… il faut un peu...","categories": [],
+        "excerpt":"Pourquoi utiliser GPG ? Par exemple pour signer les commits GIT. Maintenant comment faire quand on est sous Windows 10 et qu’on souhaite utiliser le sous système Linux (WSL2)? Sous GNU/Linux, l’installation et l’utilisation avec git est très simple. Avec WSL2,… il faut un peu d’huile de coude 🙂 Je...","categories": [],
         "tags": ["git","gpg","planetlibre","wsl2"],
         "url": "/2021/05/03/utiliser-gpg-dans-wsl2/",
         "teaser": "/assets/images/2021/05/pexels-photo-261621.jpeg"
       },{
         "title": "Ajouter un mode « maintenance » à votre API grâce à Spring boot",
-        "excerpt":"Photo by Pixabay on Pexels.com Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l'application en mode « maintenance ». Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité...","categories": [],
+        "excerpt":"Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l’application en mode « maintenance ». Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex....","categories": [],
         "tags": ["actuator","observability","planetlibre","spring","springboot"],
         "url": "/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/",
         "teaser": "/assets/images/2021/06/pexels-photo-257736.jpeg"
@@ -267,5 +267,5 @@ var store = [{
         "excerpt":"Au début de l’année, j’ai interpelé mes managers: “J’ai été retenu au Camping des Speakers”! Unanimement, j’ai eu la même réponse: “Le QUOI ???!!!” Oui j’en conviens le titre peut paraître à première vue tout sauf sérieux. Il faut dire que le lieu est un camping en Bretagne dans le...","categories": [],
         "tags": ["conference"],
         "url": "/2022/06/10/camping-speakers-2022/",
-        "teaser": "/assets/images/2022/06/camping_speakers_2.png"
+        "teaser": "/assets/images/2022/06/camping_speakers_2.jpg"
       }]

@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Ajouter un mode « maintenance » à votre API grâce à Spring boot - blog.touret.info</title>
-<meta name="description" content="Photo by Pixabay on Pexels.com">
+<meta name="description" content="">
 
 
   <meta name="author" content="Alexandre Touret">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://blog.touret.info/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/">
 
 
-  <meta property="og:description" content="Photo by Pixabay on Pexels.com">
+  <meta property="og:description" content="">
 
 
 
@@ -36,7 +36,7 @@
 
   <meta name="twitter:site" content="@touret_alex">
   <meta name="twitter:title" content="Ajouter un mode « maintenance » à votre API grâce à Spring boot">
-  <meta name="twitter:description" content="Photo by Pixabay on Pexels.com">
+  <meta name="twitter:description" content="">
   <meta name="twitter:url" content="https://blog.touret.info/2021/06/10/ajouter-un-mode-maintenance-a-votre-api-grace-a-spring-boot/">
 
   
@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret.png" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -279,7 +279,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Ajouter un mode « maintenance » à votre API grâce à Spring boot">
-    <meta itemprop="description" content="  Photo by Pixabay on Pexels.com">
+    <meta itemprop="description" content="">
     <meta itemprop="datePublished" content="2021-06-10T15:01:20+00:00">
     
 
@@ -323,13 +323,9 @@
 
       <section class="page__content e-content" itemprop="text">
         
-        <div class="wp-block-image">
-  <figure class="aligncenter size-large is-resized"><img loading="lazy" src="/assets/images/2021/06/pexels-photo-257736.jpeg" alt="" class="wp-image-543" width="697" height="463" srcset="/assets/images/2021/06/pexels-photo-257736.jpeg 1880w, /assets/images/2021/06/pexels-photo-257736-300x200.jpeg 300w, /assets/images/2021/06/pexels-photo-257736-1024x681.jpeg 1024w, /assets/images/2021/06/pexels-photo-257736-768x511.jpeg 768w, /assets/images/2021/06/pexels-photo-257736-1536x1022.jpeg 1536w, /assets/images/2021/06/pexels-photo-257736-1568x1043.jpeg 1568w" sizes="(max-width: 697px) 100vw, 697px" /><figcaption>Photo by Pixabay on <a href="https://www.pexels.com/photo/close-up-of-telephone-booth-257736/" rel="nofollow">Pexels.com</a></figcaption></figure>
-</div>
+        <p><img src="/assets/images/2021/06/pexels-photo-257736.jpeg" alt="maintenance" class="align-center" /></p>
 
-<p class="has-drop-cap">
-  Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l'application en mode « maintenance ».<br />Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex. (<a href="https://httpd.apache.org/">Apache HTTPD</a>, <a href="https://fr.wikipedia.org/wiki/Web_application_firewall">WAF</a>,&#8230;)
-</p>
+<p>Quand vous avez une API, et a fortiori une application, il peut être parfois nécessaire de passer l’application en mode « maintenance ».<br />Pour certaines applications il est parfois inutile de le traiter au niveau applicatif, car ça peut être pris géré par certaines couches de sécurité ou frontaux web par ex. (<a href="https://httpd.apache.org/">Apache HTTPD</a>, <a href="https://fr.wikipedia.org/wiki/Web_application_firewall">WAF</a>)</p>
 
 <p><a href="https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">Kubernetes a introduit ( ou popularisé ) les notions de « probes »</a> et plus particulièrement les <a href="https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">livenessProbes</a> et <a href="https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">readinessProbes</a>.<br />
 Le premier nous indique si l’application est en état de fonctionnement, le second nous permet de savoir si cette dernière est apte à recevoir des requêtes (ex. lors d’un démarrage).</p>
@@ -354,32 +350,32 @@ Le premier nous indique si l’application est en état de fonctionnement, le se
 
 <p>Dans le fichier pom.xml, vous devez ajouter le starter correspondant:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
-	<span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">actuator</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div></div>
 
 <p>Puis vous devez déclarer ces differentes <a href="https://github.com/alexandre-touret/maintenance-mode/blob/main/src/main/resources/application.properties">propriétés</a>:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">management</span><span class="o">.</span><span class="na">endpoints</span><span class="o">.</span><span class="na">enabled</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="k">default</span><span class="o">=</span><span class="kc">true</span>
-<span class="n">management</span><span class="o">.</span><span class="na">health</span><span class="o">.</span><span class="na">livenessstate</span><span class="o">.</span><span class="na">enabled</span><span class="o">=</span><span class="kc">true</span>
-<span class="n">management</span><span class="o">.</span><span class="na">health</span><span class="o">.</span><span class="na">readinessstate</span><span class="o">.</span><span class="na">enabled</span><span class="o">=</span><span class="kc">true</span>
-<span class="n">management</span><span class="o">.</span><span class="na">endpoint</span><span class="o">.</span><span class="na">health</span><span class="o">.</span><span class="na">show</span><span class="o">-</span><span class="n">details</span><span class="o">=</span><span class="n">always</span>
-<span class="n">management</span><span class="o">.</span><span class="na">endpoint</span><span class="o">.</span><span class="na">health</span><span class="o">.</span><span class="na">probes</span><span class="o">.</span><span class="na">enabled</span><span class="o">=</span><span class="kc">true</span>
-<span class="n">management</span><span class="o">.</span><span class="na">endpoint</span><span class="o">.</span><span class="na">health</span><span class="o">.</span><span class="na">enabled</span><span class="o">=</span><span class="kc">true</span>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">management.endpoints.enabled-by-default</span><span class="p">=</span><span class="s">true</span>
+<span class="py">management.health.livenessstate.enabled</span><span class="p">=</span><span class="s">true</span>
+<span class="py">management.health.readinessstate.enabled</span><span class="p">=</span><span class="s">true</span>
+<span class="py">management.endpoint.health.show-details</span><span class="p">=</span><span class="s">always</span>
+<span class="py">management.endpoint.health.probes.enabled</span><span class="p">=</span><span class="s">true</span>
+<span class="py">management.endpoint.health.enabled</span><span class="p">=</span><span class="s">true</span>
 </code></pre></div></div>
 
 <p>Après avoir redémarré votre application, vous pourrez connaître son statut grâce à un appel HTTP</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">curl</span> <span class="o">-</span><span class="n">s</span> <span class="nl">http:</span><span class="c1">//localhost:8080/actuator/health/readiness </span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> http://localhost:8080/actuator/health/readiness 
 </code></pre></div></div>
 
 <h2 id="comment-récupérer-le-statut-des-probes">Comment récupérer le statut des probes?</h2>
 
 <p>Avec Spring, vous pouvez modifier les différents statuts avec les classes <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html">ApplicationEventPublisher</a> et <a href="https://docs.spring.io/spring-boot/docs/2.4.4/api/org/springframework/boot/availability/ApplicationAvailability.html">ApplicationAvailability</a>.</p>
 
-<p>Par exemple, pour connaître le statut <code class="language-plaintext highlighter-rouge">&lt;a href="https://docs.spring.io/spring-boot/docs/2.5.0-SNAPSHOT/api/org/springframework/boot/availability/ReadinessState.html"&gt;"Readiness"&lt;/a&gt;</code> vous pouvez exécuter le code suivant:</p>
+<p>Par exemple, pour connaître le statut <a href="https://docs.spring.io/spring-boot/docs/2.5.0-SNAPSHOT/api/org/springframework/boot/availability/ReadinessState.html">Readiness</a> vous pouvez exécuter le code suivant:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ApiResponses</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span>
  <span class="nd">@ApiResponse</span><span class="o">(</span><span class="n">responseCode</span> <span class="o">=</span> <span class="s">"200"</span><span class="o">,</span> <span class="n">description</span> <span class="o">=</span> <span class="s">"Checks if the application in under maitenance"</span><span class="o">)})</span>
@@ -568,7 +564,7 @@ Bien évidemment, selon le contexte, il conviendra d’ajouter un peu de sécuri
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.png" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
