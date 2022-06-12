@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/2020/04/man-person-street-shoes-2882.jpg">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2020/04/man-person-street-shoes-2882.webp">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2020/04/man-person-street-shoes-2882.jpg">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2020/04/man-person-street-shoes-2882.webp">
     
   
 
@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       <a href="https://blog.touret.info/">
-        <img src="/assets/images/alexandre.touret-low.jpg" alt="Alexandre Touret" itemprop="image" class="u-photo">
+        <img src="/assets/images/alexandre.touret-low.webp" alt="Alexandre Touret" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -327,9 +327,7 @@
 
 <p>Bref que du bonheur 🙂</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large"><img src="/assets/images/2020/04/man-person-street-shoes-2882.jpg?w=1024" alt="" class="wp-image-295" /></figure>
-</div>
+<p><img src="/assets/images/2020/04/man-person-street-shoes-2882.jpg" alt="man street shoes" class="align-center" /></p>
 
 <p>Avant d’aller plus loin voici mon environnement:</p>
 
@@ -340,7 +338,7 @@
 
 <p>Après quelques recherches, je me suis rendu compte qu’on pouvait reproduire ce comportement en exécutant cette commande:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="nl">gcc:</span><span class="mf">4.8</span><span class="o">.</span><span class="mi">5</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> gcc:4.8.5
 </code></pre></div></div>
 
 <p>Une des raisons trouvées serait <a href="https://github.com/moby/moby/issues/28705">un problème de compatibilité avec le noyau 4.8.5</a> (oui ça remonte…).<br />
@@ -349,13 +347,13 @@ Une solution est d’activer l’émulation <a href="https://davisdoesdownunder.
 <p>Voici la configuration à effectuer:<br />
 Dans le fichier <code class="language-plaintext highlighter-rouge">/etc/default/grub</code>, ajouter la ligne suivante:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s">"quiet vsyscall=emulate"</span>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="p">=</span><span class="s">"quiet vsyscall=emulate"</span>
 </code></pre></div></div>
 
 <p>Puis lancer les commandes suivantes:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">sudo</span> <span class="n">update</span><span class="o">-</span><span class="n">grub</span> 
-<span class="err">$</span> <span class="n">sudo</span> <span class="n">reboot</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>update-grub 
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
 </code></pre></div></div>
 
 <p>Maintenant le container devrait pouvoir s’exécuter correctement.</p>
@@ -446,7 +444,7 @@ Dans le fichier <code class="language-plaintext highlighter-rouge">/etc/default/
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/06/camping_speakers_2.jpg" alt="">
+        <img src="/assets/images/2022/06/camping_speakers_2.webp" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
@@ -498,7 +496,7 @@ Dans le fichier <code class="language-plaintext highlighter-rouge">/etc/default/
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.jpg" alt="">
+        <img src="/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.webp" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
@@ -551,7 +549,7 @@ Mais qu’en est-il des batchs?
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/2022/02/architecture.jpg" alt="">
+        <img src="/assets/images/2022/02/architecture.webp" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">

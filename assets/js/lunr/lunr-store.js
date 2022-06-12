@@ -165,7 +165,7 @@ var store = [{
         "excerpt":"Java 8 est encore largement utilisé dans les entreprises aujourd’hui. Il y a même certains frameworks qui n’ont pas encore sauté le pas. Je vais essayer d’exposer dans cette article les étapes à réaliser pour migrer (simplement) votre application JAVA8 en JAVA 11. Dans cet article, je prendrai comme postulat...","categories": [],
         "tags": ["java","planetlibre"],
         "url": "/2020/02/03/passer-votre-application-java8-en-java11/",
-        "teaser": "/assets/images/2020/02/blake-wisz-eevhwmstyg8-unsplash-1.jpg"
+        "teaser": "/assets/images/2020/02/blake-wisz-eevhwmstyg8-unsplash-1.webp"
       },{
         "title": "Installer Ubuntu 18.04 LTS sur un Dell Inspiron 14-3493",
         "excerpt":"Suite aux premières annonces de distanciation sociale ( avant que le confinement soit effectif ) j’ai acheté en catastrophe un PC portable. Les critères étaient : 8Go de RAM, un disque SSD … et la compatibilité GNU/LINUX :). N’ayant pas trop de temps pour chercher la bonne affaire ( technologique...","categories": [],
@@ -177,7 +177,7 @@ var store = [{
         "excerpt":"Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une erreur SIGSEGV 139. Un crash avec aucune log. Bref que du bonheur 🙂 Avant d’aller plus loin voici mon environnement: Debian 10 Docker CE 19.03.8 Après quelques recherches, je me suis rendu...","categories": [],
         "tags": ["debian","docker","planetlibre"],
         "url": "/2020/04/01/erreur-139-a-lexecution-dun-container-docker/",
-        "teaser": "/assets/images/2020/04/man-person-street-shoes-2882.jpg"
+        "teaser": "/assets/images/2020/04/man-person-street-shoes-2882.webp"
       },{
         "title": "Répéter avec JjazzLab tout seul dans son garage",
         "excerpt":"Avec les contraintes liées au confinement, les répétitions se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical. Il y a plusieurs logiciels payants/propriétaires...","categories": [],
@@ -255,17 +255,17 @@ var store = [{
         "excerpt":"L’analyse des risques: kezako ? Souvent utilisée dans la prise de décision, l’analyse des risques a plusieurs objectifs : Permettre de pondérer des risques potentiels Faciliter la prise de décision sur les actions à réaliser pour les prévenir ou tout du moins les atténuer. Mais d’abord, revenons aux bases. Comment...","categories": [],
         "tags": ["architecture"],
         "url": "/2022/02/09/analyser-les-risques-pour-mieux-definir-une-architecture/",
-        "teaser": "/assets/images/2022/02/architecture.jpg"
+        "teaser": "/assets/images/2022/02/architecture.webp"
       },{
         "title": "Faire des batchs \"Cloud Native\" dans Kubernetes",
         "excerpt":"Quand on parle du Cloud et de Kubernetes, généralement on pense aux APIs. Mais qu’en est-il des batchs? Oui, depuis plusieurs années, on pensait les éradiquer, mais ils sont encore là et on en a encore besoin pour quelques années encore. Ils ont même eu une deuxième jeunesse avec le...","categories": [],
         "tags": ["cloud","kubernetes","batch"],
         "url": "/2022/05/17/cloud-native-batchs/",
-        "teaser": "/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.jpg"
+        "teaser": "/assets/images/2022/05/pat-whelen-xSsWBa4rb6E-unsplash.webp"
       },{
         "title": "Mon Camping des Speakers",
         "excerpt":"Au début de l’année, j’ai interpelé mes managers: “J’ai été retenu au Camping des Speakers”! Unanimement, j’ai eu la même réponse: “Le QUOI ???!!!” Oui j’en conviens le titre peut paraître à première vue tout sauf sérieux. Il faut dire que le lieu est un camping en Bretagne dans le...","categories": [],
         "tags": ["conference"],
         "url": "/2022/06/10/camping-speakers-2022/",
-        "teaser": "/assets/images/2022/06/camping_speakers_2.jpg"
+        "teaser": "/assets/images/2022/06/camping_speakers_2.webp"
       }]
