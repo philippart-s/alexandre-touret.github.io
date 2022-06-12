@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2018/09/docker.png">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2018/09/docker.png">
     
   
 
@@ -326,63 +326,48 @@
         <p>Bon, ça fait quelques temps que je n’ai rien posté…<br />
 Voici un rapide tuto pour installer <a href="https://docs.docker.com/install/linux/docker-ce/debian/">docker-ce sur une debian9</a>. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.</p>
 
-<p><img loading="lazy" class="alignnone size-medium wp-image-96" src="/assets/images/2018/09/docker.png?w=300" alt="" width="300" height="268" srcset="/assets/images/2018/09/docker.png 1354w, /assets/images/2018/09/docker-300x268.png 300w, /assets/images/2018/09/docker-1024x914.png 1024w, /assets/images/2018/09/docker-768x685.png 768w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p><img src="/assets/images/2018/09/docker.png" alt="docker" class="align-center" /></p>
 
 <h2 id="pré-requis">Pré-requis</h2>
 
 <p>Supprimer les éventuelles installations de docker et docker-compose</p>
 
-<p>[code language= »bash »]</p>
-
-<p>#apt-get remove docker docker-compose<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#apt-get remove docker docker-compose  </span>
+</code></pre></div></div>
 
 <h2 id="installation">Installation</h2>
 
 <p>Lancer les commandes suivantes:</p>
 
-<p>[code language= »bash »]<br />
-# apt-get install apt-transport-https ca-certificates<br />
-# curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add –<br />
-# add-apt-repository \<br />
-“deb [arch=amd64] https://download.docker.com/linux/debian \<br />
-$(lsb_release -cs) \ stable”<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># apt-get install apt-transport-https ca-certificates  </span>
+<span class="c"># curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add &amp;#8211;  </span>
+<span class="c"># add-apt-repository \  </span>
+<span class="s2">"deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="se">\ </span><span class="s2"> 
+</span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\ </span><span class="s2">stable"</span>  
+</code></pre></div></div>
 
 <p>Puis lancer</p>
 
-<p>[code language= »bash »]</p>
-
-<p># apt update</p>
-
-<p># apt install docker-ce</p>
-
-<p>[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># apt update</span>
+<span class="c"># apt install docker-ce</span>
+</code></pre></div></div>
 
 <h3 id="installation-de-docker-compose">Installation de docker-compose</h3>
 
 <p>Lancer les commandes suivantes:</p>
 
-<p>[code language= »bash »]</p>
-
-<p># curl -L “https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose</p>
-
-<p># chmod a+x /usr/local/bin/docker-compose<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</span>
+<span class="c"># chmod a+x /usr/local/bin/docker-compose  </span>
+</code></pre></div></div>
 
 <h2 id="configuration-des-droits">Configuration des droits</h2>
 
 <p>Pour lancer docker depuis un utiliser non root, il faut lancer les commandes suivantes:</p>
 
-<p>[code language= »bash »]</p>
-
-<p># groupadd docker</p>
-
-<p># adduser monutilisateur docker</p>
-
-<p># usermod -aG docker monutilisateur</p>
-
-<p>[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># groupadd docker</span>
+<span class="c"># adduser monutilisateur docker</span>
+<span class="c"># usermod -aG docker monutilisateur</span>
+</code></pre></div></div>
 
 <p>Après ceci, vaut mieux redémarrer le pc …</p>
 
@@ -394,67 +379,44 @@ $(lsb_release -cs) \ stable”<br />
 
 <p>Exécuter la commande:</p>
 
-<p>[code language= »bash »]</p>
-
-<p># systemctl edit docker.service</p>
-
-<p>[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># systemctl edit docker.service</span>
+</code></pre></div></div>
 
 <p>Entrer le code suivant:</p>
 
-<p>[code language= »bash »]</p>
-
-<p>[Service]</p>
-
-<p>ExecStart=</p>
-
-<p>ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock</p>
-
-<p>[/code]</p>
-
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Service]</span>
+<span class="py">ExecStart</span><span class="p">=</span>
+<span class="py">ExecStart</span><span class="p">=</span><span class="s">/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock</span>
+</code></pre></div></div>
 <p>Et l’enregistrer sous /etc/systemd/system/docker.service.d/docker.conf</p>
 
 <h3 id="configuration-du-proxy">Configuration du proxy</h3>
 
 <p>Avec la même commande</p>
 
-<p>[code language= »bash »]</p>
-
-<p># systemctl edit docker.service</p>
-
-<p>[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># systemctl edit docker.service</span>
+</code></pre></div></div>
 
 <p>Entrer la configuration suivante:</p>
 
-<p>[code language= »bash »]</p>
-
-<p>[Service]</p>
-
-<p>Environment=”HTTP_PROXY=http://mon_proxy:mon_port/”</p>
-
-<p>Environment=”NO_PROXY=127.0.0.1”</p>
-
-<p>[/code]</p>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Service]</span>
+<span class="py">Environment</span><span class="p">=</span><span class="s">"HTTP</span><span class="se">\_</span><span class="s">PROXY=http://mon</span><span class="se">\_</span><span class="s">proxy:mon_port/"</span>
+<span class="py">Environment</span><span class="p">=</span><span class="s">"NO_PROXY=127.0.0.1"</span>
+</code></pre></div></div>
 
 <h3 id="activation-des-configurations">Activation des configurations</h3>
 
 <p>Lancer les commandes suivantes:</p>
 
-<p>[code language= »bash »]</p>
-
-<p># systemctl daemon-reload # systemctl restart docker</p>
-
-<p>[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># systemctl daemon-reload # systemctl restart docker</span>
+</code></pre></div></div>
 
 <h2 id="validation">Validation</h2>
 
 <p>Maintenant, vous pouvez valider votre configuration avec la commande:</p>
 
-<p>[code language= »bash »]</p>
-
-<p>$ docker run hello-world</p>
-
-<p>[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run hello-world
+</code></pre></div></div>
 
         
       </section>

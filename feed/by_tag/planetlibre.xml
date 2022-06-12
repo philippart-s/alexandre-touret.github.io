@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/planetlibre.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-11T09:07:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/planetlibre.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mettre en oeuvre des Github Actions utiles pour un site hébergé sur Github pages</title><link href="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/" rel="alternate" type="text/html" title="Mettre en oeuvre des Github Actions utiles pour un site hébergé sur Github pages" /><published>2021-12-19T12:00:00+00:00</published><updated>2021-12-19T12:00:00+00:00</updated><id>https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io</id><content type="html" xml:base="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/">&lt;p&gt;&lt;img src=&quot;/assets/images/2021/12/github-1.jpg&quot; alt=&quot;github&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/planetlibre.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T11:46:22+00:00</updated><id>https://blog.touret.info/feed/by_tag/planetlibre.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Mettre en oeuvre des Github Actions utiles pour un site hébergé sur Github pages</title><link href="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/" rel="alternate" type="text/html" title="Mettre en oeuvre des Github Actions utiles pour un site hébergé sur Github pages" /><published>2021-12-19T12:00:00+00:00</published><updated>2021-12-19T12:00:00+00:00</updated><id>https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io</id><content type="html" xml:base="https://blog.touret.info/2021/12/19/mettre-en-oeuvre-github-actions-utiles-pour-un-site-heberge-sur-github-io/">&lt;p&gt;&lt;img src=&quot;/assets/images/2021/12/github-1.jpg&quot; alt=&quot;github&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;pourquoi-mettre-en-oeuvre-des-github-actions-&quot;&gt;Pourquoi mettre en oeuvre des GITHUB ACTIONS ?&lt;/h2&gt;
 
@@ -947,9 +947,7 @@ Vous trouverez les différents liens ci-dessous. Peut être que je publierai cet
   &lt;li&gt;&lt;a href=&quot;https://alexandre-touret.github.io/piano-sheets-as-code/&quot;&gt;Exemple de site généré&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name>Alexandre Touret</name></author><category term="docker" /><category term="github" /><category term="lilypond" /><category term="planetlibre" /><summary type="html"></summary></entry><entry><title type="html">Améliorer le temps de démarrage de Debian 10</title><link href="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/" rel="alternate" type="text/html" title="Améliorer le temps de démarrage de Debian 10" /><published>2020-04-24T18:06:13+00:00</published><updated>2020-04-24T18:06:13+00:00</updated><id>https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10</id><content type="html" xml:base="https://blog.touret.info/2020/04/24/ameliorer-le-temps-de-demarrage-de-debian-10/">&lt;p&gt;Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.&lt;/p&gt;
 
-&lt;figure class=&quot;wp-block-image size-large&quot;&gt;
-&lt;img loading=&quot;lazy&quot; width=&quot;819&quot; height=&quot;45&quot; src=&quot;/assets/images/2020/04/boot_time.png?w=819&quot; alt=&quot;&quot; class=&quot;wp-image-346&quot; srcset=&quot;/assets/images/2020/04/boot_time.png 819w, /assets/images/2020/04/boot_time-300x16.png 300w, /assets/images/2020/04/boot_time-768x42.png 768w&quot; sizes=&quot;(max-width: 819px) 100vw, 819px&quot; /&gt; 
-&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/boot_time.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Tout d’abord, vous devez analyser les services qui prennent du temps au démarrage. Vous pouvez le faire avec cette commande:&lt;/p&gt;
 
@@ -958,24 +956,18 @@ Vous trouverez les différents liens ci-dessous. Peut être que je publierai cet
 
 &lt;p&gt;J’ai obtenu le graphique suivant:&lt;figure class=&quot;wp-block-gallery aligncenter columns-1 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
-  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
-    &lt;figure&gt;&lt;a href=&quot;/assets/images/2020/04/boot_avant.png&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;6066&quot; height=&quot;4013&quot; src=&quot;/assets/images/2020/04/boot_avant.png&quot; alt=&quot;&quot; data-id=&quot;350&quot; class=&quot;wp-image-350&quot; srcset=&quot;/assets/images/2020/04/boot_avant.png 6066w, /assets/images/2020/04/boot_avant-300x198.png 300w, /assets/images/2020/04/boot_avant-1024x677.png 1024w, /assets/images/2020/04/boot_avant-768x508.png 768w, /assets/images/2020/04/boot_avant-1536x1016.png 1536w, /assets/images/2020/04/boot_avant-2048x1355.png 2048w, /assets/images/2020/04/boot_avant-1568x1037.png 1568w&quot; sizes=&quot;(max-width: 6066px) 100vw, 6066px&quot; /&gt;&lt;/a&gt;&lt;/figure&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;figcaption class=&quot;blocks-gallery-caption&quot;&gt;Avant&lt;/figcaption&gt;
-&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/boot_avant.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;configuration-grub&quot;&gt;Configuration GRUB&lt;/h2&gt;
 
 &lt;p&gt;La première manipulation à réaliser est de désactiver le timeout de &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt;. Pour celà, vous pouvez modifier la variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRUB_TIMEOUT&lt;/code&gt; dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/default/grub&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;GRUB_TIMEOUT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;GRUB_TIMEOUT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ensuite, vous devez mettre à jour la configuration &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt; en exécutant cette commande:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grub2&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;update-grub2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Au prochain reboot, vous ne verrez plus le menu &lt;a href=&quot;https://wiki.debian.org/Grub&quot;&gt;GRUB&lt;/a&gt;.&lt;/p&gt;
@@ -984,52 +976,46 @@ Vous trouverez les différents liens ci-dessous. Peut être que je publierai cet
 
 &lt;p&gt;Dans mon cas, le service &lt;a href=&quot;https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NetworkManager-wait-online.service&lt;/code&gt; prenait près de 9 secondes&lt;/a&gt;. Après avoir lu &lt;a href=&quot;https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do&quot;&gt;plusieurs billets&lt;/a&gt; et rapports de bug, je me suis aperçu que je pouvais le désactiver au boot. Vous pouvez le faire en lançant la commande suivante&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disable&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NetworkManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;online&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl disable NetworkManager-wait-online.service
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;configuration-apt&quot;&gt;Configuration Apt&lt;/h2&gt;
 
 &lt;p&gt;Un autre service qui prenait pas mal de temps était &lt;a href=&quot;https://askubuntu.com/questions/1038923/do-i-really-need-apt-daily-service-and-apt-daily-upgrade-service&quot;&gt;apt-daily.timer qui vérifiait au boot&lt;/a&gt; qu’il y avait des mises à jour de l’OS. Après quelques recherches, j’ ai vu qu’on pouvait soit le désactiver ( ce qui n’est pas recommandé pour les mises à jour de sécurité ) soit décaler la recherche. J’ai choisi cette solution. Vous devez donc exécuter la commande suivante:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timer&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl edit apt-daily.timer
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Et renseigner le contenu suivant:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Timer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;OnBootSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;OnUnitActiveSec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;AccuracySec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Timer]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;OnBootSec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;15min&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;OnUnitActiveSec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;1d&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;AccuracySec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;1h&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;30min&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ce service sera donc lancé 15 minutes après le boot. Ce qui est largement suffisant.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;[EDIT]&lt;/strong&gt; Vous pouvez appliquer la même configuration pour le service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt-daily-upgrade&lt;/code&gt; en exécutant la commande:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;upgrade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timer&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl edit apt-daily-upgrade.timer
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Ensuite, vous pouvez recharger la configuration en exécutant cette commande:&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;systemctl&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;daemon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reload&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl daemon-reload
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;résultats&quot;&gt;Résultats&lt;/h2&gt;
 
-&lt;p&gt;Après ces quelques manipulations qui peuvent prendre 5 minutes grand maximum, j’ai réussi à optimiser le boot en réduisant le démarrage à &lt;strong&gt;5 secondes!&lt;/strong&gt;&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Après ces quelques manipulations qui peuvent prendre 5 minutes grand maximum, j’ai réussi à optimiser le boot en réduisant le démarrage à &lt;strong&gt;5 secondes!&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; width=&quot;783&quot; height=&quot;55&quot; src=&quot;/assets/images/2020/04/boot_apres_header.png?w=783&quot; alt=&quot;&quot; class=&quot;wp-image-360&quot; srcset=&quot;/assets/images/2020/04/boot_apres_header.png 783w, /assets/images/2020/04/boot_apres_header-300x21.png 300w, /assets/images/2020/04/boot_apres_header-768x54.png 768w&quot; sizes=&quot;(max-width: 783px) 100vw, 783px&quot; /&gt; &amp;lt;/figure&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/boot_apres_header.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Vous pourrez trouver le détail ci-dessous:&lt;figure class=&quot;wp-block-gallery aligncenter columns-1 is-cropped&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
 
-&lt;ul class=&quot;blocks-gallery-grid&quot;&gt;
-  &lt;li class=&quot;blocks-gallery-item&quot;&gt;
-    &lt;figure&gt;&lt;a href=&quot;/assets/images/2020/04/boot_apres-2.png?w=287&quot;&gt;&lt;img loading=&quot;lazy&quot; width=&quot;1102&quot; height=&quot;3930&quot; src=&quot;/assets/images/2020/04/boot_apres-2.png?w=287&quot; alt=&quot;&quot; data-id=&quot;362&quot; data-link=&quot;https://blog.touret.info/boot_apres-2/&quot; class=&quot;wp-image-362&quot; srcset=&quot;/assets/images/2020/04/boot_apres-2.png 1102w, /assets/images/2020/04/boot_apres-2-84x300.png 84w, /assets/images/2020/04/boot_apres-2-287x1024.png 287w, /assets/images/2020/04/boot_apres-2-768x2739.png 768w, /assets/images/2020/04/boot_apres-2-431x1536.png 431w, /assets/images/2020/04/boot_apres-2-574x2048.png 574w&quot; sizes=&quot;(max-width: 1102px) 100vw, 1102px&quot; /&gt;&lt;/a&gt;&lt;/figure&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-&lt;figcaption class=&quot;blocks-gallery-caption&quot;&gt;Après&lt;/figcaption&gt;
-&lt;p&gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><summary type="html">Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.</summary></entry><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/04/boot_apres-2.png&quot; alt=&quot;boot&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="planetlibre" /><summary type="html">Mon PC Lenovo a un SSD. Le temps de démarrage est actuellement de 11 sec. Ça commence à faire pas mal… J’ai eu donc envie de me pencher sur l’optimisation du démarrage ( encore une fois) . Voici comment gagner (facilement) quelques secondes au démarrage.</summary></entry><entry><title type="html">Répéter avec JjazzLab tout seul dans son garage</title><link href="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/" rel="alternate" type="text/html" title="Répéter avec JjazzLab tout seul dans son garage" /><published>2020-04-12T12:47:48+00:00</published><updated>2020-04-12T12:47:48+00:00</updated><id>https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage</id><content type="html" xml:base="https://blog.touret.info/2020/04/12/repeter-avec-jjazzlab-tout-seul-dans-son-garage/">&lt;p&gt;Avec les contraintes liées au confinement, les &lt;a href=&quot;http://george-abitbol.fr/v/c0bce857&quot;&gt;répétitions&lt;/a&gt; se font de plus en plus rares. Pour ne pas perdre la main, il y a quelques logiciels qui permettent de jouer d’un instrument et d’ improviser tout en ayant une bande son en fond musical.&lt;/p&gt;
 
 &lt;div class=&quot;wp-block-image&quot;&gt;
   &lt;figure class=&quot;aligncenter size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/04/thomas-litangen-sp9hcrasmpe-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-303&quot; /&gt;&lt;/figure&gt;

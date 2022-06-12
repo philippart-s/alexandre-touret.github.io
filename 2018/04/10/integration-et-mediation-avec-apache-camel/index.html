@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2018/04/apache-camel-logo.png">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2018/04/apache-camel-logo.png">
     
   
 
@@ -325,7 +325,7 @@
         
         <p>Depuis quelques jours, je teste <a href="https://camel.apache.org/">Apache Camel</a> pour la mise en œuvre  de médiations.</p>
 
-<p><img loading="lazy" class=" size-full wp-image-80 aligncenter" src="/assets/images/2018/04/apache-camel-logo.png" alt="Apache-camel-logo" width="349" height="171" srcset="/assets/images/2018/04/apache-camel-logo.png 349w, /assets/images/2018/04/apache-camel-logo-300x147.png 300w" sizes="(max-width: 349px) 100vw, 349px" /></p>
+<p><img src="/assets/images/2018/04/apache-camel-logo.png" alt="camel" class="align-center" /></p>
 
 <p><a href="https://camel.apache.org/">Apache Camel</a> est un framework assez ancien. Il est similaire à <a href="https://projects.spring.io/spring-integration/">Spring Intégration</a> et permet l’ implémentation de <a href="http://www.enterpriseintegrationpatterns.com/patterns/messaging/Chapter1.html">patterns d’intégration</a>.</p>
 
@@ -335,9 +335,7 @@
 
 <p>Exemple :</p>
 
-<p><img loading="lazy" class="alignnone size-full wp-image-79" src="/assets/images/2018/04/publishsubscribesolution.gif" alt="PublishSubscribeSolution" width="504" height="330" /></p>
-
-<p> </p>
+<p><img src="/assets/images/2018/04/publishsubscribesolution.gif" alt="publish_subscribe" class="align-center" /></p>
 
 <p>Camel permet simplement de gérer l’intégration via un DSL.</p>
 
@@ -363,17 +361,17 @@
 
 <p>Elles sont externalisées dans des fichiers de configuration pour faciliter les tests et accessibles via SPRING.</p>
 
-<p>https://gist.github.com/littlewing/470b84ac760c4f70d093753c63ec153b</p>
+<script src="https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b.js">
 
-<p>https://gist.github.com/littlewing/470b84ac760c4f70d093753c63ec153b#file-camel-properties</p>
+<script src="https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b#file-camel-properties" />
 
-<p>https://gist.github.com/littlewing/470b84ac760c4f70d093753c63ec153b#file-routebuilder-java</p>
+<script src="https://gist.github.com/alexandre-touret/470b84ac760c4f70d093753c63ec153b#file-routebuilder-java" />
 
-<h2 id="lancement-de-la-route">Lancement de la route</h2>
+## Lancement de la route
 
-<p>Le lancement de la route se fait dans une méthode main() :</p>
+Le lancement de la route se fait dans une méthode main() :
 
-<p>https://gist.github.com/littlewing/40f3cfa13f5947aa922fc1f796668c59</p>
+<script src="https://gist.github.com/alexandre-touret/40f3cfa13f5947aa922fc1f796668c59.js"></script>
 
 <h2 id="tests">Tests</h2>
 
@@ -381,7 +379,7 @@
 
 <p>Dans mon cas, j’ai décidé de remplacer la base de données que j’interroge en input par une <a href="http://hsqldb.org/doc/guide/ch01.html#N101CA">base HSQLDB chargée en mémoire</a>. Le fichier de sortie est, lui, remplacé dynamiquement par un <a href="https://camel.apache.org/mock.html">mock</a>. Pour ce faire, j’ai utilisé les « adviceWith »</p>
 
-<p>https://gist.github.com/littlewing/391305e01510e65703a26c46c2e233f5</p>
+<script src="https://gist.github.com/alexandre-touret/391305e01510e65703a26c46c2e233f5.js"></script>
 
 <h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
 

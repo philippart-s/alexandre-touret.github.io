@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2018/03/vagrant.png">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2018/03/vagrant.png">
     
   
 
@@ -325,7 +325,7 @@
         
         <p><a href="http://vagrantup.com/">Vagrant</a> est un outil permettant de construire des environnements de travail virtualisés hébergés sur vmware, virtualbox ou encore docker. Il permet par exemple de construire et gérer une VM dans un seul et même workflow et d’éviter les exports et partages de machines virtuelles ( tout est déclaré dans un seul et même fichier ).</p>
 
-<p><img loading="lazy" class="  wp-image-69 alignright" src="/assets/images/2018/03/vagrant.png" alt="Vagrant" width="128" height="156" srcset="/assets/images/2018/03/vagrant.png 999w, /assets/images/2018/03/vagrant-246x300.png 246w, /assets/images/2018/03/vagrant-840x1024.png 840w, /assets/images/2018/03/vagrant-768x936.png 768w" sizes="(max-width: 128px) 100vw, 128px" /></p>
+<p><img src="/assets/images/2018/03/vagrant.png" alt="vagrant" class="align-center" /></p>
 
 <p>Voici comment je l’ai installé sur ma <a href="http://blog.touret.info/2018/02/10/ma-configuration-debian-9/">debian 9</a>.</p>
 
@@ -333,9 +333,8 @@
 
 <p>Le paquet fourni dans la distribution n’est pas compatible avec la version de virtualbox fournie dans l<a href="https://www.virtualbox.org/wiki/Linux_Downloads">e repo virtualbox.org</a>. j’ai donc installé la version disponible sur le site de <a href="https://www.vagrantup.com/downloads.html">vagrant</a>.</p>
 
-<p>[code language= »bash »]<br />
-# dpkg -i vagrant_2.0.2_x86_64.deb<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># dpkg -i vagrant\_2.0.2\_x86_64.deb  </span>
+</code></pre></div></div>
 
 <h2 id="configuration">Configuration</h2>
 
@@ -343,30 +342,28 @@
 
 <p>Si vous avez un proxy, il faut effectuer le paramétrage suivant</p>
 
-<p>[code language= »bash »]<br />
-$ export http_proxy= »http://user:password@host:port »<br />
-$ export https_proxy= »http://user:password@host:port »<br />
-$ vagrant plugin install vagrant-proxyconf<br />
-$ export VAGRANT_HTTP_PROXY= »http://user:password@host:port »<br />
-$ export VAGRANT_NO_PROXY= »127.0.0.1″<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span> »http://user:password@host:port »  
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">https_proxy</span><span class="o">=</span> »http://user:password@host:port »  
+<span class="nv">$ </span>vagrant plugin <span class="nb">install </span>vagrant-proxyconf  
+<span class="nv">$ </span><span class="nb">export </span>VAGRANT<span class="se">\_</span>HTTP<span class="se">\_</span><span class="nv">PROXY</span><span class="o">=</span> »http://user:password@host:port »  
+<span class="nv">$ </span><span class="nb">export </span>VAGRANT<span class="se">\_</span>NO<span class="se">\_</span><span class="nv">PROXY</span><span class="o">=</span> »127.0.0.1&amp;Prime<span class="p">;</span>  
+</code></pre></div></div>
 
-<p>[code language= »bash »]<br />
-$vagrant box add \<br />
-precise64 https://files.hashicorp.com/precise64.box<br />
-<code class="language-plaintext highlighter-rouge">$ export VAGRANT_DEFAULT_PROVIDER</code>=virtualbox [/code]</p>
-
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$vagrant</span> box add <span class="se">\ </span> 
+precise64 https://files.hashicorp.com/precise64.box  
+<span class="sb">`</span><span class="nv">$ </span><span class="nb">export </span>VAGRANT_DEFAULT_PROVIDER<span class="sb">`</span><span class="o">=</span>virtualbox <span class="o">[</span>/code]
+</code></pre></div></div>
 <h2 id="installation-dune-vm">Installation d’une VM</h2>
 
 <p>Voici un exemple pour une VM virtualbox basée sur ubuntu</p>
 
-<p>[code language= »bash »]<br />
-$ mkdir ~/vagrant<br />
-$ cd ~/vagrant<br />
-$ vagrant init pristine ubuntu-budgie-17-x64<br />
-$ vagrant up [/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> ~/vagrant  
+<span class="nv">$ </span><span class="nb">cd</span> ~/vagrant  
+<span class="nv">$ </span>vagrant init pristine ubuntu-budgie-17-x64  
+<span class="nv">$ </span>vagrant up <span class="o">[</span>/code]
+</code></pre></div></div>
 
-<p>Avec ces quelques commandes j’obtiens un environnement ubuntu hébergé sur virtualbox sans avoir à installer et configurer la vm. Pour l’instant je ne rentre pas trop dans les détails de la construction des images. Peut-être que je m’y plongerai prochainement…</p>
+<p>Avec ces quelques commandes j’obtiens un environnement ubuntu hébergé sur virtualbox sans avoir à installer et configurer la vm. Pour l’instant je ne rentre pas trop dans les détails de la construction des images. Peut-être que je m’y plongerai prochainement</p>
 
         
       </section>

@@ -328,9 +328,7 @@ Je vais essayer d’exposer dans cette article les étapes à réaliser pour mig
 
 <p>Dans cet article, je prendrai comme postulat que l’application se construit avec Maven.</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large"><img src="/assets/images/2020/02/blake-wisz-eevhwmstyg8-unsplash-1.jpg?w=683" alt="" class="wp-image-270" /></figure>
-</div>
+<p><img src="/assets/images/2020/02/blake-wisz-eevhwmstyg8-unsplash-1.jpg" alt="boot" class="align-center" /></p>
 
 <h2 id="pré-requis">Pré-requis</h2>
 
@@ -352,29 +350,29 @@ Je vais essayer d’exposer dans cette article les étapes à réaliser pour mig
 
 <h3 id="maven-compiler-plugin">Maven compiler plugin</h3>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">plugin</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">maven</span><span class="o">-</span><span class="n">compiler</span><span class="o">-</span><span class="n">plugin</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">configuration</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="n">release</span><span class="o">&gt;</span><span class="mi">11</span><span class="o">&lt;/</span><span class="n">release</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="n">encoding</span><span class="o">&gt;</span><span class="no">UTF</span><span class="o">-</span><span class="mi">8</span><span class="o">&lt;/</span><span class="n">encoding</span><span class="o">&gt;</span>
-        <span class="o">&lt;/</span><span class="n">configuration</span><span class="o">&gt;</span>
-      <span class="o">&lt;/</span><span class="n">plugin</span><span class="o">&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+          <span class="nt">&lt;release&gt;</span>11<span class="nt">&lt;/release&gt;</span>
+          <span class="nt">&lt;encoding&gt;</span>UTF-8<span class="nt">&lt;/encoding&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
 </code></pre></div></div>
 
 <h2 id="maven-surefire--failsafe-plugin">maven surefire / failsafe plugin</h2>
 
 <p>Pour ces deux plugins, ajouter la configuration suivante:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">plugin</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">maven</span><span class="o">-</span><span class="n">surefire</span><span class="o">-</span><span class="n">plugin</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">2.22</span><span class="o">.</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">configuration</span><span class="o">&gt;</span>
-        <span class="o">[...]</span>
-          <span class="o">&lt;</span><span class="n">argLine</span><span class="o">&gt;--</span><span class="n">illegal</span><span class="o">-</span><span class="n">access</span><span class="o">=</span><span class="n">permit</span><span class="o">&lt;/</span><span class="n">argLine</span><span class="o">&gt;</span>
-          <span class="o">[...]</span>
-        <span class="o">&lt;/</span><span class="n">configuration</span><span class="o">&gt;</span>
-      <span class="o">&lt;/</span><span class="n">plugin</span><span class="o">&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;plugin&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.22.2<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+        [...]
+          <span class="nt">&lt;argLine&gt;</span>--illegal-access=permit<span class="nt">&lt;/argLine&gt;</span>
+          [...]
+        <span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
 </code></pre></div></div>
 
 <h2 id="mise-à-jour-des-librairies">Mise à jour des librairies</h2>
@@ -389,23 +387,23 @@ Je vais essayer d’exposer dans cette article les étapes à réaliser pour mig
 
 <p>Par exemple:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">com</span><span class="o">.</span><span class="na">sun</span><span class="o">.</span><span class="na">xml</span><span class="o">.</span><span class="na">bind</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">jaxb</span><span class="o">-</span><span class="n">core</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">2.3</span><span class="o">.</span><span class="mf">0.1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">scope</span><span class="o">&gt;</span><span class="n">test</span><span class="o">&lt;/</span><span class="n">scope</span><span class="o">&gt;</span>
-        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">com</span><span class="o">.</span><span class="na">sun</span><span class="o">.</span><span class="na">xml</span><span class="o">.</span><span class="na">bind</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">jaxb</span><span class="o">-</span><span class="n">impl</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">2.3</span><span class="o">.</span><span class="mf">0.1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">scope</span><span class="o">&gt;</span><span class="n">test</span><span class="o">&lt;/</span><span class="n">scope</span><span class="o">&gt;</span>
-        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">javax</span><span class="o">.</span><span class="na">xml</span><span class="o">.</span><span class="na">bind</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">jaxb</span><span class="o">-</span><span class="n">api</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">2.3</span><span class="o">.</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
-        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.sun.xml.bind<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>jaxb-core<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.3.0.1<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.sun.xml.bind<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>jaxb-impl<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.3.0.1<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>javax.xml.bind<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>jaxb-api<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.3.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
 
 </code></pre></div></div>
 

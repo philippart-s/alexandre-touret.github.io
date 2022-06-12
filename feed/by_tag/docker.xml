@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/docker.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-11T09:07:18+00:00</updated><id>https://blog.touret.info/feed/by_tag/docker.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/2020/08/24/music-scores-as-code/">&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-428&quot; /&gt;&lt;/figure&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.touret.info/feed/by_tag/docker.xml" rel="self" type="application/atom+xml" /><link href="https://blog.touret.info/" rel="alternate" type="text/html" /><updated>2022-06-12T11:46:22+00:00</updated><id>https://blog.touret.info/feed/by_tag/docker.xml</id><title type="html">blog.touret.info</title><subtitle>Mon blog personnel. J'y expose mes derniers travaux et ma veille technologique. Au menu en vrac: Java, Kotlin, Maven, Docker, Cloud, Kubernetes, logiciels libres, Debian, Ubuntu, Gnu/Linux, des talks online et présentiels.</subtitle><author><name>Alexandre Touret</name></author><entry><title type="html">Music Scores As Code</title><link href="https://blog.touret.info/2020/08/24/music-scores-as-code/" rel="alternate" type="text/html" title="Music Scores As Code" /><published>2020-08-24T10:42:46+00:00</published><updated>2020-08-24T10:42:46+00:00</updated><id>https://blog.touret.info/2020/08/24/music-scores-as-code</id><content type="html" xml:base="https://blog.touret.info/2020/08/24/music-scores-as-code/">&lt;figure class=&quot;wp-block-image size-large&quot;&gt;&lt;img src=&quot;/assets/images/2020/08/cesar-abner-martinez-aguilar-_lmekwwtiwy-unsplash.jpg?w=1024&quot; alt=&quot;&quot; class=&quot;wp-image-428&quot; /&gt;&lt;/figure&gt;
 
 &lt;p&gt;Derrière ce nom pompeux qui peut effrayer, je vais essayer d’expliquer dans cet article comment on peut versionner facilement ses partitions et les publier sur le web.&lt;/p&gt;
 
@@ -190,63 +190,48 @@ Dans le fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&
 &lt;p&gt;Maintenant le container devrait pouvoir s’exécuter correctement.&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Voici un rapide article sur un problème rencontré récemment. Lors de l’exécution d’un container docker, j’ai eu une erreur SIGSEGV 139. Un crash avec aucune log.</summary></entry><entry><title type="html">Installer docker ce sur Debian 9</title><link href="https://blog.touret.info/2018/09/26/installer-docker-ce-sur-debian-9/" rel="alternate" type="text/html" title="Installer docker ce sur Debian 9" /><published>2018-09-26T10:28:21+00:00</published><updated>2018-09-26T10:28:21+00:00</updated><id>https://blog.touret.info/2018/09/26/installer-docker-ce-sur-debian-9</id><content type="html" xml:base="https://blog.touret.info/2018/09/26/installer-docker-ce-sur-debian-9/">&lt;p&gt;Bon, ça fait quelques temps que je n’ai rien posté…&lt;br /&gt;
 Voici un rapide tuto pour installer &lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/debian/&quot;&gt;docker-ce sur une debian9&lt;/a&gt;. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.&lt;/p&gt;
 
-&lt;p&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-96&quot; src=&quot;/assets/images/2018/09/docker.png?w=300&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;268&quot; srcset=&quot;/assets/images/2018/09/docker.png 1354w, /assets/images/2018/09/docker-300x268.png 300w, /assets/images/2018/09/docker-1024x914.png 1024w, /assets/images/2018/09/docker-768x685.png 768w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2018/09/docker.png&quot; alt=&quot;docker&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;pré-requis&quot;&gt;Pré-requis&lt;/h2&gt;
 
 &lt;p&gt;Supprimer les éventuelles installations de docker et docker-compose&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;#apt-get remove docker docker-compose&lt;br /&gt;
-[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#apt-get remove docker docker-compose  &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
 
 &lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;br /&gt;
-# apt-get install apt-transport-https ca-certificates&lt;br /&gt;
-# curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add –&lt;br /&gt;
-# add-apt-repository \&lt;br /&gt;
-“deb [arch=amd64] https://download.docker.com/linux/debian \&lt;br /&gt;
-$(lsb_release -cs) \ stable”&lt;br /&gt;
-[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# apt-get install apt-transport-https ca-certificates  &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add &amp;amp;#8211;  &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# add-apt-repository \  &lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;&quot;deb [arch=amd64] https://download.docker.com/linux/debian &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 
+&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-cs&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;stable&quot;&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Puis lancer&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;# apt update&lt;/p&gt;
-
-&lt;p&gt;# apt install docker-ce&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# apt update&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# apt install docker-ce&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;installation-de-docker-compose&quot;&gt;Installation de docker-compose&lt;/h3&gt;
 
 &lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;# curl -L “https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose&lt;/p&gt;
-
-&lt;p&gt;# chmod a+x /usr/local/bin/docker-compose&lt;br /&gt;
-[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# curl -L &quot;https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# chmod a+x /usr/local/bin/docker-compose  &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;configuration-des-droits&quot;&gt;Configuration des droits&lt;/h2&gt;
 
 &lt;p&gt;Pour lancer docker depuis un utiliser non root, il faut lancer les commandes suivantes:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;# groupadd docker&lt;/p&gt;
-
-&lt;p&gt;# adduser monutilisateur docker&lt;/p&gt;
-
-&lt;p&gt;# usermod -aG docker monutilisateur&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# groupadd docker&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# adduser monutilisateur docker&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# usermod -aG docker monutilisateur&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Après ceci, vaut mieux redémarrer le pc …&lt;/p&gt;
 
@@ -258,64 +243,41 @@ $(lsb_release -cs) \ stable”&lt;br /&gt;
 
 &lt;p&gt;Exécuter la commande:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;# systemctl edit docker.service&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# systemctl edit docker.service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Entrer le code suivant:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;[Service]&lt;/p&gt;
-
-&lt;p&gt;ExecStart=&lt;/p&gt;
-
-&lt;p&gt;ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
-
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Service]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Et l’enregistrer sous /etc/systemd/system/docker.service.d/docker.conf&lt;/p&gt;
 
 &lt;h3 id=&quot;configuration-du-proxy&quot;&gt;Configuration du proxy&lt;/h3&gt;
 
 &lt;p&gt;Avec la même commande&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;# systemctl edit docker.service&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# systemctl edit docker.service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Entrer la configuration suivante:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;[Service]&lt;/p&gt;
-
-&lt;p&gt;Environment=”HTTP_PROXY=http://mon_proxy:mon_port/”&lt;/p&gt;
-
-&lt;p&gt;Environment=”NO_PROXY=127.0.0.1”&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Service]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;HTTP&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\_&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PROXY=http://mon&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\_&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;proxy:mon_port/&quot;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;NO_PROXY=127.0.0.1&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;activation-des-configurations&quot;&gt;Activation des configurations&lt;/h3&gt;
 
 &lt;p&gt;Lancer les commandes suivantes:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;# systemctl daemon-reload # systemctl restart docker&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# systemctl daemon-reload # systemctl restart docker&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;validation&quot;&gt;Validation&lt;/h2&gt;
 
 &lt;p&gt;Maintenant, vous pouvez valider votre configuration avec la commande:&lt;/p&gt;
 
-&lt;p&gt;[code language= »bash »]&lt;/p&gt;
-
-&lt;p&gt;$ docker run hello-world&lt;/p&gt;
-
-&lt;p&gt;[/code]&lt;/p&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.</summary></entry></feed>
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Alexandre Touret</name></author><category term="debian" /><category term="docker" /><category term="planetlibre" /><summary type="html">Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce fournie par docker.</summary></entry></feed>

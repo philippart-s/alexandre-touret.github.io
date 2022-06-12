@@ -27,31 +27,31 @@ var store = [{
         "excerpt":"Vagrant est un outil permettant de construire des environnements de travail virtualisés hébergés sur vmware, virtualbox ou encore docker. Il permet par exemple de construire et gérer une VM dans un seul et même workflow et d’éviter les exports et partages de machines virtuelles ( tout est déclaré dans un...","categories": [],
         "tags": ["planetlibre","vagrant"],
         "url": "/2018/03/15/installation-de-vagrant/",
-        "teaser": null
+        "teaser": "/assets/images/2018/03/vagrant.png"
       },{
         "title": "Activer l' equalizer sur Debian 9",
-        "excerpt":"Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne! Installation de l’equalizer [code language= »bash »] #apt-get install pulseaudio-equalizer [/code] Activation Ajouter les lignes suivantes dans le fichier /etc/pulse/default.pa [code language= »text »] load-module module-equalizer-sink load-module module-dbus-protocol [/code] Relancer le...","categories": [],
+        "excerpt":"Et oui, il y a un equalizer dans debian….Pulse Audio dispose d’un equalizer. Bon ce n’est encore très user friendly, mais ça fonctionne! Installation de l’equalizer apt-get install pulseaudio-equalizer Activation Ajouter les lignes suivantes dans le fichier /etc/pulse/default.pa load-module module-equalizer-sink load-module module-dbus-protocol Relancer le démon pulseaudio \\# pulseaudio -k &amp;&amp;...","categories": [],
         "tags": ["debian","planetlibre","pulseaudio"],
         "url": "/2018/03/25/activer-l-equalizer-sur-debian-9/",
-        "teaser": null
+        "teaser": "/assets/images/2018/03/sc3a9lection_001.png"
       },{
         "title": "Intégration et médiation avec Apache Camel",
         "excerpt":"Depuis quelques jours, je teste Apache Camel pour la mise en œuvre  de médiations. Apache Camel est un framework assez ancien. Il est similaire à Spring Intégration et permet l’ implémentation de patterns d’intégration. Les patterns d’intégration Qu’est-ce qu’un pattern d’intégration allez-vous me dire ? C’est une solution d’architecture ou...","categories": [],
         "tags": ["camel","integration","planetlibre"],
         "url": "/2018/04/10/integration-et-mediation-avec-apache-camel/",
-        "teaser": null
+        "teaser": "/assets/images/2018/04/apache-camel-logo.png"
       },{
         "title": "Devoxx 2018",
         "excerpt":"L’édition 2018 de DEVOXX touche bientôt à sa fin. Pour ceux qui ne connaissent pas cette conférence, c’est LA conférence sur le développement en France. A titre personnel, je peux plus apprendre en trois jours à cette conférence qu’en formation. Tout d’abord un grand merci aux organisateurs. Ils assurent réellement....","categories": [],
         "tags": ["devoxx","devoxxfr","java","planetlibre"],
         "url": "/2018/04/20/devoxx-2018/",
-        "teaser": null
+        "teaser": "/assets/images/2018/04/img_20180419_155256624099247.jpg"
       },{
         "title": "Installer docker ce sur Debian 9",
         "excerpt":"Bon, ça fait quelques temps que je n’ai rien posté… Voici un rapide tuto pour installer docker-ce sur une debian9. Oui, je sais, docker est déjà présent sur les dépôts, mais si vous souhaitez avoir une version un peu plus récente, vous pouvez passer par l’installation de la version ce...","categories": [],
         "tags": ["debian","docker","planetlibre"],
         "url": "/2018/09/26/installer-docker-ce-sur-debian-9/",
-        "teaser": null
+        "teaser": "/assets/images/2018/09/docker.png"
       },{
         "title": "Premier cross over &#8230;",
         "excerpt":"je n’ai pas écrit beaucoup de choses sur mon blog ces derniers temps. C’était en partie dû au fait que j’étais en train d’écrire un article avec R. SEMETEYS pour le blog de mon entreprise. Cet article est disponible ici. Il essaye de synthétiser l’histoire de l’open source. J’espère que...","categories": [],
@@ -69,7 +69,7 @@ var store = [{
         "excerpt":"Il y a quelques jours, je cherchais comment tracer rapidement et simplement les entrées sorties d’une API REST en appliquant quelques formatages, des filtres, et des insertions en base si besoin. Travaillant sur une stack SpringBoot, vous allez me dire : oui tu peux faire des filtres. Pour être franc,...","categories": [],
         "tags": ["logbook","planetlibre","spring","springboot"],
         "url": "/2018/12/01/tracer-facilement-les-entrees-sorties-dune-api-rest/",
-        "teaser": null
+        "teaser": "/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg"
       },{
         "title": "Touraine Tech 2019",
         "excerpt":"Mon sujet de talk « Objectif Top Architecte » a été retenu pour l’édition 2019 de Touraine Tech. Réservez le 1 février 2019 dans votre agenda ! Tout d’abord merci aux organisateurs pour leur confiance. Je suis vraiment  honoré d’être sélectionné une deuxième année consécutive. Cette année, j’animerai un hands on sur...","categories": [],
@@ -147,19 +147,19 @@ var store = [{
         "excerpt":"Une fois n’est pas coutume, voici un article qui reprend des basiques de la programmation. J’aborde une stack JAVA, mais c’est applicable à d’autres langages. Il existe une fonctionnalité très intéressante dans Spring (et dans J(akarta)EE) que l’on oublie assez souvent : l’AOP ou encore la programmation par aspect. Cette...","categories": [],
         "tags": ["aop","java","planetlibre","spring","springboo"],
         "url": "/2019/11/05/programmmation-par-aspect-avec-spring-aop/",
-        "teaser": null
+        "teaser": "/assets/images/2019/11/stanley-dai-73ozynjvoni-unsplash.jpg"
       },{
         "title": "Partager des variables entre scénarios gatling",
         "excerpt":"Je suis en train de mettre en œuvre des tests de performance avec Gatling. Un des principaux outils libres de tests de performance. J’ai eu récemment à résoudre un « petit » soucis : je souhaitai partager des variables entre plusieurs scénarios. Il existe pas mal de solutions sur stackoverflow. J’ai condensé...","categories": [],
         "tags": ["gatling","planetlibre","scala"],
         "url": "/2019/11/21/partager-des-variables-entre-scenarios-gatling/",
-        "teaser": null
+        "teaser": "/assets/images/2019/11/gatling-new-design.png"
       },{
         "title": "Premiers pas avec Gradle",
         "excerpt":"Depuis quelques temps je me mets à Gradle. Après de (trop?) nombreuses années à utiliser Maven (depuis la version 0.9…), je me risque à modifier mon environnement de build. Du moins sur des projets démo. Quand on a fait pas mal de Maven, on est un peu dérouté au début....","categories": [],
         "tags": ["gradle","java"],
         "url": "/2019/12/30/premiers-pas-avec-gradle/",
-        "teaser": null
+        "teaser": "/assets/images/2019/12/gradle_logo.png"
       },{
         "title": "Passer votre application Java8 en Java11",
         "excerpt":"Java 8 est encore largement utilisé dans les entreprises aujourd’hui. Il y a même certains frameworks qui n’ont pas encore sauté le pas. Je vais essayer d’exposer dans cette article les étapes à réaliser pour migrer (simplement) votre application JAVA8 en JAVA 11. Dans cet article, je prendrai comme postulat...","categories": [],

@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2018/03/sc3a9lection_001.png">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2018/03/sc3a9lection_001.png">
     
   
 
@@ -327,46 +327,40 @@
 
 <h2 id="installation-de-lequalizer">Installation de l’equalizer</h2>
 
-<p>[code language= »bash »]<br />
-#apt-get install pulseaudio-equalizer<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>pulseaudio-equalizer  
+</code></pre></div></div>
 
 <h2 id="activation">Activation</h2>
 
 <p>Ajouter les lignes suivantes dans le fichier /etc/pulse/default.pa</p>
 
-<p>[code language= »text »]<br />
-load-module module-equalizer-sink<br />
-load-module module-dbus-protocol<br />
-[/code]</p>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">load-module</span> <span class="err">module-equalizer-sink</span>  
+<span class="err">load-module</span> <span class="err">module-dbus-protocol</span>  
+</code></pre></div></div>
 
 <p>Relancer le démon pulseaudio</p>
 
-<p>[code language= »bash »]<br />
-# pulseaudio -k &amp;&amp; pulseaudio -D<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\#</span> pulseaudio <span class="nt">-k</span> <span class="o">&amp;&amp;</span> pulseaudio <span class="nt">-D</span>  
+</code></pre></div></div>
 
 <p>A ce stade, vous devriez avoir dans le panneau de configuration la référence à l’equalizer</p>
 
-<p><img loading="lazy" class="alignnone size-full wp-image-74" src="/assets/images/2018/03/sc3a9lection_001.png" alt="Sélection_001" width="431" height="177" srcset="/assets/images/2018/03/sc3a9lection_001.png 431w, /assets/images/2018/03/sc3a9lection_001-300x123.png 300w" sizes="(max-width: 431px) 100vw, 431px" /></p>
+<p><img src="/assets/images/2018/03/sc3a9lection_001.png" alt="camel" class="align-center" /></p>
 
 <h2 id="lancement">Lancement</h2>
 
 <p>En ligne de commande ( je vous disais que ce n’était pas trop user-friendly), lancer la commande</p>
 
-<p>[code language= »bash »]<br />
-$ qpaeq &amp;<br />
-[/code]</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>qpaeq &amp;  
+</code></pre></div></div>
 
 <p>On obtient cette interface:</p>
 
-<p><img loading="lazy" class="alignnone size-full wp-image-75" src="/assets/images/2018/03/qpaeq_002.png" alt="qpaeq_002" width="1382" height="368" srcset="/assets/images/2018/03/qpaeq_002.png 1382w, /assets/images/2018/03/qpaeq_002-300x80.png 300w, /assets/images/2018/03/qpaeq_002-1024x273.png 1024w, /assets/images/2018/03/qpaeq_002-768x205.png 768w" sizes="(max-width: 1382px) 100vw, 1382px" /></p>
+<p><img src="/assets/images/2018/03/qpaeq_002.png" alt="camel" class="align-center" /></p>
 
 <p>Arrivé à ce niveau, je suis quand même un peu déçu/ Il n’y a pas une vrai intégration dans debian ( pas de lanceur pour l’equalizer ) et il n’y a pas de presets configurés ( #souvienstoiwinamp)</p>
 
 <p>J’ai essayé de poster mon soucis sur IRC, mais je n’ai pas encore eu de réponse. Je pense soumettre un bug dans les prochains jours.</p>
-
-<p> </p>
 
         
       </section>

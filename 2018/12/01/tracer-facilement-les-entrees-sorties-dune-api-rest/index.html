@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg">
     
   
 
@@ -323,7 +323,7 @@
 
       <section class="page__content e-content" itemprop="text">
         
-        <figure class="wp-block-image"><img loading="lazy" width="1200" height="1200" src="/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg" alt="" class="wp-image-115" srcset="/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg 1200w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-300x300.jpeg 300w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-1024x1024.jpeg 1024w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-150x150.jpeg 150w, /assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd-768x768.jpeg 768w" sizes="(max-width: 1200px) 100vw, 1200px" /></figure>
+        <p><img src="/assets/images/2018/12/street_city_people_blackandwhite_bw_man_detail_project-248333-jpgd.jpeg" alt="street_city" class="align-center" /></p>
 
 <p>Il y a quelques jours, je cherchais comment tracer rapidement et simplement les entrées sorties d’une <a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">API REST</a> en appliquant quelques formatages, des filtres, et des insertions en base si besoin.</p>
 
@@ -340,44 +340,43 @@ Ce composant ne fait qu’une seule chose, mais il le fait bien !</p>
 
 <p>Dans le  fichier pom.xml, ajouter cette dépendance:</p>
 
-<pre class="wp-block-preformatted"><dependency><br />    <groupId>org.zalando</groupId><br />    <artifactId>logbook-spring-boot-starter</artifactId><br />    <version>1.11.2</version><br /></dependency><br /><br />
-```
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+ <span class="nt">&lt;groupId&gt;</span>org.zalando<span class="nt">&lt;/groupId&gt;</span>
+ <span class="nt">&lt;artifactId&gt;</span>logbook-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+ <span class="nt">&lt;version&gt;</span>1.11.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
 
+<p>Dans une de vos classes <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html">Configuration</a>, définir la factory de Logbook</p>
 
-Dans une de vos classes [Configuration](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html), définir la factory de Logbook
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="nc">Logbook</span> <span class="nf">createLogBook</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// too easy : return Logbook.create();</span>
+  <span class="k">return</span> <span class="nc">Logbook</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">condition</span><span class="o">(</span><span class="nc">Conditions</span><span class="o">.</span><span class="na">requestTo</span><span class="o">(</span><span class="s">"/helloworld"</span><span class="o">))</span>
+                  <span class="o">.</span><span class="na">formatter</span><span class="o">(</span><span class="k">new</span> <span class="nc">JsonHttpLogFormatter</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
-<pre class="wp-block-preformatted">@Bean<br />public Logbook createLogBook() {<br />    // too easy : return Logbook.create();<br />    return Logbook.<em>builder</em>()<br />            .condition(Conditions.<em>requestTo</em>("/helloworld"))<br />            .formatter(new JsonHttpLogFormatter())<br />            .build();<br />}
-```
+<p>Dans mon cas j’ai fait un filtre en n’incluant que l’ API /helloworld et j’ai formatté en JSON.<br />
+On peut également modifier le processus d’écriture pour ne pas écrire dans un fichier mais en base par ex.</p>
 
+<p>Ensuite, j’ai ajouté la configuration du logger dans le fichier application.properties</p>
 
-Dans mon cas j'ai fait un filtre en n'incluant que l' API /helloworld et j'ai formatté en JSON.  
-On peut également modifier le processus d'écriture pour ne pas écrire dans un fichier mais en base par ex.  
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">logging.level.org.zalando.logbook:TRACE</span>
+</code></pre></div></div>
 
+<p>Et voila !</p>
 
-Ensuite, j'ai ajouté la configuration du logger dans le fichier application.properties
+<p>Dans la console, lors d’un appel ou d’une réponse à mon API, j’ai le message suivant :</p>
 
-<pre class="wp-block-preformatted">logging.level.org.zalando.logbook:TRACE<br />
-```
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>018-12-01 15:14:18.373 TRACE 3605 <span class="nt">---</span> <span class="o">[</span>nio-8080-exec-1] org.zalando.logbook.Logbook              : <span class="o">{</span><span class="s2">"origin"</span>:<span class="s2">"remote"</span>,<span class="s2">"type"</span>:<span class="s2">"request"</span>,<span class="s2">"correlation"</span>:<span class="s2">"c6b345013835273f"</span>,<span class="s2">"protocol"</span>:<span class="s2">"HTTP/1.1"</span>,<span class="s2">"remote"</span>:<span class="s2">"127.0.0.1"</span>,<span class="s2">"method"</span>:<span class="s2">"GET"</span>,<span class="s2">"uri"</span>:<span class="s2">"http://127.0.0.1:8080/helloworld"</span>,<span class="s2">"headers"</span>:<span class="o">{</span><span class="s2">"accept"</span>:[<span class="s2">"/"</span><span class="o">]</span>,<span class="s2">"host"</span>:[<span class="s2">"127.0.0.1:8080"</span><span class="o">]</span>,<span class="s2">"user-agent"</span>:[<span class="s2">"curl/7.52.1"</span><span class="o">]}}</span>
+2018-12-01 15:14:18.418 TRACE 3605 <span class="nt">---</span> <span class="o">[</span>nio-8080-exec-1] org.zalando.logbook.Logbook              : <span class="o">{</span><span class="s2">"origin"</span>:<span class="s2">"local"</span>,<span class="s2">"type"</span>:<span class="s2">"response"</span>,<span class="s2">"correlation"</span>:<span class="s2">"c6b345013835273f"</span>,<span class="s2">"duration"</span>:48,<span class="s2">"protocol"</span>:<span class="s2">"HTTP/1.1"</span>,<span class="s2">"status"</span>:200,<span class="s2">"headers"</span>:<span class="o">{</span><span class="s2">"Content-Length"</span>:[<span class="s2">"11"</span><span class="o">]</span>,<span class="s2">"Content-Type"</span>:[<span class="s2">"text/plain;charset=UTF-8"</span><span class="o">]</span>,<span class="s2">"Date"</span>:[<span class="s2">"Sat, 01 Dec 2018 14:14:18 GMT"</span><span class="o">]}</span>,<span class="s2">"body"</span>:<span class="s2">"Hello world"</span><span class="o">}</span>
+</code></pre></div></div>
 
+<p>Vous remarquerez que les requêtes / réponses peuvent désormais être associés grâce à un identifiant de corrélation. On peut facilement déterminer le temps de traitement d’une requête ou encore faciliter les recherches.</p>
 
-Et voila ! 
-
-Dans la console, lors d'un appel ou d'une réponse à mon API, j'ai le message suivant :
-
-
-
-<pre class="wp-block-preformatted">018-12-01 15:14:18.373 TRACE 3605 --- [nio-8080-exec-1] org.zalando.logbook.Logbook              : {"origin":"remote","type":"request","correlation":"c6b345013835273f","protocol":"HTTP/1.1","remote":"127.0.0.1","method":"GET","uri":"http://127.0.0.1:8080/helloworld","headers":{"accept":["<em>/</em>"],"host":["127.0.0.1:8080"],"user-agent":["curl/7.52.1"]}}<br />
-2018-12-01 15:14:18.418 TRACE 3605 --- [nio-8080-exec-1] org.zalando.logbook.Logbook              : {"origin":"local","type":"response","correlation":"c6b345013835273f","duration":48,"protocol":"HTTP/1.1","status":200,"headers":{"Content-Length":["11"],"Content-Type":["text/plain;charset=UTF-8"],"Date":["Sat, 01 Dec 2018 14:14:18 GMT"]},"body":"Hello world"}
-```
-
-
-Vous remarquerez que les requêtes / réponses peuvent désormais être associés grâce à un identifiant de corrélation. On peut facilement déterminer le temps de traitement d'une requête ou encore faciliter les recherches.  
-
-
-
-
-Vous trouverez tout le code dans [ce repo github](https://github.com/littlewing/demo-logbook).
-</pre></pre></pre></pre>
+<p>Vous trouverez tout le code dans <a href="https://github.com/littlewing/demo-logbook">ce repo github</a>.</p>
 
         
       </section>

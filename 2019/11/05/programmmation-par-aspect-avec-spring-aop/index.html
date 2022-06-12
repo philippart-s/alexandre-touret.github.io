@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+  <meta property="og:image" content="https://blog.touret.info/assets/images/2019/11/stanley-dai-73ozynjvoni-unsplash.jpg">
 
 
 
@@ -42,7 +42,7 @@
   
     <meta name="twitter:card" content="summary">
     
-      <meta name="twitter:image" content="https://blog.touret.info/assets/images/alexandre.touret.png">
+      <meta name="twitter:image" content="https://blog.touret.info/assets/images/2019/11/stanley-dai-73ozynjvoni-unsplash.jpg">
     
   
 
@@ -325,9 +325,7 @@
         
         <p>Une fois n’est pas coutume, voici un article qui reprend des basiques de la programmation. J’aborde une stack JAVA, mais c’est applicable à d’autres langages.</p>
 
-<div class="wp-block-image">
-  <figure class="aligncenter size-large"><img src="/assets/images/2019/11/stanley-dai-73ozynjvoni-unsplash.jpg?w=1024" alt="" class="wp-image-231" /></figure>
-</div>
+<p><img src="/assets/images/2019/11/stanley-dai-73ozynjvoni-unsplash.jpg" alt="spring" class="align-center" /></p>
 
 <p>Il existe une fonctionnalité très intéressante dans Spring (et dans J(akarta)EE) que l’on oublie assez souvent : l’<a href="https://fr.wikipedia.org/wiki/Programmation_orient%C3%A9e_aspect">AOP</a> ou encore la programmation par aspect. Cette manière de programmer permet notamment de séparer le code fonctionnel et technique.<br />
 Si vous faites du JAVA, vous utilisez déjà l’<a href="https://fr.wikipedia.org/wiki/Programmation_orient%C3%A9e_aspect">AOP</a>. En effet, quand vous faites une insertion en base via JPA dans un EJB ou un bean annoté <code class="language-plaintext highlighter-rouge">@Transactional</code>, une transaction est initiée au début de la méthode et fermée à la fin.</p>
@@ -338,10 +336,10 @@ Si vous faites du JAVA, vous utilisez déjà l’<a href="https://fr.wikipedia.o
 
 <p>Ajouter le starter AOP:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">aop</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
 
 </code></pre></div></div>
 
