@@ -268,4 +268,10 @@ var store = [{
         "tags": ["conference"],
         "url": "/2022/06/10/camping-speakers-2022/",
         "teaser": "/assets/images/2022/06/camping_speakers_2.webp"
+      },{
+        "title": "Déployer des batchs cloud native avec Spring Cloud Data Flow",
+        "excerpt":"Dans mon dernier article, j’ai tenté de faire un état des lieux des solutions possibles pour implémenter des batchs cloud natifs. J’ai par la suite testé plus en détails les jobs et cron jobs Kubernetes en essayant d’avoir une vue OPS sur ce sujet. Le principal inconvénient (qui ne l’est...","categories": [],
+        "tags": ["cloud","kubernetes","batch","spring"],
+        "url": "/2022/08/16/spring-data-flow/",
+        "teaser": "/assets/images/2022/08/maksym-tymchyk-vHO-yT1BDWk-unsplash.webp"
       }]
